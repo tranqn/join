@@ -1,0 +1,130 @@
+// ========================================
+// 1. BREAKPOINTS
+// ========================================
+$break-xxs: 320px;
+$break-xs: 480px;
+$break-sm: 576px;
+$break-md: 768px;
+$break-lg: 992px;
+$break-xl: 1200px;
+$break-xxl: 1400px;
+
+// ========================================
+// 2. BASIS MIXINS
+// ========================================
+@mixin respond($bp) {
+  @media (min-width: $bp) {
+    @content;
+  }
+}
+
+@mixin respond-max($bp) {
+  @media (max-width: $bp) {
+    @content;
+  }
+}
+
+// ========================================
+// 4. RESPONSIVE VERSIONEN MIXINS
+// ========================================
+// Responsive Text-Style
+// Verwendung: @include text-style-responsive(16px, 18px, 20px);
+@mixin text-style-responsive(
+  $size-mobile,
+  $size-tablet,
+  $size-desktop,
+  $family: 'Overpass',
+  $weight: 400
+) {
+  font-family: $family;
+  font-size: $size-mobile;
+  font-weight: $weight;
+
+  @include respond($break-md) {
+    font-size: $size-tablet;
+  }
+
+  @include respond($break-lg) {
+    font-size: $size-desktop;
+  }
+}
+
+// Responsive Section-Size
+// Verwendung: @include section-size-responsive(400px, 500px, 650px);
+@mixin section-size-responsive($height-mobile, $height-tablet, $height-desktop, $mxwidth: 1440px) {
+  max-width: $mxwidth;
+  height: $height-mobile;
+  margin: 20px auto;
+
+  @include respond($break-md) {
+    height: $height-tablet;
+    margin: 50px auto;
+  }
+
+  @include respond($break-lg) {
+    height: $height-desktop;
+    margin: 100px auto;
+  }
+}
+
+// Responsive Flex Direction
+// Verwendung: @include dFlex-responsive(column, row);
+@mixin dFlex-responsive($direction-mobile, $direction-desktop, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $direction-mobile;
+  justify-content: $justify;
+  align-items: $align;
+
+  @include respond($break-md) {
+    flex-direction: $direction-desktop;
+  }
+}
+
+// ========================================
+// 5. ZUSÄTZLICHE HILFS-MIXINS
+// ========================================
+// Container mit responsive Padding
+@mixin container {
+  width: 100%;
+  max-width: $break-xl;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+
+  @include respond($break-md) {
+    padding: 2rem;
+  }
+
+  @include respond($break-lg) {
+    padding: 3rem;
+  }
+}
+
+// Nur auf Handy sichtbar
+@mixin show-mobile {
+  display: block;
+  @include respond($break-md) {
+    display: none;
+  }
+}
+
+// Nur auf Desktop sichtbar
+@mixin show-desktop {
+  display: none;
+  @include respond($break-md) {
+    display: block;
+  }
+}
+
+// Universelles Spacing (margin/padding) responsive
+@mixin spacing($property, $mobile, $tablet, $desktop) {
+  #{$property}: $mobile;
+
+  @include respond($break-md) {
+    #{$property}: $tablet;
+  }
+
+  @include respond($break-lg) {
+    #{$property}: $desktop;
+  }
+}
