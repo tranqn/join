@@ -4,11 +4,23 @@ import { provideRouter } from '@angular/router';
 import { routes } from './app.routes';
 import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { getDatabase, provideDatabase } from '@angular/fire/database';
+import { getAuth, provideAuth } from '@angular/fire/auth';
+import { getFirestore, provideFirestore } from '@angular/fire/firestore';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideRouter(routes), provideFirebaseApp(() => initializeApp({ projectId: "join-9776e", appId: "1:949796685452:web:99aee8c2e372fcb2e91da9", databaseURL: "https://join-9776e-default-rtdb.europe-west1.firebasedatabase.app", storageBucket: "join-9776e.firebasestorage.app", apiKey: "AIzaSyDGKyDylxYi0J6hWxgWE2HR1IgaBegByAY", authDomain: "join-9776e.firebaseapp.com", messagingSenderId: "949796685452", projectNumber: "949796685452", version: "2" })), provideDatabase(() => getDatabase())
+    provideRouter(routes), 
+    provideFirebaseApp(() => initializeApp({ 
+      projectId: "join-9776e", 
+      appId: "1:949796685452:web:99aee8c2e372fcb2e91da9", 
+      databaseURL: "https://join-9776e-default-rtdb.europe-west1.firebasedatabase.app", 
+      storageBucket: "join-9776e.firebasestorage.app", 
+      apiKey: "AIzaSyDGKyDylxYi0J6hWxgWE2HR1IgaBegByAY", 
+      authDomain: "join-9776e.firebaseapp.com", 
+      messagingSenderId: "949796685452"
+    })), 
+    provideDatabase(() => getDatabase()), provideFirebaseApp(() => initializeApp({ projectId: "join-9776e", appId: "1:949796685452:web:99aee8c2e372fcb2e91da9", databaseURL: "https://join-9776e-default-rtdb.europe-west1.firebasedatabase.app", storageBucket: "join-9776e.firebasestorage.app", apiKey: "AIzaSyDGKyDylxYi0J6hWxgWE2HR1IgaBegByAY", authDomain: "join-9776e.firebaseapp.com", messagingSenderId: "949796685452" })), provideAuth(() => getAuth()), provideFirestore(() => getFirestore())
   ]
 };
