@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { Contactlist } from './contactlist/contactlist';
 import { ContactDetails } from './contact-details/contact-details';
 
