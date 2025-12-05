@@ -1,0 +1,84 @@
+@import './../../../../styles.scss';
+
+section {
+	width: 700px;
+}
+
+.contact_header {
+	display: flex;
+	align-items: center;
+	gap: 35px;
+	padding: 20px;
+	border: 1px solid #ccc;
+}
+
+.vl {
+	border-left: 2px solid rgba(41, 171, 226, 1);
+	height: 60px;
+}
+
+.contact_card {
+	display: flex;
+	flex-direction: column;
+	gap: 20px;
+	padding: 20px;
+	margin-top: 15px;
+	border: 1px solid #ccc;
+	&_header {
+		display: flex;
+		gap: 75px;
+		align-items: center;
+	}
+}
+
+.profil-icon {
+	background-color: rgba(255, 122, 0, 1);
+	border-radius: 100%;
+	> p {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 120px;
+		height: 120px;
+		color: black;
+	}
+}
+
+.contact-actions {
+	display: flex;
+	gap: 10px;
+
+	button {
+		background: none;
+		border: none;
+		cursor: pointer;
+		font-size: 14px;
+
+		&.edit-btn {
+			color: #0077cc;
+		}
+
+		&.delete-btn {
+			color: #cc0000;
+		}
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
+
+.info-header {
+	border: 1px solid #ccc;
+	padding: 12px;
+	margin-top: 20px;
+}
+
+.info-section {
+	border: 1px solid #ccc;
+	padding: 20px;
+	margin-top: 10px;
+	> div {
+		margin-bottom: 20px;
+	}
+}
