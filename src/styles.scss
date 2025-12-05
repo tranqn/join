@@ -1,3 +1,26 @@
 @use 'src/app/styles/mixin' as *;
 @use 'src/app/styles/fonts' as *;
 
+h1 {
+	font-size: 61px;
+}
+
+h2 {
+	font-size: 64px;
+}
+
+h3 {
+	font-size: 47px;
+}
+
+h4 {
+	font-size: 27px;
+}
+
+h5 {
+	font-size: 20px;
+}
+
+p {
+	font-size: 16px;
+}
