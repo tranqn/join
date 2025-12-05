@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { getShortName } from '../contact';
 
 @Component({
   selector: 'app-contact-details',
@@ -7,5 +8,7 @@ import { Component } from '@angular/core';
   styleUrl: './contact-details.scss',
 })
 export class ContactDetails {
-
+	getInitials(fullName: string) {
+		return getShortName(fullName);
+	}
 }

@@ -1,0 +1,8 @@
+<div class="contacts">
+	@for (contact of firebaseService.contacts(); track contact.id) {
+		<div class="contacts__card">
+			<span>{{ getInitials(contact.name) }}</span>
+			{{ contact.name }}
+		</div>
+	}
+</div>
