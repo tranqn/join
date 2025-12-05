@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
+import { FirebaseService } from '../../../services/firebase-service';
 
 @Component({
   selector: 'app-contactlist',
@@ -7,5 +8,11 @@ import { Component } from '@angular/core';
   styleUrl: './contactlist.scss',
 })
 export class Contactlist {
+	firebaseService = inject(FirebaseService);
 
+	constructor() {
+		effect(() => {
+			console.log('Contacts loaded:', this.firebaseService.contacts());
+		});
+	}
 }

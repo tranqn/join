@@ -49,7 +49,8 @@ export class FirebaseService {
 			id: id,
 			name: obj.name || '',
 			email: obj.email || '',
-			phone: obj.phone || ''
+			phone: obj.phone || '',
+			color: obj.color || ''
 		};
 	}
 
@@ -90,6 +91,7 @@ export class FirebaseService {
             name: contact.name,
             email: contact.email,
             phone: contact.phone,
+			color: contact.color
         };
     }
 }
