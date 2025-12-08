@@ -1,3 +1,6 @@
+@use '../../../styles/vars.scss' as *;
+@use '../../../styles/mixin.scss' as *;
+
 .contact-modal {
   position: fixed;
   top: 0;
@@ -23,7 +26,7 @@
     position: relative;
     z-index: 1;
     background: white;
-    border-radius: 12px;
+    border-radius: map-get($radius, small);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     width: 90%;
     max-width: 500px;
@@ -36,7 +39,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px 24px;
+    padding: $spacing-md;
     border-bottom: 1px solid #e0e0e0;
   }
 
@@ -44,7 +47,7 @@
     margin: 0;
     font-size: 20px;
     font-weight: 600;
-    color: rgb(42, 54, 71);
+    color: $darkblue;
   }
 
   &__close-btn {
@@ -68,7 +71,7 @@
   }
 
   &__body {
-    padding: 24px;
+    padding: $spacing-md;
   }
 }
 

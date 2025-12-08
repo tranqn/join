@@ -7,27 +7,29 @@
     top: 0;
     z-index: 10;
     background: inherit;
-    padding-bottom: 20px;
+    display: flex;
+	align-items: center;
+	justify-content: space-between;
   }
 
   &__add-btn {
-    width: calc(100% - 40px);
-    margin: 0 20px;
-    background: rgb(42, 54, 71);
+    width: 100%;
+    margin: $spacing-sm;
+    background: $darkblue;
     color: white;
     border: none;
-    border-radius: 8px;
-    padding: 12px 20px;
+    border-radius: map-get($radius, small);
+    padding: $spacing-sm $spacing-md;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 12px;
+    gap: $spacing-sm;
     cursor: pointer;
     transition: background 0.2s;
     font-family: inherit;
 
     &:hover {
-      background: rgb(52, 64, 81);
+      background: lighten($darkblue, 5%);
     }
 
     &:active {
