@@ -1,7 +1,7 @@
 import { Component, computed, effect, inject, output, signal } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase-service';
 import { getShortName } from '../contact';
-import { Contact } from '../../../interfaces/contact';
+import { ContactModel } from '../../../interfaces/contact';
 import { ContactModal } from '../contact-modal/contact-modal';
 
 @Component({
@@ -16,7 +16,7 @@ export class Contactlist {
 	contacts = this.firebaseService.contacts();
 	isModalOpen = signal(false);
 
-	contact = output<Contact>();
+	contact = output<ContactModel>();
 
 	groupedContacts = computed(() => {
 		const contacts = this.firebaseService.contacts();
@@ -39,7 +39,7 @@ export class Contactlist {
 		});
 	}
 
-	showDetails(contact: Contact) {
+	showDetails(contact: ContactModel) {
 		this.contact.emit(contact);
 	}
 

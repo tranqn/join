@@ -13,7 +13,7 @@ import {
 	limit,
 	where
 } from '@angular/fire/firestore';
-import { Contact } from '../interfaces/contact';
+import { ContactModel } from '../interfaces/contact';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,7 +21,7 @@ import { Contact } from '../interfaces/contact';
 export class FirebaseService {
 	firestore: Firestore = inject(Firestore);
 
-	contacts = signal<Contact[]>([]);
+	contacts = signal<ContactModel[]>([]);
 
 	unsubContacts: () => void;
 
@@ -36,7 +36,7 @@ export class FirebaseService {
 	subContactsList() {
 		const q = query(this.getContacts(), orderBy('name'), limit(100));
 		return onSnapshot(q, (list) => {
-			const contacts: Contact[] = [];
+			const contacts: ContactModel[] = [];
 			list.forEach((element) => {
 				contacts.push(this.setNoteObject(element.data(), element.id));
 			});
@@ -44,7 +44,7 @@ export class FirebaseService {
 		});
 	}
 
-	setNoteObject(obj: any, id: string): Contact {
+	setNoteObject(obj: any, id: string): ContactModel {
 		return {
 			id: id,
 			name: obj.name || '',
@@ -73,7 +73,7 @@ export class FirebaseService {
 		return doc(collection(this.firestore, colId), docId);
 	}
 
-	async updateContact(contact: Contact) {
+	async updateContact(contact: ContactModel) {
         if (contact.id) {
             let docRef = this.getSingleDocRef(
                 "contact",
@@ -85,7 +85,7 @@ export class FirebaseService {
         }
     }
 
-	getCleanJson(contact: Contact): {} {
+	getCleanJson(contact: ContactModel): {} {
         return {
             id: contact.id,
             name: contact.name,
