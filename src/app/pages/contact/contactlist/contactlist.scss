@@ -1,31 +1,76 @@
 @use '../../../styles/vars.scss' as *;
 @use '../../../styles/mixin.scss' as *;
 
+.contactlist {
+  &__header {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: inherit;
+    padding-bottom: 20px;
+  }
+
+  &__add-btn {
+    width: calc(100% - 40px);
+    margin: 0 20px;
+    background: rgb(42, 54, 71);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    padding: 12px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: background 0.2s;
+    font-family: inherit;
+
+    &:hover {
+      background: rgb(52, 64, 81);
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
+  }
+
+  &__add-btn-text {
+    font-size: 16px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  &__add-btn-icon {
+    flex-shrink: 0;
+  }
+}
+
 .contacts {
-	width: 450px;
-	height: calc(100vh - 81px);
-	padding: $spacing-xl $spacing-lg 0;
-	overflow-y: auto;
-	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
-	scrollbar-width: thin;
-	&__card {
-		@include dFlex-responsive(row, row, $justify: flex-start, $align: center);
-		gap: $spacing-md;
-		padding: 1rem 1.5rem;
-	}
-	&__initials {
-		color: #fff;
-		width: 40px;
-		height: 40px;
-		border-radius: 100%;
-		@include dFlex-responsive(row, row, $justify: center, $align: center);
-	}
-	&__info {
-		@include dFlex-responsive(column, column, $justify: center, $align: flex-start);
-		gap: $spacing-xs;
-		a {
-			text-decoration: none;
-			color: $light-blue;
-		}
-	}
+  width: 450px;
+  height: calc(100vh - 81px);
+  padding: $spacing-xl $spacing-lg 0;
+  overflow-y: auto;
+  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+  scrollbar-width: thin;
+  &__card {
+    @include dFlex-responsive(row, row, $justify: flex-start, $align: center);
+    gap: $spacing-md;
+    padding: 1rem 1.5rem;
+  }
+  &__initials {
+    color: #fff;
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+    @include dFlex-responsive(row, row, $justify: center, $align: center);
+  }
+  &__info {
+    @include dFlex-responsive(column, column, $justify: center, $align: flex-start);
+    gap: $spacing-xs;
+    a {
+      text-decoration: none;
+      color: $light-blue;
+    }
+  }
 }

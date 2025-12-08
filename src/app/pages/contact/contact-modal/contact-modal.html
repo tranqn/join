@@ -1,1 +1,18 @@
-<p>contact-modal works!</p>
+@if (isOpen()) {
+  <div class="contact-modal">
+    <div class="contact-modal__backdrop" (click)="onClose()"></div>
+
+    <div class="contact-modal__dialog" role="dialog" aria-modal="true">
+      <header class="contact-modal__header">
+        <h2 class="contact-modal__title">Add Contact</h2>
+        <button class="contact-modal__close-btn" (click)="onClose()" type="button" aria-label="Close modal">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </header>
+
+      <div class="contact-modal__body">
+        <p>Modal skeleton ready. Contact form will be added here.</p>
+      </div>
+    </div>
+  </div>
+}

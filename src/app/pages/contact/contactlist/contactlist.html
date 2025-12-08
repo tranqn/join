@@ -1,11 +1,25 @@
-<div class="contacts">
-	@for (contact of firebaseService.contacts(); track contact.id) {
-		<div class="contacts__card">
-			<span class="contacts__initials" [style.background-color]="contact.color">{{ getInitials(contact.name) }}</span>
-			<div class="contacts__info">
-				<span>{{ contact.name }}</span>
-				<a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
-			</div>
-		</div>
-	}
+<div class="contactlist">
+  <header class="contactlist__header">
+    <button class="contactlist__add-btn" (click)="openModal()" type="button" aria-label="Add new contact">
+      <span class="contactlist__add-btn-text">Add new contact</span>
+      <img src="/icons/add_contact.svg" alt="" class="contactlist__add-btn-icon" width="24" height="24">
+    </button>
+  </header>
+
+  <div class="contacts">
+    @for (contact of firebaseService.contacts(); track contact.id) {
+      <div class="contacts__card">
+        <span class="contacts__initials" [style.background-color]="contact.color">{{ getInitials(contact.name) }}</span>
+        <div class="contacts__info">
+          <span>{{ contact.name }}</span>
+          <a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+        </div>
+      </div>
+    }
+  </div>
+
+  <app-contact-modal
+    [isOpen]="isModalOpen()"
+    (close)="closeModal()">
+  </app-contact-modal>
 </div>

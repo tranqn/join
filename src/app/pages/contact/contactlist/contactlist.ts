@@ -1,10 +1,11 @@
-import { Component, effect, inject } from '@angular/core';
+import { Component, effect, inject, signal } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase-service';
 import { getShortName } from '../contact';
+import { ContactModal } from '../contact-modal/contact-modal';
 
 @Component({
   selector: 'app-contactlist',
-  imports: [],
+  imports: [ContactModal],
   templateUrl: './contactlist.html',
   styleUrl: './contactlist.scss',
 })
@@ -12,6 +13,7 @@ export class Contactlist {
 	firebaseService = inject(FirebaseService);
 
 	contacts = this.firebaseService.contacts();
+	isModalOpen = signal(false);
 
 	constructor() {
 		effect(() => {
@@ -21,5 +23,15 @@ export class Contactlist {
 
 	getInitials(fullName: string) {
 		return getShortName(fullName);
+	}
+
+
+	openModal() {
+		this.isModalOpen.set(true);
+	}
+
+
+	closeModal() {
+		this.isModalOpen.set(false);
 	}
 }
