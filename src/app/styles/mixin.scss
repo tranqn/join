@@ -1,3 +1,6 @@
+@use 'vars.scss' as *;
+@use 'sass:map';
+
 // ========================================
 // 1. BREAKPOINTS
 // ========================================
@@ -128,3 +131,10 @@ $break-xxl: 1400px;
     #{$property}: $desktop;
   }
 }
+
+
+// Functions //
+@function radius($size) {
+  @return map.get($radius, $size);
+}
+// Functions //

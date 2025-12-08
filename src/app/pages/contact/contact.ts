@@ -12,4 +12,9 @@ export function getShortName(fullName: string): string {
   templateUrl: './contact.html',
   styleUrl: './contact.scss',
 })
-export class Contact {}
+export class Contact {
+	displayDetails(item: {}) {
+		console.log(item);
+		
+	}
+}
