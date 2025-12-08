@@ -35,9 +35,7 @@
     border-bottom: 1px solid #D1D1D1;
     @include spacing(margin-bottom, $spacing-sm, $spacing-sm, $spacing-sm);
   }
-}
 
-.contactlist {
   &__header {
     position: sticky;
     top: 0;
