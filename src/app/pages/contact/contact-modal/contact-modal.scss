@@ -29,28 +29,16 @@
     border-radius: radius(small);
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
     width: 90%;
-    max-width: 500px;
+    max-width: 800px;
     max-height: 90vh;
-    overflow: auto;
+    overflow: hidden;
     animation: slideIn 0.3s ease-out;
   }
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: $spacing-md;
-    border-bottom: 1px solid #e0e0e0;
-  }
-
-  &__title {
-    margin: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: $darkblue;
-  }
-
   &__close-btn {
+    position: absolute;
+    top: $spacing-md;
+    right: $spacing-md;
     background: none;
     border: none;
     font-size: 28px;
@@ -64,14 +52,176 @@
     align-items: center;
     justify-content: center;
     transition: color 0.2s;
+    z-index: 10;
 
     &:hover {
       color: #000;
     }
   }
 
-  &__body {
+  &__content {
+    display: flex;
+    flex-direction: row;
+    min-height: 500px;
+  }
+
+  &__branding {
+    flex: 0 0 33%;
+    background: $darkblue;
     padding: $spacing-md;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    color: white;
+  }
+
+  &__branding-logo {
+    margin-bottom: $spacing-sm;
+    width: 50px;
+    height: auto;
+  }
+
+  &__branding-title {
+    font-size: 32px;
+    font-weight: 700;
+    margin: 0 0 $spacing-xs 0;
+    text-align: left;
+  }
+
+  &__branding-subtitle {
+    font-size: 16px;
+    font-weight: 400;
+    margin: 0 0 $spacing-sm 0;
+    text-align: left;
+  }
+
+  &__branding-divider {
+    width: 20%;
+    height: 3px;
+    background: $light-blue;
+  }
+
+  &__profile-icon {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: $spacing-sm;
+    background: white;
+
+    img {
+      width: 110px;
+      height: 110px;
+    }
+  }
+
+  &__form {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  &__field {
+    margin-bottom: $spacing-md;
+  }
+
+  &__label {
+    display: none;
+  }
+
+  &__input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  &__input {
+    width: 100%;
+    padding: $spacing-sm;
+    padding-right: 40px;
+    border: 1px solid #ccc;
+    border-radius: map-get($radius, small);
+    font-size: 14px;
+    font-family: inherit;
+    transition: border-color 0.1s;
+
+    &:focus {
+      outline: none;
+      border-color: $light-blue;
+    }
+
+    &--error {
+      border-color: #ff6347;
+    }
+  }
+
+  &__input-icon {
+    position: absolute;
+    right: $spacing-sm;
+    width: 20px;
+    height: 20px;
+    pointer-events: none;
+  }
+
+  &__error {
+    display: block;
+    font-size: 12px;
+    color: #ff6347;
+    margin-top: $spacing-xs;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: flex-end;
+    margin-top: $spacing-md;
+  }
+
+  &__btn {
+    padding: $spacing-sm $spacing-md;
+    border-radius: map-get($radius, small);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.1s;
+    display: flex;
+    align-items: center;
+    gap: $spacing-xs;
+
+    &:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    &--cancel {
+      background: white;
+      color: $darkblue;
+      border: 1px solid $darkblue;
+
+      &:hover:not(:disabled) {
+        background: lighten($darkblue, 70%);
+      }
+    }
+
+    &--submit {
+      background: $darkblue;
+      color: white;
+      border: none;
+
+      &:hover:not(:disabled) {
+        background: lighten($darkblue, 5%);
+      }
+    }
+  }
+
+  &__btn-icon {
+    flex-shrink: 0;
+    order: 2;
   }
 }
 
