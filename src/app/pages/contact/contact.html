@@ -6,6 +6,8 @@
 			<div class="vl"></div>
 			<h4>Better with a team</h4>
 		</div>
-		<app-contact-details></app-contact-details>
+		@if (selectedContact() && isContactVisible()) {
+			<app-contact-details [contact]="selectedContact()!"></app-contact-details>
+		}
 	</div>
 </div>

@@ -1,12 +1,12 @@
 <section>
 	<div class="contact_card">
 		<div class="contact_card_header">
-			<div class="profil-icon">
-				<p><strong>{{ getInitials('Tatjana Wolf') }}</strong></p>
+			<div class="profil-icon" [style.background-color]="contact().color">
+				<p><strong>{{ getInitials(contact().name) }}</strong></p>
 			</div>
 			<div class="contact-name">
 				<div>
-					<h3>Tatjana Wolf</h3>
+					<h3>{{ contact().name }}</h3>
 				</div>
 				<div class="contact-actions">
 					<button class="edit-btn">Edit</button>
@@ -22,11 +22,11 @@
 		<div class="info-section">
 			<div class="info-email">
 				<p><strong>Email</strong></p>
-				<p>wolf@gmail.com</p>
+				<a [href]="'mailto:' + contact().email">{{ contact().email }}</a>
 			</div>
 			<div class="info-phone">
 				<p><strong>Phone</strong></p>
-				<p>+49 222 222 22 2</p>
+				<a [href]="'tel:' + contact().phone">{{ contact().phone }}</a>
 			</div>
 		</div>
 	</div>

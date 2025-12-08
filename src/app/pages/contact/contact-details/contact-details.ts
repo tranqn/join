@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 import { getShortName } from '../contact';
+import { ContactModel } from '../../../interfaces/contact';
 
 @Component({
   selector: 'app-contact-details',
@@ -8,6 +9,9 @@ import { getShortName } from '../contact';
   styleUrl: './contact-details.scss',
 })
 export class ContactDetails {
+	contact = input.required<ContactModel>();
+
+
 	getInitials(fullName: string) {
 		return getShortName(fullName);
 	}

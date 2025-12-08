@@ -19,7 +19,6 @@ section {
 }
 
 .profil-icon {
-	background-color: rgba(255, 122, 0, 1);
 	border-radius: 100%;
 	& > p {
 		@include text-style-responsive(27px, 37px, 47px, 'Inter', 500);

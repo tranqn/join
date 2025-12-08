@@ -18,7 +18,6 @@ export class Contact {
 	isContactVisible = signal(false);
 
 	displayDetails(item: ContactModel) {
-		console.log(item);
 		this.selectedContact.set(item);
 		this.isContactVisible.set(true);
 	}
