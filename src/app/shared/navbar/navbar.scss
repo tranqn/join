@@ -1,0 +1,79 @@
+/* === Sidebar Container === */
+.sidebar {
+  width: 240px;
+  height: 100vh;
+  background-color: #2a3647;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 32px 0;
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10;
+}
+
+/* === Logo Bereich === */
+.logo-section {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 40px;
+
+  .logo {
+    width: 60px;
+    height: auto;
+  }
+}
+
+/* === Navigation Links === */
+.nav-links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 16px 32px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background 150ms ease-in-out;
+
+    &:hover {
+      background-color: #091931;
+    }
+
+    &.active {
+      background-color: #091931;
+      border-right: 4px solid #29abe2;
+    }
+
+    .nav-icon {
+      width: 24px;
+      height: 24px;
+      object-fit: contain;
+    }
+  }
+}
+
+/* === Bottom Links (Privacy / Legal Notice) === */
+.bottom-links {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-left: 32px;
+  padding-bottom: 16px;
+
+  a {
+    color: #a8a8a8;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 150ms;
+
+    &:hover {
+      color: white;
+    }
+  }
+}
