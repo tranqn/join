@@ -6,7 +6,7 @@ import { Summary } from './pages/summary/summary';
 
 export const routes: Routes = [
 	{
-		path: 'contact',
+		path: 'contacts',
 		component: Contact,
 	},
 	{
