@@ -15,7 +15,7 @@
   align-items: center;
   gap: 20px;
 
-  .help-btn {
+  & .help-btn {
     background: transparent;
     border: 2px solid #2a3647;
     border-radius: 50%;
@@ -25,7 +25,7 @@
     cursor: pointer;
   }
 
-  .user-icon {
+  & .user-icon {
     width: 45px;
     border-radius: 50%;
     border: 2px solid #2a3647;
