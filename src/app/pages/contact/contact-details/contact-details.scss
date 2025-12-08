@@ -1,4 +1,5 @@
-@import './../../../../styles.scss';
+@use './../../../../styles.scss' as *;
+@use '../../../styles/mixin.scss' as *;
 
 section {
 	width: 700px;
@@ -10,7 +11,6 @@ section {
 	gap: 20px;
 	padding: 20px;
 	margin-top: 15px;
-	border: 1px solid #ccc;
 	&_header {
 		display: flex;
 		gap: 75px;
@@ -56,13 +56,11 @@ section {
 }
 
 .info-header {
-	border: 1px solid #ccc;
 	padding: 12px;
 	margin-top: 20px;
 }
 
 .info-section {
-	border: 1px solid #ccc;
 	padding: 20px;
 	margin-top: 10px;
 	> div {
