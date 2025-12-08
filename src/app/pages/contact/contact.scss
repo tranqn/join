@@ -12,7 +12,6 @@
 		align-items: center;
 		gap: 35px;
 		padding: 20px;
-		border: 1px solid #ccc;
 		> h1 {
 			@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
 		}

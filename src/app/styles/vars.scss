@@ -9,12 +9,23 @@ $spacing-xxl: 150px;
 $spacing-xxxl: 200px;
 // Spacing //
 
-// Misc //
-$btn-radius: 10px;
-$card-radius: 30px;
-// Misc //
-
 // Colors //
 $darkblue: #2A3647;
-$lightblue: #007CEE;
+$secondary-color: #091931;
+$light-blue: #29ABE2; //hover-effekt
+$urgent-color: #FF3D00;
+$medium-color: #FFA800;
+$low-color: #7AE229;
+$story-color: #0038FF;
+$task-color: #1FD7C1;
+
 // Colors //
+
+// Misc //
+$radius: (
+	small: 8px,
+	medium: 10px,
+	large: 24px,
+	x-large: 30px
+)
+// Misc //
