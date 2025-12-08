@@ -14,10 +14,10 @@ export function getShortName(fullName: string): string {
   styleUrl: './contact.scss',
 })
 export class Contact {
-	selectedContact = signal<ContactModel | {} | null>(null);
+	selectedContact = signal<ContactModel | null>(null);
 	isContactVisible = signal(false);
 
-	displayDetails(item: {}) {
+	displayDetails(item: ContactModel) {
 		console.log(item);
 		this.selectedContact.set(item);
 		this.isContactVisible.set(true);
