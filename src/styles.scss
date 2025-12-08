@@ -1,5 +1,6 @@
 @use './../src/app/styles/mixin.scss' as *;
 @use './../src/app/styles/fonts.scss' as *;
+@use './../src/app/styles/colors.scss' as *;
 
 * {
 	font-family: 'Inter', sans-serif;
@@ -38,3 +39,10 @@ p {
 	font-size: 16px;
 	font-weight: 400;
 }
+
+$radius: (
+	small: 8px,
+	medium: 10px,
+	large: 24px,
+	x-large: 30px
+)
