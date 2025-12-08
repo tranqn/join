@@ -34,7 +34,7 @@ export class FirebaseService {
 	}
 
 	subContactsList() {
-		const q = query(this.getContacts(), limit(100));
+		const q = query(this.getContacts(), orderBy('name'), limit(100));
 		return onSnapshot(q, (list) => {
 			const contacts: Contact[] = [];
 			list.forEach((element) => {

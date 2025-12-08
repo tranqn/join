@@ -1,0 +1,31 @@
+@use '../../../styles/vars.scss' as *;
+@use '../../../styles/mixin.scss' as *;
+
+.contacts {
+	width: 450px;
+	height: calc(100vh - 81px);
+	padding: $spacing-xl $spacing-lg 0;
+	overflow-y: auto;
+	box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
+	scrollbar-width: thin;
+	&__card {
+		@include dFlex-responsive(row, row, $justify: flex-start, $align: center);
+		gap: $spacing-md;
+		padding: 1rem 1.5rem;
+	}
+	&__initials {
+		color: #fff;
+		width: 40px;
+		height: 40px;
+		border-radius: 100%;
+		@include dFlex-responsive(row, row, $justify: center, $align: center);
+	}
+	&__info {
+		@include dFlex-responsive(column, column, $justify: center, $align: flex-start);
+		gap: $spacing-xs;
+		a {
+			text-decoration: none;
+			color: $lightblue;
+		}
+	}
+}

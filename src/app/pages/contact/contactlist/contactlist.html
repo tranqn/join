@@ -1,8 +1,11 @@
 <div class="contacts">
 	@for (contact of firebaseService.contacts(); track contact.id) {
 		<div class="contacts__card">
-			<span>{{ getInitials(contact.name) }}</span>
-			{{ contact.name }}
+			<span class="contacts__initials" [style.background-color]="contact.color">{{ getInitials(contact.name) }}</span>
+			<div class="contacts__info">
+				<span>{{ contact.name }}</span>
+				<a [href]="'mailto:' + contact.email">{{ contact.email }}</a>
+			</div>
 		</div>
 	}
 </div>

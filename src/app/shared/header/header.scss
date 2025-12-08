@@ -5,12 +5,14 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #dcdcdc;
+  width: calc(100% - 240px);
+  margin-left: auto;
+  box-shadow: 0px 0px 3px 0px rgba(0,0,0,0.75);
 
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 240px;
+//   position: fixed;
+//   top: 0;
+//   right: 0;
+//   left: 240px;
 }
 
 .header-right {

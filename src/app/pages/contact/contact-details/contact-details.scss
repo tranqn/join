@@ -4,19 +4,6 @@ section {
 	width: 700px;
 }
 
-.contact_header {
-	display: flex;
-	align-items: center;
-	gap: 35px;
-	padding: 20px;
-	border: 1px solid #ccc;
-}
-
-.vl {
-	border-left: 2px solid rgba(41, 171, 226, 1);
-	height: 60px;
-}
-
 .contact_card {
 	display: flex;
 	flex-direction: column;
