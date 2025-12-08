@@ -1,17 +1,13 @@
 @use '../../styles/mixin.scss' as *;
 
 .contact {
-	@include dFlex-responsive(
-		row,
-		row,
-		$justify: flex-start,
-		$align: flex-start
+	@include dFlex-responsive(row,row,$justify: flex-start,$align: flex-start
 	);
 	&__header {
-		display: flex;
-		align-items: center;
 		gap: 35px;
-		padding: 20px;
+		padding: 35px;
+		@include dFlex-responsive(column, row, $justify: flex-start, $align: flex-start);
+		@include spacing (gap, 15px, 25px, 35px);
 		> h1 {
 			@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
 		}
@@ -20,5 +16,18 @@
 	& .vl {
 		border-left: 2px solid rgba(41, 171, 226, 1);
 		height: 60px;
+		align-self: center;
+		@include show-desktop
+	}
+	.wl {
+		border-bottom: 2px solid rgba(41, 171, 226, 1);
+		width: 90px;
+		align-self: flex-start;
+		@include show-mobile
+
 	}
 }
+
+
+
+

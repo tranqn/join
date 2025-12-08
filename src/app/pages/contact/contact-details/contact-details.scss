@@ -1,5 +1,6 @@
 @use './../../../../styles.scss' as *;
 @use '../../../styles/mixin.scss' as *;
+@use '../../../styles/vars.scss' as *;
 
 section {
 	width: 700px;
@@ -13,8 +14,64 @@ section {
 	margin-top: 15px;
 	&_header {
 		display: flex;
-		gap: 75px;
 		align-items: center;
+		@include spacing(gap,35px, 55px, 75px);
+	}
+	&_name {
+		display: flex;
+		flex-direction: column;
+		gap: 15px;
+		h3 {
+			@include text-style-responsive(36px,41px,47px, 'Inter', 700)
+		}
+	}
+	&_actions {
+		display: flex;
+		gap: 30px;
+		@include respond-max($break-xs){
+			display: none;
+		}
+
+		.edit-btn,
+		.delete-btn {
+			display: flex;
+			gap: 10px;
+		}
+
+		button {
+			display: flex;
+			background: none;
+			border: none;
+			cursor: pointer;
+			font-size: 16px;
+			color: inherit;
+			font-weight: inherit;
+		}
+
+		.edit-btn:hover,
+		.delete-btn:hover {
+			color: $light-blue;
+			font-weight: 600;
+		}
+
+		.edit-btn svg path,
+		.delete-btn svg path {
+			fill: currentColor;
+		}
+	}
+}
+
+.info-header {
+	padding: 12px;
+	> p {
+		font-weight: 400;
+	}
+}
+
+.info-section {
+	padding: 12px;
+	> div {
+		margin-bottom: 20px;
 	}
 }
 
@@ -28,42 +85,17 @@ section {
 		width: 120px;
 		height: 120px;
 		color: white;
+
+		@include respond-max($break-xs) {
+			width: 80px;
+			height: 80px;
+		}
 	}
 }
 
-.contact-actions {
+.info-email,
+.info-phone {
 	display: flex;
-	gap: 10px;
-
-	& button {
-		background: none;
-		border: none;
-		cursor: pointer;
-		font-size: 14px;
-
-		&.edit-btn {
-			color: #0077cc;
-		}
-
-		&.delete-btn {
-			color: #cc0000;
-		}
-
-		&:hover {
-			text-decoration: underline;
-		}
-	}
-}
-
-.info-header {
-	padding: 12px;
-	margin-top: 20px;
-}
-
-.info-section {
-	padding: 20px;
-	margin-top: 10px;
-	& > div {
-		margin-bottom: 20px;
-	}
+	flex-direction: column;
+	gap: 15px;
 }
