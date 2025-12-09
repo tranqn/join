@@ -2,20 +2,20 @@
 @use '../../../styles/mixin.scss' as *;
 @use '../../../styles/vars.scss' as *;
 
-section {
-	width: 700px;
-}
-
 .contact_card {
 	display: flex;
 	flex-direction: column;
 	gap: 20px;
-	padding: 20px;
-	margin-top: 15px;
+	padding: 20px 35px;
 	&_header {
 		display: flex;
 		align-items: center;
 		@include spacing(gap,35px, 55px, 75px);
+		@media (min-width: $break-lg) and (max-width: $break-xl) {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 20px;
+		}
 	}
 	&_name {
 		display: flex;
@@ -62,14 +62,14 @@ section {
 }
 
 .info-header {
-	padding: 12px;
+	padding: 12px 0;
 	> p {
 		font-weight: 400;
 	}
 }
 
 .info-section {
-	padding: 12px;
+	padding: 12px 0;
 	> div {
 		margin-bottom: 20px;
 	}
@@ -77,6 +77,7 @@ section {
 
 .profil-icon {
 	border-radius: 100%;
+	border: 2px solid #fff;
 	& > p {
 		@include text-style-responsive(27px, 37px, 47px, 'Inter', 500);
 		display: flex;
@@ -98,4 +99,9 @@ section {
 	display: flex;
 	flex-direction: column;
 	gap: 15px;
+	a {
+		color: $light-blue;
+		text-decoration: none;
+		width: fit-content;
+	}
 }

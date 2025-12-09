@@ -83,6 +83,17 @@ $break-xxl: 1400px;
   }
 }
 
+@mixin dFlex-responsiveXL($direction-mobile, $direction-desktop, $justify: center, $align: center) {
+  display: flex;
+  flex-direction: $direction-desktop;
+  justify-content: $justify;
+  align-items: $align;
+
+  @include respond-max($break-xl) {
+    flex-direction: $direction-mobile;
+  }
+}
+
 // ========================================
 // 5. ZUSÄTZLICHE HILFS-MIXINS
 // ========================================

@@ -18,6 +18,9 @@ html, body {
 h1, .h1 {
 	font-size: 61px;
 	font-weight: 700;
+	@include respond-max($break-xl) {
+		font-size: 53px;
+	}
 	@include respond-max($break-md) {
 		font-size: 47px;
 	}
