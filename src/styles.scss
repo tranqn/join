@@ -1,5 +1,6 @@
 @use './../src/app/styles/mixin.scss' as *;
 @use './../src/app/styles/fonts.scss' as *;
+@use './../src/app/styles/vars.scss' as *;
 
 * {
 	font-family: 'Inter', sans-serif;
@@ -17,6 +18,9 @@ html, body {
 h1, .h1 {
 	font-size: 61px;
 	font-weight: 700;
+	@include respond-max($break-md) {
+		font-size: 47px;
+	}
 }
 
 h2, .h2 {
@@ -70,3 +74,19 @@ p-toast {
 	display: none;
 }
 
+// Utility //
+.join {
+	color: $light-blue;
+}
+.hide-mobile {
+	@include respond-max($break-md) {
+    	display: none;
+  	}
+}
+.show-mobile {
+	display: none;
+	@include respond-max($break-md) {
+    	display: block;
+  	}
+}
+// Utility //

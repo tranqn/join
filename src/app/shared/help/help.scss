@@ -1,0 +1,60 @@
+@use '../../styles/vars.scss' as *;
+@use '../../styles/mixin.scss' as *;
+
+section {
+	max-width: 1200px;
+	padding: $spacing-xl $spacing-lg;
+	position: relative;
+	@include respond-max($break-md) {
+		padding: $spacing-lg $spacing-md;
+	}
+	& h1 {
+		margin-bottom: $spacing-lg;
+	}
+	& h2 {
+		margin: 1.5rem 0;
+		font-weight: 600;
+	}
+	p {
+		margin-bottom: 1rem;
+	}
+	ol {
+		margin-bottom: $spacing-lg;
+		& li {
+			counter-increment: item;
+			&::marker {
+				content: counter(item) '. ';
+				padding-right: 20px;
+				font-size: 27px;
+				font-weight: 600;
+			}
+			& h3,
+			& p {
+				margin-left: $spacing-md;
+			}
+		}
+	} 
+}
+
+.back-btn {
+	position: absolute;
+	top: 130px;
+	right: 50px;
+	border: 0;
+	background: transparent;
+	@include respond-max($break-md) {
+		top: 60px;
+		right: 20px;
+	}
+	img {
+		width: 35px;
+		object-fit: contain;
+		transition: all .1s ease;
+		border-radius: 100%;
+		cursor: pointer;
+		&:hover {
+			transform: scale(1.2);
+			background: #eee;
+		}
+	}
+}
