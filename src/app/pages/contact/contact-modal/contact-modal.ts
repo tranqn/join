@@ -4,6 +4,7 @@ import { ContactModel } from '../../../interfaces/contact';
 import { FirebaseService } from '../../../services/firebase-service';
 import { ColorService } from '../../../services/color-service';
 import { minLengthValidator, emailValidator, phoneValidator, getErrorMessage } from './contact-validators';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-contact-modal',
@@ -19,6 +20,7 @@ export class ContactModal {
   private fb = inject(FormBuilder);
   private firebaseService = inject(FirebaseService);
   private colorService = inject(ColorService);
+  private messageService = inject(MessageService);
 
   contactForm: FormGroup;
   isSaving = signal(false);
@@ -98,6 +100,12 @@ export class ContactModal {
       color: this.getRandomColor()
     };
     await this.firebaseService.addContact(newContact);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Contact successfully created',
+      life: 1000000
+    });
   }
 
 
@@ -109,6 +117,12 @@ export class ContactModal {
       phone: formValue.phone
     };
     await this.firebaseService.updateContact(updated);
+    this.messageService.add({
+      severity: 'success',
+      summary: 'Success',
+      detail: 'Contact successfully updated',
+      life: 1000000
+    });
   }
 
 

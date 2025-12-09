@@ -44,3 +44,29 @@ p {
 	font-weight: 400;
 }
 
+// PrimeNG Toast custom styles
+p-toast {
+	position: fixed;
+	top: 1.25rem;
+	right: 1.25rem;
+	z-index: 9999;
+	--p-toast-border-width: 0;
+	--p-toast-success-detail-color: white;
+}
+
+.p-toast-message-success .p-toast-detail {
+	padding: 20px;
+	background: #2A3647;
+	color: white;
+	border-radius: 10px;
+	text-align: center;
+	border: none;
+}
+
+.p-toast-message button,
+.p-toast-message svg,
+.p-toast-message i,
+.p-toast-summary {
+	display: none;
+}
+
