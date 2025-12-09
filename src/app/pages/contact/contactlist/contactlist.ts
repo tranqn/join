@@ -34,12 +34,6 @@ export class Contactlist {
 		return Array.from(groups.entries()).sort((a, b) => a[0].localeCompare(b[0]));
 	});
 
-	constructor() {
-		effect(() => {
-			console.log('Contacts loaded:', this.firebaseService.contacts());
-		});
-	}
-
 	showDetails(contact: ContactModel) {
 		this.contact.emit(contact);
 	}

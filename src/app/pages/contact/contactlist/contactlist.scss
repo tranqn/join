@@ -3,91 +3,109 @@
 @use 'sass:color';
 
 .contacts {
-  width: 450px;
-  height: calc(100vh - 81px);
-  padding: 0 $spacing-lg 0;
-  overflow-y: auto;
-  box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
-  scrollbar-width: thin;
-  background: white;
+	width: 450px;
+	height: calc(100vh - 81px);
+	padding: 0 $spacing-lg;
+	overflow-y: auto;
+	box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.75);
+	scrollbar-width: thin;
+	background: white;
+	@include respond-max($break-xl) {
+		padding: 0 $spacing-md;
+		width: 400px;
+	}
+	&__header {
+		position: sticky;
+		top: 0;
+		z-index: 10;
+		background: white;
+		padding: $spacing-md;
+	}
 
-  &__header {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    background: white;
-    padding: $spacing-md;
-  }
+	&__add-btn {
+		width: 100%;
+		background: $darkblue;
+		color: white;
+		border: none;
+		border-radius: radius(small);
+		padding: $spacing-sm $spacing-md;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		gap: $spacing-sm;
+		cursor: pointer;
+		transition: background 0.2s;
+		font-family: inherit;
 
-  &__add-btn {
-    width: 100%;
-    background: $darkblue;
-    color: white;
-    border: none;
-    border-radius: radius(small);
-    padding: $spacing-sm $spacing-md;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: $spacing-sm;
-    cursor: pointer;
-    transition: background 0.2s;
-    font-family: inherit;
+		&-text {
+			font-size: 16px;
+			font-weight: 500;
+			line-height: 1;
+		}
 
-    &-text {
-      font-size: 16px;
-      font-weight: 500;
-      line-height: 1;
-    }
-  
-    &-icon {
-      flex-shrink: 0;
-    }
+		&-icon {
+			flex-shrink: 0;
+		}
 
-    &:hover {
-      background: color.scale($darkblue, $lightness: 5%);
-    }
+		&:hover {
+			background: color.scale($darkblue, $lightness: 5%);
+		}
 
-    &:active {
-      transform: scale(0.98);
-    }
-  }
+		&:active {
+			transform: scale(0.98);
+		}
+	}
 
-  &__card {
-    gap: $spacing-md;
-    padding: 1rem 1.5rem;
-    cursor: pointer;
-    border-radius: radius(medium);
-    @include dFlex-responsive(row, row, $justify: flex-start, $align: center);
+	&__card {
+		gap: $spacing-md;
+		padding: 1rem 1.5rem;
+		cursor: pointer;
+		border-radius: radius(medium);
+		@include dFlex-responsive(
+			row,
+			row,
+			$justify: flex-start,
+			$align: center
+		);
 
-    &:hover {
-      background: $darkblue;
-      color: #fff;
-    }
-  }
+		&:hover {
+			background: $darkblue;
+			color: #fff;
+		}
+		// @include respond-max($break-xl) {
+		// 	gap: $spacing-sm;
+		// 	padding: 1rem .5rem;
+		// }
+	}
 
-  &__initials {
-    color: #fff;
-    width: 40px;
-    height: 40px;
-    border-radius: 100%;
-    @include dFlex-responsive(row, row, $justify: center, $align: center);
-  }
+	&__initials {
+		color: #fff;
+		width: 40px;
+		height: 40px;
+		border-radius: 100%;
+		@include dFlex-responsive(row, row, $justify: center, $align: center);
+	}
 
-  &__info {
-    gap: $spacing-xs;
-    @include dFlex-responsive(column, column, $justify: center, $align: flex-start);
+	&__info {
+		gap: $spacing-xs;
+		@include dFlex-responsive(
+			column,
+			column,
+			$justify: center,
+			$align: flex-start
+		);
 
-    & a {
-      text-decoration: none;
-      color: $light-blue;
-      word-break: break-all;
-    }
-  }
+		& p {
+			text-decoration: none;
+			color: $light-blue;
+			word-break: break-all;
+		}
+	}
 
-  &__letter {
-    padding: 1rem 2rem;
-    border-bottom: 1px solid #D1D1D1;
-    @include spacing(margin-bottom, $spacing-sm, $spacing-sm, $spacing-sm);
-  }
+	&__letter {
+		padding: 1rem 2rem;
+		border-bottom: 1px solid #d1d1d1;
+		@include spacing(margin-bottom, $spacing-sm, $spacing-sm, $spacing-sm);
+		font-weight: 400;
+	}
 }

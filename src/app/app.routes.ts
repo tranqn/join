@@ -5,6 +5,7 @@ import { AddTask } from './pages/add-task/add-task';
 import { Summary } from './pages/summary/summary';
 import { PrivacyPolicy } from './imprint/privacy-policy/privacy-policy';
 import { LegalNotice } from './imprint/legal-notice/legal-notice';
+import { Help } from './shared/help/help';
 
 export const routes: Routes = [
 	{
@@ -30,5 +31,9 @@ export const routes: Routes = [
 	{
 		path: 'legal-notice',
 		component: LegalNotice
+	},
+	{
+		path: 'help',
+		component: Help
 	}
 ];
