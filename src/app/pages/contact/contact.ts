@@ -24,6 +24,8 @@ export class Contact {
 		this.isContactVisible.set(true);
 	}
 
+	showContactOptions(){
+		
 	onEditContact(contact: ContactModel) {
 		this.contactlist().openEditModal(contact);
 	}

@@ -1,18 +1,108 @@
 @use '../../styles/mixin.scss' as *;
+@use '../../styles/mixin.scss' as *;
+@use '../../styles/vars.scss' as *;
 
 .contact {
-	@include dFlex-responsive(row,row,$justify: flex-start,$align: flex-start
+	background-color: #f6f7f8;
+	@include dFlex-responsive(
+		row,
+		row,
+		$justify: flex-start,
+		$align: flex-start
 	);
+
 	&__header {
 		gap: 35px;
 		padding: 35px;
-		@include dFlex-responsive(column, row, $justify: flex-start, $align: center);
-		@include spacing (gap, 15px, 25px, 35px);
-		@include respond-max($break-md){
-			align-items: flex-start
+		@include dFlex-responsive(
+			column,
+			row,
+			$justify: flex-start,
+			$align: center
+		);
+		@include spacing(gap, 15px, 25px, 35px);
+		@include respond-max($break-md) {
+			align-items: flex-start;
 		}
-		> h1 {
-			@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
+		> :nth-child(1) {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+
+			> h1 {
+				@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
+			}
+			> img {
+				@include respond($break-xs) {
+					display: none;
+				}
+			}
+		}
+		> h4 {
+			width: 100%;
+		}
+	}
+
+	&__details {
+		position: relative;
+		flex: 1;
+	}
+
+	&__options {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		width: 56px;
+		height: 56px;
+		border-radius: 100%;
+		background-color: #091931;
+		z-index: 10;
+		@include respond-max($break-xs) {
+			display: flex;
+		}
+	}
+
+	&__sidebar {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		justify-content: center;
+		gap: 10px;
+		width: 116px;
+		height: 100px;
+		background-color: #ffffff;
+		border-bottom-left-radius: 16px;
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+		box-shadow: -5px 10px 5px 0px rgba(0, 0, 0, 0.21);
+		.edit-btn,
+		.delete-btn {
+			display: flex;
+			gap: 10px;
+		}
+
+		button {
+			display: flex;
+			background: none;
+			border: none;
+			cursor: pointer;
+			font-size: 16px;
+			color: inherit;
+			font-weight: inherit;
+		}
+
+		.edit-btn:hover,
+		.delete-btn:hover {
+			color: $light-blue;
+			font-weight: 600;
+		}
+
+		.edit-btn svg path,
+		.delete-btn svg path {
+			fill: currentColor;
 		}
 	}
 
@@ -20,17 +110,12 @@
 		border-left: 2px solid rgba(41, 171, 226, 1);
 		height: 60px;
 		align-self: center;
-		@include show-desktop
+		@include show-desktop;
 	}
 	.wl {
 		border-bottom: 2px solid rgba(41, 171, 226, 1);
 		width: 90px;
 		align-self: flex-start;
-		@include show-mobile
-
+		@include show-mobile;
 	}
 }
-
-
-
-
