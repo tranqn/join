@@ -59,10 +59,10 @@ p-toast {
 }
 
 .p-toast-message-success .p-toast-detail {
-	padding: 20px;
-	background: #2A3647;
+	padding: $spacing-md;
+	background: $darkblue;
 	color: white;
-	border-radius: 10px;
+	border-radius: map-get($radius, medium);
 	text-align: center;
 	border: none;
 }

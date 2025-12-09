@@ -104,7 +104,7 @@ export class ContactModal {
       severity: 'success',
       summary: 'Success',
       detail: 'Contact successfully created',
-      life: 1000000
+      life: 3000
     });
   }
 
@@ -121,7 +121,7 @@ export class ContactModal {
       severity: 'success',
       summary: 'Success',
       detail: 'Contact successfully updated',
-      life: 1000000
+      life: 3000
     });
   }
 
