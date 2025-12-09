@@ -1,4 +1,4 @@
-import { Component, input, inject } from '@angular/core';
+import { Component, input, inject, output } from '@angular/core';
 import { getShortName } from '../contact';
 import { ContactModel } from '../../../interfaces/contact';
 import { FirebaseService } from '../../../services/firebase-service';
@@ -12,6 +12,7 @@ import { FirebaseService } from '../../../services/firebase-service';
 })
 export class ContactDetails {
 	contact = input.required<ContactModel>();
+	editContact = output<ContactModel>();
 
 	firebaseService = inject(FirebaseService);
 
@@ -19,5 +20,9 @@ export class ContactDetails {
 
 	getInitials(fullName: string) {
 		return getShortName(fullName);
+	}
+
+	onEdit() {
+		this.editContact.emit(this.contact());
 	}
 }

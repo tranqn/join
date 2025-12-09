@@ -2,13 +2,15 @@
 	<app-contactlist (contact)="displayDetails($event)"></app-contactlist>
 	<div class="contact__details">
 		<div class="contact__header">
-			<h1>Contacts</h1>
+			<div style="display: flex; align-items: center; justify-content:space-between;">
+				<h1>Contacts</h1> <img src="/icons/arrow-left-line.svg" alt="">
+			</div>
 			<div class="vl"></div>
 			<h4>Better with a team</h4>
 			<div class="wl"></div>
 		</div>
 		@if (selectedContact() && isContactVisible()) {
-			<app-contact-details [contact]="selectedContact()!"></app-contact-details>
+			<app-contact-details [contact]="selectedContact()!" (editContact)="onEditContact($event)"></app-contact-details>
 		}
 	</div>
 </div>

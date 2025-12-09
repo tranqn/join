@@ -1,4 +1,4 @@
-import { Component, effect, inject, signal } from '@angular/core';
+import { Component, effect, inject, signal, viewChild } from '@angular/core';
 import { Contactlist } from './contactlist/contactlist';
 import { ContactDetails } from './contact-details/contact-details';
 import { ContactModel } from '../../interfaces/contact';
@@ -14,11 +14,17 @@ export function getShortName(fullName: string): string {
   styleUrl: './contact.scss',
 })
 export class Contact {
+	contactlist = viewChild.required(Contactlist);
+
 	selectedContact = signal<ContactModel | null>(null);
 	isContactVisible = signal(false);
 
 	displayDetails(item: ContactModel) {
 		this.selectedContact.set(item);
 		this.isContactVisible.set(true);
+	}
+
+	onEditContact(contact: ContactModel) {
+		this.contactlist().openEditModal(contact);
 	}
 }

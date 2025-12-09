@@ -76,7 +76,7 @@ export class FirebaseService {
 	async updateContact(contact: ContactModel) {
         if (contact.id) {
             let docRef = this.getSingleDocRef(
-                "contact",
+                "contacts",
                 contact.id
             );
             await updateDoc(docRef, this.getCleanJson(contact)).catch((err) => {
