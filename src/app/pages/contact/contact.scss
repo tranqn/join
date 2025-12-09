@@ -14,15 +14,20 @@
 	&__header {
 		gap: 35px;
 		padding: 35px;
-		@include dFlex-responsive(
+		@include dFlex-responsiveXL(
 			column,
 			row,
 			$justify: flex-start,
 			$align: center
 		);
 		@include spacing(gap, 15px, 25px, 35px);
-		@include respond-max($break-md) {
+		@include respond-max($break-xl) {
 			align-items: flex-start;
+		}
+		@include respond($break-lg) {
+			@include respond-max($break-xl) {
+				gap: 10px;
+			}
 		}
 		> :nth-child(1) {
 			display: flex;
@@ -110,12 +115,22 @@
 		border-left: 2px solid rgba(41, 171, 226, 1);
 		height: 60px;
 		align-self: center;
-		@include show-desktop;
+		// @include show-desktop;
+		@media (min-width: $break-lg) and (max-width: $break-xl) {
+			display: none;
+		}
 	}
 	.wl {
 		border-bottom: 2px solid rgba(41, 171, 226, 1);
 		width: 90px;
 		align-self: flex-start;
-		@include show-mobile;
+		// @include show-mobile;
+
+		@media (min-width: $break-lg) and (max-width: $break-xl) {
+			display: block;
+		}
+		@include respond(1201px) {
+			display: none;
+		}
 	}
 }

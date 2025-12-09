@@ -24,7 +24,7 @@ export class Contact {
 		this.isContactVisible.set(true);
 	}
 
-	showContactOptions(){
+	showContactOptions() {
 
 	}
 
