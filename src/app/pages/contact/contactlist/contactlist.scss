@@ -5,7 +5,7 @@
 .contacts {
   width: 450px;
   height: calc(100vh - 81px);
-  padding: $spacing-xl $spacing-lg 0;
+  padding: 0 $spacing-lg 0;
   overflow-y: auto;
   box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.75);
   scrollbar-width: thin;
