@@ -1,6 +1,6 @@
 import { Component, input, output, effect, HostListener, inject, signal } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
-import { Contact } from '../../../interfaces/contact';
+import { ContactModel } from '../../../interfaces/contact';
 import { FirebaseService } from '../../../services/firebase-service';
 import { ColorService } from '../../../services/color-service';
 import { minLengthValidator, emailValidator, phoneValidator, getErrorMessage } from './contact-validators';
@@ -13,7 +13,7 @@ import { minLengthValidator, emailValidator, phoneValidator, getErrorMessage } f
 })
 export class ContactModal {
   isOpen = input<boolean>(false);
-  contact = input<Contact | null>(null);
+  contact = input<ContactModel | null>(null);
   close = output<void>();
 
   private fb = inject(FormBuilder);
@@ -101,8 +101,8 @@ export class ContactModal {
   }
 
 
-  async updateExistingContact(existing: Contact, formValue: any) {
-    const updated: Contact = {
+  async updateExistingContact(existing: ContactModel, formValue: any) {
+    const updated: ContactModel = {
       ...existing,
       name: formValue.name,
       email: formValue.email,

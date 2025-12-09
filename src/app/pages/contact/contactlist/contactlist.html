@@ -2,7 +2,7 @@
 	<header class="contacts__header">
 		<button
 			class="contacts__add-btn"
-			(click)="openModal()"
+			(click)="openCreateModal()"
 			type="button"
 			aria-label="Add new contact"
 		>
@@ -36,5 +36,5 @@
 	}
 </div>
 
-<app-contact-modal [isOpen]="isModalOpen()" (close)="closeModal()">
+<app-contact-modal [isOpen]="isModalOpen()" [contact]="contactToEdit()" (close)="closeModal()">
 </app-contact-modal>

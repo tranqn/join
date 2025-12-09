@@ -15,6 +15,7 @@ export class Contactlist {
 
 	contacts = this.firebaseService.contacts();
 	isModalOpen = signal(false);
+	contactToEdit = signal<ContactModel | null>(null);
 
 	contact = output<ContactModel>();
 
@@ -47,12 +48,18 @@ export class Contactlist {
 		return getShortName(fullName);
 	}
 
-	openModal() {
+	openCreateModal() {
+		this.contactToEdit.set(null);
 		this.isModalOpen.set(true);
 	}
 
+	openEditModal(contact: ContactModel) {
+		this.contactToEdit.set(contact);
+		this.isModalOpen.set(true);
+	}
 
 	closeModal() {
 		this.isModalOpen.set(false);
+		this.contactToEdit.set(null);
 	}
 }
