@@ -6,8 +6,11 @@
 	&__header {
 		gap: 35px;
 		padding: 35px;
-		@include dFlex-responsive(column, row, $justify: flex-start, $align: flex-start);
+		@include dFlex-responsive(column, row, $justify: flex-start, $align: center);
 		@include spacing (gap, 15px, 25px, 35px);
+		@include respond-max($break-md){
+			align-items: flex-start
+		}
 		> h1 {
 			@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
 		}
