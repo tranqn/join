@@ -2,6 +2,10 @@
 @use '../../../styles/mixin.scss' as *;
 @use '../../../styles/vars.scss' as *;
 
+section {
+	animation: slideIn 300ms ease-out;
+}
+
 .contact_card {
 	display: flex;
 	flex-direction: column;

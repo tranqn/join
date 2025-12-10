@@ -149,3 +149,17 @@ $break-xxl: 1400px;
   @return map.get($radius, $size);
 }
 // Functions //
+
+// ========================================
+// KEYFRAME ANIMATIONS
+// ========================================
+@keyframes slideIn {
+	from {
+		transform: translateX(100%);
+		opacity: 0;
+	}
+	to {
+		transform: translateX(0);
+		opacity: 1;
+	}
+}
