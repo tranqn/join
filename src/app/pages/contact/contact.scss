@@ -12,6 +12,7 @@
 	);
 
 	&__header {
+		width: fit-content;
 		gap: 35px;
 		padding: 35px;
 		@include dFlex-responsiveXL(
