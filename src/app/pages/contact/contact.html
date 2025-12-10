@@ -1,6 +1,6 @@
 <div class="contact">
 	<app-contactlist (contact)="displayDetails($event)"></app-contactlist>
-	<div class="contact__details">
+	<div class="contact__details" (click)="closeSidebar()">
 		<div class="contact__header">
 			<div>
 				<h1>Contacts</h1>
@@ -13,12 +13,12 @@
 		@if (selectedContact() && isContactVisible()) {
 			<app-contact-details [contact]="selectedContact()!" (editContact)="onEditContact($event)"></app-contact-details>
 		}
-		<div (click)="showContactOptions()" class="contact__options">
+		<div (click)="showContactOptions(); $event.stopPropagation()" class="contact__options">
 			<img src="/icons/more_vert.svg" alt="" />
 		</div>
 
 		<!-- Sidebar -->
-		<div class="contact__sidebar">
+		<div class="contact__sidebar" [class.open]="isSidebarOpen()" (click)="$event.stopPropagation()">
 			<div class="edit-btn">
 				<svg
 					width="19"

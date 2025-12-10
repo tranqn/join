@@ -1,99 +1,157 @@
 @if (isOpen()) {
-  <div class="contact-modal">
-    <div class="contact-modal__backdrop" (click)="onClose()"></div>
+<div class="contact-modal">
+	<div class="contact-modal__backdrop" (click)="onClose()"></div>
 
-    <div class="contact-modal__dialog" role="dialog" aria-modal="true">
-      <button class="contact-modal__close-btn" (click)="onClose()" type="button" aria-label="Close modal">
-        <span aria-hidden="true">&times;</span>
-      </button>
+	<div class="contact-modal__dialog" role="dialog" aria-modal="true">
+		<button
+			class="contact-modal__close-btn"
+			(click)="onClose()"
+			type="button"
+			aria-label="Close modal"
+		>
+			<span aria-hidden="true">&times;</span>
+		</button>
 
-      <div class="contact-modal__content">
-        <div class="contact-modal__branding">
-          <img src="/icons/join_logo.svg" alt="Join Logo" class="contact-modal__branding-logo" />
-          <h2 class="contact-modal__branding-title">{{ contact() ? 'Edit contact' : 'Add contact' }}</h2>
-          <p class="contact-modal__branding-subtitle">Tasks are better with a team!</p>
-          <div class="contact-modal__branding-divider"></div>
-        </div>
+		<div class="contact-modal__content">
+			<div class="contact-modal__branding">
+				<img
+					src="/icons/join_logo.svg"
+					alt="Join Logo"
+					class="contact-modal__branding-logo"
+				/>
+				<h2 class="contact-modal__branding-title">
+					{{ contact() ? 'Edit contact' : 'Add contact' }}
+				</h2>
+				<p class="contact-modal__branding-subtitle">
+					Tasks are better with a team!
+				</p>
+				<div class="contact-modal__branding-divider"></div>
+			</div>
 
-        <div class="contact-modal__profile-icon">
-          <img src="/icons/empty_profile_icon.svg" alt="" />
-        </div>
+			<div class="contact-modal__profile-icon">
+				<img src="/icons/empty_profile_icon.svg" alt="" />
+			</div>
 
-        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="contact-modal__form">
-          <div class="contact-modal__field">
-            <label for="name" class="contact-modal__label">Name</label>
-            <div class="contact-modal__input-wrapper">
-              <input
-                type="text"
-                id="name"
-                formControlName="name"
-                class="contact-modal__input"
-                placeholder="Name"
-                [class.contact-modal__input--error]="contactForm.get('name')?.invalid && contactForm.get('name')?.touched"
-              />
-              <img src="/icons/contact-from_name_icon.svg" alt="" class="contact-modal__input-icon" />
-            </div>
-            @if (getErrorMessage('name')) {
-              <span class="contact-modal__error">{{ getErrorMessage('name') }}</span>
-            }
-          </div>
+			<form
+				[formGroup]="contactForm"
+				(ngSubmit)="onSubmit()"
+				class="contact-modal__form"
+			>
+				<div class="contact-modal__field">
+					<label for="name" class="contact-modal__label">Name</label>
+					<div class="contact-modal__input-wrapper">
+						<input
+							type="text"
+							id="name"
+							formControlName="name"
+							class="contact-modal__input"
+							placeholder="Name"
+							[class.contact-modal__input--error]="
+								contactForm.get('name')?.invalid &&
+								contactForm.get('name')?.touched
+							"
+						/>
+						<img
+							src="/icons/contact-from_name_icon.svg"
+							alt=""
+							class="contact-modal__input-icon"
+						/>
+					</div>
+					@if (getErrorMessage('name')) {
+					<span class="contact-modal__error">{{
+						getErrorMessage('name')
+					}}</span>
+					}
+				</div>
 
-          <div class="contact-modal__field">
-            <label for="email" class="contact-modal__label">Email</label>
-            <div class="contact-modal__input-wrapper">
-              <input
-                type="text"
-                id="email"
-                formControlName="email"
-                class="contact-modal__input"
-                placeholder="Email"
-                [class.contact-modal__input--error]="contactForm.get('email')?.invalid && contactForm.get('email')?.touched"
-              />
-              <img src="/icons/contact-form_email_icon.svg" alt="" class="contact-modal__input-icon" />
-            </div>
-            @if (getErrorMessage('email')) {
-              <span class="contact-modal__error">{{ getErrorMessage('email') }}</span>
-            }
-          </div>
+				<div class="contact-modal__field">
+					<label for="email" class="contact-modal__label"
+						>Email</label
+					>
+					<div class="contact-modal__input-wrapper">
+						<input
+							type="text"
+							id="email"
+							formControlName="email"
+							class="contact-modal__input"
+							placeholder="Email"
+							[class.contact-modal__input--error]="
+								contactForm.get('email')?.invalid &&
+								contactForm.get('email')?.touched
+							"
+						/>
+						<img
+							src="/icons/contact-form_email_icon.svg"
+							alt=""
+							class="contact-modal__input-icon"
+						/>
+					</div>
+					@if (getErrorMessage('email')) {
+					<span class="contact-modal__error">{{
+						getErrorMessage('email')
+					}}</span>
+					}
+				</div>
 
-          <div class="contact-modal__field">
-            <label for="phone" class="contact-modal__label">Phone</label>
-            <div class="contact-modal__input-wrapper">
-              <input
-                type="text"
-                id="phone"
-                formControlName="phone"
-                class="contact-modal__input"
-                placeholder="Phone"
-                [class.contact-modal__input--error]="contactForm.get('phone')?.invalid && contactForm.get('phone')?.touched"
-              />
-              <img src="/icons/contact-form_phone_icon.svg" alt="" class="contact-modal__input-icon" />
-            </div>
-            @if (getErrorMessage('phone')) {
-              <span class="contact-modal__error">{{ getErrorMessage('phone') }}</span>
-            }
-          </div>
+				<div class="contact-modal__field">
+					<label for="phone" class="contact-modal__label"
+						>Phone</label
+					>
+					<div class="contact-modal__input-wrapper">
+						<input
+							type="text"
+							id="phone"
+							formControlName="phone"
+							class="contact-modal__input"
+							placeholder="Phone"
+							[class.contact-modal__input--error]="
+								contactForm.get('phone')?.invalid &&
+								contactForm.get('phone')?.touched
+							"
+						/>
+						<img
+							src="/icons/contact-form_phone_icon.svg"
+							alt=""
+							class="contact-modal__input-icon"
+						/>
+					</div>
+					@if (getErrorMessage('phone')) {
+					<span class="contact-modal__error">{{
+						getErrorMessage('phone')
+					}}</span>
+					}
+				</div>
 
-          <div class="contact-modal__actions">
-            <button type="button" class="contact-modal__btn contact-modal__btn--cancel" (click)="onClose()">
-              Cancel
-              <span class="contact-modal__btn-icon" aria-hidden="true">&times;</span>
-            </button>
-            <button
-              type="submit"
-              class="contact-modal__btn contact-modal__btn--submit"
-              [disabled]="contactForm.invalid || isSaving()"
-            >
-              @if (isSaving()) {
-                Saving...
-              } @else {
-                {{ contact() ? 'Update contact' : 'Create contact' }}
-                <img src="/icons/check.svg" alt="" class="contact-modal__btn-icon" width="16" height="16" />
-              }
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  </div>
+				<div class="contact-modal__actions">
+					<button
+						type="button"
+						class="contact-modal__btn contact-modal__btn--cancel"
+						(click)="onClose()"
+					>
+						Cancel
+						<span class="contact-modal__btn-icon" aria-hidden="true"
+							>&times;</span
+						>
+					</button>
+					<button
+						type="submit"
+						class="contact-modal__btn contact-modal__btn--submit"
+						[disabled]="contactForm.invalid || isSaving()"
+					>
+						@if (isSaving()) { Saving... } @else {
+						{{ contact() ? 'Update contact' : 'Create contact' }}
+						<img
+							src="/icons/check.svg"
+							alt=""
+							class="contact-modal__btn-icon"
+							width="16"
+							height="16"
+						/>
+						}
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
 }

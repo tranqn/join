@@ -14,6 +14,7 @@ export function getShortName(fullName: string): string {
   styleUrl: './contact.scss',
 })
 export class Contact {
+	isSidebarOpen = signal(false);
 	contactlist = viewChild.required(Contactlist);
 
 	selectedContact = signal<ContactModel | null>(null);
@@ -25,7 +26,11 @@ export class Contact {
 	}
 
 	showContactOptions() {
+		this.isSidebarOpen.update(value => !value);
+	}
 
+	closeSidebar() {
+		this.isSidebarOpen.set(false);
 	}
 
 	onEditContact(contact: ContactModel) {
