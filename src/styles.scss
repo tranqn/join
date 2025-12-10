@@ -1,3 +1,4 @@
+@use 'sass:map';
 @use './../src/app/styles/mixin.scss' as *;
 @use './../src/app/styles/fonts.scss' as *;
 @use './../src/app/styles/vars.scss' as *;
@@ -65,7 +66,7 @@ p-toast {
 	padding: $spacing-md;
 	background: $darkblue;
 	color: white;
-	border-radius: map-get($radius, medium);
+	border-radius: map.get($radius, medium);
 	text-align: center;
 	border: none;
 }
