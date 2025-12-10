@@ -33,7 +33,7 @@
 		> :nth-child(1) {
 			display: flex;
 			justify-content: space-between;
-			width: 100%;
+			// width: 100%;
 
 			> h1 {
 				@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
@@ -90,6 +90,9 @@
 		border-top-left-radius: 16px;
 		border-top-right-radius: 16px;
 		box-shadow: -5px 10px 5px 0px rgba(0, 0, 0, 0.21);
+		@media (min-width: 768px) {
+			display: none;
+		}
 		.edit-btn,
 		.delete-btn {
 			display: flex;

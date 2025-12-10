@@ -13,6 +13,7 @@ import { FirebaseService } from '../../../services/firebase-service';
 export class ContactDetails {
 	contact = input.required<ContactModel>();
 	editContact = output<ContactModel>();
+	deleteContact = output<void>();
 
 	firebaseService = inject(FirebaseService);
 
@@ -28,5 +29,6 @@ export class ContactDetails {
 
 	onDelete() {
 		this.firebaseService.deleteContact(this.contact().id!);
+		this.deleteContact.emit();
 	}
 }

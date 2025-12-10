@@ -20,7 +20,7 @@
 	<div class="contacts__group">
 		<p class="contacts__letter h5">{{ group[0] }}</p>
 		@for (contact of group[1]; track contact.id) {
-		<div class="contacts__card" (click)="showDetails(contact)">
+		<div class="contacts__card" [class.active]="selectedContact()?.id === contact.id" (click)="showDetails(contact)">
 			<span
 				class="contacts__initials"
 				[style.background-color]="contact.color"

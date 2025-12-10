@@ -61,6 +61,7 @@
 		padding: 1rem 1.5rem;
 		cursor: pointer;
 		border-radius: radius(medium);
+		margin-bottom: $spacing-sm;
 		@include dFlex-responsive(
 			row,
 			row,
@@ -72,10 +73,11 @@
 			background: $darkblue;
 			color: #fff;
 		}
-		// @include respond-max($break-xl) {
-		// 	gap: $spacing-sm;
-		// 	padding: 1rem .5rem;
-		// }
+
+		&.active {
+			background: $darkblue;
+			color: #fff;
+		}
 	}
 
 	&__initials {

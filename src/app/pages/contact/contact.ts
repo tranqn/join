@@ -36,4 +36,9 @@ export class Contact {
 	onEditContact(contact: ContactModel) {
 		this.contactlist().openEditModal(contact);
 	}
+
+	onDeleteContact() {
+		this.selectedContact.set(null);
+		this.isContactVisible.set(false);
+	}
 }

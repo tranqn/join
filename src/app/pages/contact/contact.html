@@ -1,5 +1,5 @@
 <div class="contact">
-	<app-contactlist (contact)="displayDetails($event)"></app-contactlist>
+	<app-contactlist [selectedContact]="selectedContact()" (contact)="displayDetails($event)"></app-contactlist>
 	<div class="contact__details" (click)="closeSidebar()">
 		<div class="contact__header">
 			<div>
@@ -11,7 +11,7 @@
 			<div class="wl"></div>
 		</div>
 		@if (selectedContact() && isContactVisible()) {
-			<app-contact-details [contact]="selectedContact()!" (editContact)="onEditContact($event)"></app-contact-details>
+			<app-contact-details [contact]="selectedContact()!" (editContact)="onEditContact($event)" (deleteContact)="onDeleteContact()"></app-contact-details>
 		}
 		<div (click)="showContactOptions(); $event.stopPropagation()" class="contact__options">
 			<img src="/icons/more_vert.svg" alt="" />

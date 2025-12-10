@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, output, signal } from '@angular/core';
+import { Component, computed, effect, inject, input, output, signal } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase-service';
 import { getShortName } from '../contact';
 import { ContactModel } from '../../../interfaces/contact';
@@ -16,6 +16,7 @@ export class Contactlist {
 	contacts = this.firebaseService.contacts();
 	isModalOpen = signal(false);
 	contactToEdit = signal<ContactModel | null>(null);
+	selectedContact = input<ContactModel | null>(null);
 
 	contact = output<ContactModel>();
 
