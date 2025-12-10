@@ -4,12 +4,14 @@
 		<img src="assets/img/logo-dark.svg" alt="Dark join logo" class="show-mobile">
 
 		<div class="header-right">
+			@if (!isHelpRoute()) {
 			<img
 				src="icons/help.svg"
 				alt="Help Icon"
 				class="help-btn"
 				routerLink="/help"
 			/>
+			}
 			<div class="user-icon">
 				<span>TU</span>
 			</div>

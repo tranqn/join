@@ -48,4 +48,9 @@ export class Contact {
 		this.selectedContactId.set(null);
 		this.isContactVisible.set(false);
 	}
+	
+	closeDetailsView() {
+		this.selectedContact.set(null);
+		this.isContactVisible.set(false);
+	}
 }

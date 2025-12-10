@@ -50,12 +50,11 @@
     transition: background 150ms ease-in-out;
 
     &:hover {
-      background-color: #091931;
+      background-color: '#lightblue';
     }
 
     &.active {
       background-color: #091931;
-      border-right: 4px solid #29abe2;
     }
 
     & .nav-icon {
@@ -119,13 +118,10 @@
     li {
       flex-direction: column;
       padding: 8px 0;
-      border-right: none; /* Kein rechter Border auf Mobile */
-      border-top: 4px solid transparent; /* Optional für aktive Markierung */
       font-size: 12px;
 
       &.active {
         background-color: transparent;
-        border-top: 4px solid #29abe2;
       }
 
       .nav-icon {
@@ -133,13 +129,10 @@
         height: 28px;
       }
 
-      span {
-        display: none; /* Falls du nur Icons willst, sonst entfernen */
-      }
     }
   }
 
   .bottom-links {
-    display: none; /* Impressum / Privacy verschwinden */
+    display: none; 
   }
 }

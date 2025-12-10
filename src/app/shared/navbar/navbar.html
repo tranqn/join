@@ -6,22 +6,26 @@
    <div class="nav-section"> 
 
   <ul class="nav-links">
-    <li class="active" routerLink="/" >
-      <img src="icons/Property 1=Summary.svg" alt="" class="nav-icon" />
-      <span>Summary</span>
-    </li>
+    <li 
+  routerLink="/" 
+  routerLinkActive="active" 
+  [routerLinkActiveOptions]="{ exact: true }"
+>
+  <img src="icons/Property 1=Summary.svg" alt="" class="nav-icon" />
+  <span>Summary</span>
+</li>
 
-    <li class="active" routerLink="/add-task" >
+    <li routerLink="/add-task" routerLinkActive="active" >
       <img src="icons/Property 1=Add task.svg" alt="" class="nav-icon" />
       <span>Add Task</span>
     </li>
 
-    <li class="active" routerLink="/board" >
+    <li routerLink="/board" routerLinkActive="active" >
       <img src="icons/Property 1=Board.svg" alt="" class="nav-icon" />
       <span>Board</span>
     </li>
 
-    <li class="active" routerLink="/contacts" >
+    <li routerLink="/contacts" routerLinkActive="active" >
       <img src="icons/Property 1=Contacts.svg" alt="" class="nav-icon" />
       <span>Contacts</span>
     </li>

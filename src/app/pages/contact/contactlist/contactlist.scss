@@ -16,6 +16,10 @@
 		padding: 0 $spacing-md;
 		width: 400px;
 	}
+	@include respond-max($break-lg) {
+		width: 100%;
+		height: calc(100vh - 161px);
+	}
 	&__header {
 		position: sticky;
 		top: 0;

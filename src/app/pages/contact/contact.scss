@@ -5,12 +5,19 @@
 .contact {
 	background-color: #f6f7f8;
 	overflow-x: hidden;
+	position: relative;
 	@include dFlex-responsive(
 		row,
 		row,
 		$justify: flex-start,
 		$align: flex-start
 	);
+
+	&__list {
+		@include respond-max($break-lg) {
+			width: 100%;
+		}
+	}
 
 	&__header {
 		width: fit-content;
@@ -26,33 +33,52 @@
 		@include respond-max($break-xl) {
 			align-items: flex-start;
 		}
+		@include respond-max($break-lg) {
+			width: 100%;
+		}
 		@include respond($break-lg) {
 			@include respond-max($break-xl) {
 				gap: 10px;
 			}
 		}
-		> :nth-child(1) {
-			display: flex;
-			justify-content: space-between;
-			// width: 100%;
 
-			> h1 {
-				@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
-			}
-			> img {
-				@include respond($break-xs) {
-					display: none;
-				}
-			}
-		}
 		> h4 {
 			width: 100%;
+		}
+	}
+
+	&__headline {
+		@media (max-width: 991px) {
+			display: flex;
+			justify-content: space-between;
+			width: 100%;
+		}
+
+		> h1 {
+			@include text-style-responsive(47px, 54px, 61px, 'inter', 700);
+		}
+		> img {
+			@include respond($break-lg) {
+				display: none;
+			}
 		}
 	}
 
 	&__details {
 		position: relative;
 		flex: 1;
+		@media (max-width: 991px) {
+			display: none;
+			&.open {
+				position: absolute;
+				top: 0;
+				width: 100%;
+				height: 100%;
+				z-index: 101;
+				background: #fff;
+				display: block;
+			}
+		}
 	}
 
 	&__options {
@@ -67,7 +93,7 @@
 		border-radius: 100%;
 		background-color: #091931;
 		z-index: 10;
-		@include respond-max($break-xs) {
+		@include respond-max($break-md) {
 			display: flex;
 		}
 	}
