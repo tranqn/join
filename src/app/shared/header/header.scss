@@ -10,13 +10,15 @@
 	justify-content: space-between;
 	width: calc(100% - 240px);
 	margin-left: auto;
-	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
-	
-@media (max-width: 768px) {
+	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
+	position: relative;
+	z-index: 100;
+
+	@media (max-width: 768px) {
 		width: 100%;
 		margin-left: 0;
 	}
-	
+
 	&__row {
 		max-width: 1200px;
 		width: 100%;
@@ -45,7 +47,7 @@
 		width: 20px;
 		height: 20px;
 		cursor: pointer;
-		transition: all .1s ease;
+		transition: all 0.1s ease;
 		&:hover {
 			transform: scale(1.2);
 		}
@@ -55,13 +57,8 @@
 		width: 45px;
 		height: 45px;
 		border-radius: 50%;
-		border: 2px solid #2a3647;		
-		@include dFlex-responsive(
-			row,
-			row,
-			$justify: center,
-			$align: center
-		);
+		border: 2px solid #2a3647;
+		@include dFlex-responsive(row, row, $justify: center, $align: center);
 		& span {
 			font-weight: 600;
 			color: $light-blue;
