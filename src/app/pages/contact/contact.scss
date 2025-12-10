@@ -129,7 +129,7 @@
 		height: 60px;
 		align-self: center;
 		// @include show-desktop;
-		@media (min-width: $break-lg) and (max-width: $break-xl) {
+		@media (min-width: $break-xxs) and (max-width: $break-xl) {
 			display: none;
 		}
 	}

@@ -25,4 +25,8 @@ export class ContactDetails {
 	onEdit() {
 		this.editContact.emit(this.contact());
 	}
+
+	onDelete() {
+		this.firebaseService.deleteContact(this.contact().id!);
+	}
 }
