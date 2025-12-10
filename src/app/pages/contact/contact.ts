@@ -1,4 +1,4 @@
-import { Component, computed, effect, inject, signal, viewChild } from '@angular/core';
+import { Component, computed, inject, signal, viewChild } from '@angular/core';
 import { Contactlist } from './contactlist/contactlist';
 import { ContactDetails } from './contact-details/contact-details';
 import { ContactModel } from '../../interfaces/contact';
@@ -45,7 +45,7 @@ export class Contact {
 	}
 
 	onDeleteContact() {
-		this.selectedContact.set(null);
+		this.selectedContactId.set(null);
 		this.isContactVisible.set(false);
 	}
 }
