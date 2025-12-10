@@ -85,3 +85,61 @@
     }
   }
 }
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 100%;
+    height: 80px;
+    padding: 0;
+    position: fixed;
+    bottom: 0;
+    top: auto;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    z-index: 50;
+  }
+
+  .logo-section {
+    display: none; /* Logo ausblenden */
+  }
+
+  .nav-section {
+    width: 100%;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .nav-links {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    justify-content: space-around;
+
+    li {
+      flex-direction: column;
+      padding: 8px 0;
+      border-right: none; /* Kein rechter Border auf Mobile */
+      border-top: 4px solid transparent; /* Optional für aktive Markierung */
+      font-size: 12px;
+
+      &.active {
+        background-color: transparent;
+        border-top: 4px solid #29abe2;
+      }
+
+      .nav-icon {
+        width: 28px;
+        height: 28px;
+      }
+
+      span {
+        display: none; /* Falls du nur Icons willst, sonst entfernen */
+      }
+    }
+  }
+
+  .bottom-links {
+    display: none; /* Impressum / Privacy verschwinden */
+  }
+}

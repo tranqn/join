@@ -11,6 +11,12 @@
 	width: calc(100% - 240px);
 	margin-left: auto;
 	box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
+	
+@media (max-width: 768px) {
+		width: 100%;
+		margin-left: 0;
+	}
+	
 	&__row {
 		max-width: 1200px;
 		width: 100%;
