@@ -1,3 +1,5 @@
+@use 'sass:map';
+@use 'sass:color';
 @use '../../../styles/vars.scss' as *;
 @use '../../../styles/mixin.scss' as *;
 
@@ -144,7 +146,7 @@
     padding: $spacing-sm;
     padding-right: 40px;
     border: 1px solid #ccc;
-    border-radius: map-get($radius, small);
+    border-radius: map.get($radius, small);
     font-size: 14px;
     font-family: inherit;
     transition: border-color 0.1s;
@@ -183,7 +185,7 @@
 
   &__btn {
     padding: $spacing-sm $spacing-md;
-    border-radius: map-get($radius, small);
+    border-radius: map.get($radius, small);
     font-size: 14px;
     font-weight: 500;
     font-family: inherit;
@@ -204,7 +206,7 @@
       border: 1px solid $darkblue;
 
       &:hover:not(:disabled) {
-        background: lighten($darkblue, 70%);
+        background: color.adjust($darkblue, $lightness: 70%);
       }
     }
 
@@ -214,7 +216,7 @@
       border: none;
 
       &:hover:not(:disabled) {
-        background: lighten($darkblue, 5%);
+        background: color.adjust($darkblue, $lightness: 5%);
       }
     }
   }
