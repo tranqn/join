@@ -50,7 +50,7 @@ export class Contact {
 	}
 	
 	closeDetailsView() {
-		this.selectedContact.set(null);
+		this.selectedContactId.set(null);
 		this.isContactVisible.set(false);
 	}
 }
