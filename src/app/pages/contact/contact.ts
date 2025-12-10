@@ -41,4 +41,9 @@ export class Contact {
 		this.selectedContact.set(null);
 		this.isContactVisible.set(false);
 	}
+	
+	closeDetailsView() {
+		this.selectedContact.set(null);
+		this.isContactVisible.set(false);
+	}
 }
