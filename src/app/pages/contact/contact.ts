@@ -18,6 +18,7 @@ export class Contact {
 	firebaseService = inject(FirebaseService);
 	
 	contactlist = viewChild.required(Contactlist);
+	contactDetails = viewChild(ContactDetails);
 
 	selectedContactId = signal<string | null>(null);
 	selectedContact = computed(() => {
@@ -44,5 +45,9 @@ export class Contact {
 	closeDetailsView() {
 		this.selectedContactId.set(null);
 		this.isContactVisible.set(false);
+	}
+
+	closeSidebarIfOpen() {
+		this.contactDetails()?.closeSidebar();
 	}
 }

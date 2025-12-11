@@ -1,5 +1,5 @@
 <section>
-	<div class="contact_card" (click)="closeSidebar()">
+	<div class="contact_card" (click)="closeSidebar(); $event.stopPropagation()">
 		<div class="contact_card_header">
 			<div class="profil-icon" [style.background-color]="contact().color">
 				<p><strong>{{ getInitials(contact().name) }}</strong></p>

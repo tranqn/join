@@ -1,6 +1,6 @@
 <div class="contact">
 	<app-contactlist class="contact__list" [selectedContact]="selectedContact()" (contact)="displayDetails($event)"></app-contactlist>
-	<div class="contact__details" [class.open]="selectedContact() && isContactVisible()">
+	<div class="contact__details" [class.open]="selectedContact() && isContactVisible()" (click)="closeSidebarIfOpen()">
 		<div class="contact__header">
 			<div class="contact__headline">
 				<h1>Contacts</h1>
