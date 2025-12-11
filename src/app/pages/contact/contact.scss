@@ -81,78 +81,7 @@
 		}
 	}
 
-	&__options {
-		position: absolute;
-		bottom: 20px;
-		right: 20px;
-		display: none;
-		justify-content: center;
-		align-items: center;
-		width: 56px;
-		height: 56px;
-		border-radius: 100%;
-		background-color: #091931;
-		z-index: 10;
-		@include respond-max($break-md) {
-			display: flex;
-		}
-	}
-
-	&__sidebar {
-		position: absolute;
-		right: 0;
-		bottom: 0;
-		transform: translateX(100%);
-		opacity: 0;
-		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		z-index: 1000;
-		gap: 10px;
-		width: 116px;
-		height: 100px;
-		background-color: #ffffff;
-		border-bottom-left-radius: 16px;
-		border-top-left-radius: 16px;
-		border-top-right-radius: 16px;
-		box-shadow: -5px 10px 5px 0px rgba(0, 0, 0, 0.21);
-		@media (min-width: 768px) {
-			display: none;
-		}
-		.edit-btn,
-		.delete-btn {
-			display: flex;
-			padding-left: 20px;
-			gap: 5px;
-		}
-
-		button {
-			display: flex;
-			background: none;
-			border: none;
-			cursor: pointer;
-			font-size: 16px;
-			color: inherit;
-			font-weight: inherit;
-		}
-
-		.edit-btn:hover,
-		.delete-btn:hover {
-			color: $light-blue;
-			font-weight: 600;
-		}
-
-		.edit-btn svg path,
-		.delete-btn svg path {
-			fill: currentColor;
-		}
-
-		&.open {
-			transform: translateX(0);
-			opacity: 1;
-		}
-	}
+	
 
 	& .vl {
 		border-left: 2px solid rgba(41, 171, 226, 1);

@@ -16,7 +16,7 @@ export function getShortName(fullName: string): string {
 })
 export class Contact {
 	firebaseService = inject(FirebaseService);
-	isSidebarOpen = signal(false);
+	
 	contactlist = viewChild.required(Contactlist);
 
 	selectedContactId = signal<string | null>(null);
@@ -32,19 +32,12 @@ export class Contact {
 		this.isContactVisible.set(true);
 	}
 
-	showContactOptions() {
-		this.isSidebarOpen.update(value => !value);
-	}
-
-	closeSidebar() {
-		this.isSidebarOpen.set(false);
-	}
-
 	onEditContact(contact: ContactModel) {
 		this.contactlist().openEditModal(contact);
 	}
 
 	onDeleteContact() {
+		this.firebaseService.deleteContact(this.selectedContactId()!);
 		this.selectedContactId.set(null);
 		this.isContactVisible.set(false);
 	}

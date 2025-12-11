@@ -1,6 +1,8 @@
 @use './../../../../styles.scss' as *;
 @use '../../../styles/mixin.scss' as *;
 @use '../../../styles/vars.scss' as *;
+@use 'sass:map';
+@use 'sass:color';
 
 section {
 	animation: slideIn 300ms ease-out;
@@ -14,7 +16,7 @@ section {
 	&_header {
 		display: flex;
 		align-items: center;
-		@include spacing(gap,35px, 55px, 75px);
+		@include spacing(gap, 35px, 55px, 75px);
 		@media (min-width: $break-lg) and (max-width: $break-xl) {
 			flex-direction: column;
 			align-items: flex-start;
@@ -26,13 +28,13 @@ section {
 		flex-direction: column;
 		gap: 15px;
 		h3 {
-			@include text-style-responsive(36px,41px,47px, 'Inter', 700)
+			@include text-style-responsive(36px, 41px, 47px, 'Inter', 700);
 		}
 	}
 	&_actions {
 		display: flex;
 		gap: 30px;
-		@include respond-max($break-xs){
+		@include respond-max($break-xs) {
 			display: none;
 		}
 
@@ -107,5 +109,130 @@ section {
 		color: $light-blue;
 		text-decoration: none;
 		width: fit-content;
+	}
+}
+
+.delete-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background: rgba($color: #000000, $alpha: 0.2);
+	z-index: 500;
+	& .modal-body {
+		background: $darkblue;
+		padding: $spacing-md;
+		border-radius: map.get($radius, medium);
+		border: 1px solid #000;
+		.h4 {
+			margin-bottom: $spacing-md;
+			color: #fff;
+		}
+	}
+}
+
+.delete-contact-btn {
+	border-radius: map.get($radius, medium);
+	border: none;
+	background-color: $urgent-color;
+	color: #fff;
+	padding: 12px 18px;
+	margin-right: $spacing-md;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	&:hover {
+		background: color.adjust($urgent-color, $lightness: -10%);
+	}
+}
+.cancel-btn {
+	border-radius: map.get($radius, medium);
+	border: 1px solid #fff;
+	background: transparent;
+	color: #fff;
+	padding: 12px 18px;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	&:hover {
+		color: #000;
+		background: #fff;
+		border-color: #fff;
+	}
+}
+
+.contact {
+	&__sidebar {
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		transform: translateX(100%);
+		opacity: 0;
+		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		z-index: 1000;
+		gap: 10px;
+		width: 116px;
+		height: 100px;
+		background-color: #ffffff;
+		border-bottom-left-radius: 16px;
+		border-top-left-radius: 16px;
+		border-top-right-radius: 16px;
+		box-shadow: -5px 10px 5px 0px rgba(0, 0, 0, 0.21);
+		@media (min-width: 768px) {
+			display: none;
+		}
+		.edit-btn,
+		.delete-btn {
+			display: flex;
+			padding-left: 20px;
+			gap: 5px;
+		}
+
+		button {
+			display: flex;
+			background: none;
+			border: none;
+			cursor: pointer;
+			font-size: 16px;
+			color: inherit;
+			font-weight: inherit;
+		}
+
+		.edit-btn:hover,
+		.delete-btn:hover {
+			color: $light-blue;
+			font-weight: 600;
+		}
+
+		.edit-btn svg path,
+		.delete-btn svg path {
+			fill: currentColor;
+		}
+
+		&.open {
+			transform: translateX(0);
+			opacity: 1;
+		}
+	}
+	&__options {
+		position: absolute;
+		bottom: 20px;
+		right: 20px;
+		display: none;
+		justify-content: center;
+		align-items: center;
+		width: 56px;
+		height: 56px;
+		border-radius: 100%;
+		background-color: #091931;
+		z-index: 10;
+		@include respond-max($break-md) {
+			display: flex;
+		}
 	}
 }
