@@ -126,6 +126,16 @@
 					>
 						Delete
 					</button>
+					} @else {
+					<button
+						type="button"
+						class="contact-modal__btn contact-modal__btn--cancel"
+						(click)="onClose()"
+						[disabled]="isSaving()"
+					>
+						Cancel
+						<span aria-hidden="true">&times;</span>
+					</button>
 					}
 
 					<button
