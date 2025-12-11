@@ -64,8 +64,12 @@
 		width: 45px;
 		height: 45px;
 		border-radius: 50%;
-		border: 2px solid #2a3647;
+		border: 3px solid #2a3647;
 		@include dFlex-responsive(row, row, $justify: center, $align: center);
+		cursor: pointer;
+		&:hover {
+			background-color: rgba($user-hover, .12);
+		}
 		& span {
 			font-weight: 600;
 			color: $light-blue;
