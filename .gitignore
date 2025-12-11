@@ -46,3 +46,6 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
+
+# Projekt-Dokumentation (nur lokal)
+PROJEKT_ERKLAERUNG_FUER_ANFAENGER.md
