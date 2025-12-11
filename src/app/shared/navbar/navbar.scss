@@ -5,7 +5,7 @@
 .sidebar {
   width: 240px;
   height: 100vh;
-  background-color: #2a3647;
+  background-color: $darkblue;
   color: white;
   display: flex;
   flex-direction: column;
@@ -53,11 +53,11 @@
     transition: background 150ms ease-in-out;
 
     &:hover {
-      background-color: '#lightblue';
+      background-color: $light-blue;
     }
 
     &.active {
-      background-color: #091931;
+      background-color: $secondary-color;
     }
 
     & .nav-icon {
@@ -84,6 +84,8 @@
 
     &:hover {
       color: white;
+	  font-weight: bold;
+	  background-color: $light-blue;
     }
   }
 }
@@ -103,7 +105,7 @@
   }
 
   .logo-section {
-    display: none; /* Logo ausblenden */
+    display: none; 
   }
 
   .nav-section {
@@ -127,9 +129,15 @@
       font-size: 16px;
 	  min-width: 65px;
 
+	&:hover {
+		border-radius: map.get($radius, medium);
+		background-color: §darkblue;
+	  }
+
       &.active {
         border-radius: map.get($radius, medium);
       }
+
 
       .nav-icon {
         width: 28px;
