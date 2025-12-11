@@ -1,10 +1,6 @@
 .main-content {
-  margin-left: 240px;
-}
-
-@media (max-width: 768px) {
-  .main-content {
-	margin-left: 0;	
-  }
-	
+	margin-left: 240px;
+	@media (max-width: 768px) {
+		margin-left: 0;
+	}
 }

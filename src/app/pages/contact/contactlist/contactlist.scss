@@ -18,9 +18,9 @@
 	}
 	@include respond-max($break-lg) {
 		width: 100%;
-		height: calc(100vh - 161px);
 	}
 	@include respond-max($break-md) {
+		height: calc(100vh - 161px);
 		padding-top: 50px;
 	}
 	&__header {
