@@ -58,6 +58,9 @@
 		&:hover {
 			transform: scale(1.2);
 		}
+		@include respond-max($break-md) {
+			display: none;
+		}
 	}
 
 	& .user-icon {

@@ -5,7 +5,9 @@
 @use 'sass:color';
 
 section {
-	animation: slideIn 300ms ease-out;
+	@include respond($break-md) {
+		animation: slideIn 300ms ease-out;
+	}
 	background: #fff;
 	// height: 100%;
 }
