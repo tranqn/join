@@ -21,12 +21,13 @@
 	@media (max-width: 768px) {
 		width: 100%;
 		margin-left: 0;
+		padding: 0 10px;
 	}
 
 	&__row {
 		max-width: 1200px;
 		width: 100%;
-		@media (min-width: 768px) {
+		@media (min-width: 769px) {
 			padding-left: 50px;
 		}
 		@include dFlex-responsive(
@@ -57,6 +58,9 @@
 		transition: all 0.1s ease;
 		&:hover {
 			transform: scale(1.2);
+		}
+		@include respond-max($break-md) {
+			display: none;
 		}
 	}
 

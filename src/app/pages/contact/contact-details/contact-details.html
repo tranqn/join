@@ -1,5 +1,5 @@
 <section>
-	<div class="contact_card" (click)="closeSidebar()">
+	<div class="contact_card" (click)="closeSidebar(); $event.stopPropagation()">
 		<div class="contact_card_header">
 			<div class="profil-icon" [style.background-color]="contact().color">
 				<p><strong>{{ getInitials(contact().name) }}</strong></p>
@@ -24,7 +24,7 @@
 						</svg>
 						<button>Edit</button>
 					</div>
-					<div class="delete-btn" (click)="openDeleteModal()">
+					<div class="delete-btn" (click)="onDelete()">
 						<svg
 							width="16"
 							height="18"
@@ -42,16 +42,6 @@
 				</div>
 			</div>
 		</div>
-
-		@if (deleteModalOpen()) {
-			<div class="delete-modal" (click)="closeDeleteModal()">
-				<div class="modal-body">
-					<p class="h4">Are you sure?</p>
-					<button class="delete-contact-btn" (click)="onDelete()">Delete</button>
-					<button class="cancel-btn" (click)="closeDeleteModal()">Cancel</button>
-				</div>
-			</div>
-		}
 
 		<div class="info-header">
 			<p class="h5">Contact Information</p>
@@ -97,11 +87,11 @@
 						fill="currentColor"
 					/>
 				</svg>
-				<button (click)="openDeleteModal()">Delete</button>
+				<button (click)="onDelete()">Delete</button>
 			</div>
 		</div>
 		<div (click)="showContactOptions(); $event.stopPropagation()" class="contact__options" [class.active]="isSidebarOpen()">
-			<img src="/icons/more_vert.svg" alt="" />
+			<img src="icons/more_vert.svg" alt="" />
 		</div>
 	</div>
 </section>

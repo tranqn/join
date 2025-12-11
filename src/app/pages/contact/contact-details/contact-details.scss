@@ -5,7 +5,10 @@
 @use 'sass:color';
 
 section {
-	animation: slideIn 300ms ease-out;
+	@include respond($break-md) {
+		animation: slideIn 300ms ease-out;
+	}
+	background: #f6f7f8;
 }
 
 .contact_card {
@@ -14,7 +17,7 @@ section {
 	gap: 20px;
 	padding: 20px 35px;
 	@include respond-max($break-sm) {
-		padding: 20px 10px;
+		padding: 10px;
 	}
 	&_header {
 		display: flex;
@@ -75,6 +78,9 @@ section {
 
 .info-header {
 	padding: 12px 0;
+	@include respond-max($break-sm) {
+		padding: 0;
+	}
 	> p {
 		font-weight: 400;
 	}
@@ -172,8 +178,8 @@ section {
 .contact {
 	&__sidebar {
 		position: absolute;
-		right: 0;
-		bottom: 0;
+		bottom: 10px;
+		right: 10px;
 		transform: translateX(100%);
 		opacity: 0;
 		transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
@@ -223,8 +229,6 @@ section {
 		&.open {
 			transform: translateX(0);
 			opacity: 1;
-			bottom: 10px;
-			right: 10px;
 		}
 	}
 	&__options {
