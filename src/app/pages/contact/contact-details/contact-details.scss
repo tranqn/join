@@ -9,7 +9,7 @@ section {
 		animation: slideIn 300ms ease-out;
 	}
 	background: #f6f7f8;
-	@include respond($break-lg) {
+	@include respond-max($break-lg) {
 		background: #fff;
 	}
 }
