@@ -76,8 +76,7 @@
 		);
 
 		&:hover {
-			background: $darkblue;
-			color: #fff;
+			background: linear-gradient(180deg,rgba(249, 249, 249, 1) 0%, rgba(240, 240, 240, 1) 100%);
 		}
 
 		&.active {
