@@ -34,7 +34,7 @@ section {
 	&_actions {
 		display: flex;
 		gap: 30px;
-		@include respond-max($break-xs) {
+		@include respond-max($break-md) {
 			display: none;
 		}
 
