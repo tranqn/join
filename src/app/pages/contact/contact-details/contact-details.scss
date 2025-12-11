@@ -18,7 +18,7 @@ section {
 	gap: 20px;
 	padding: 20px 35px;
 	@include respond-max($break-sm) {
-		padding: 20px 10px;
+		padding: 10px;
 	}
 	&_header {
 		display: flex;
@@ -79,6 +79,9 @@ section {
 
 .info-header {
 	padding: 12px 0;
+	@include respond-max($break-sm) {
+		padding: 0;
+	}
 	> p {
 		font-weight: 400;
 	}
