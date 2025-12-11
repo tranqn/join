@@ -36,6 +36,9 @@
 		@include respond-max($break-lg) {
 			width: 100%;
 		}
+		@include respond-max($break-sm) {
+			padding: 20px 10px;
+		}
 		@include respond($break-lg) {
 			@include respond-max($break-xl) {
 				gap: 10px;
