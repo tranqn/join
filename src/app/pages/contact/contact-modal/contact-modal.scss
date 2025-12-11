@@ -218,6 +218,16 @@
       }
     }
 
+    &--delete {
+      background: white;
+      color: #d32f2f;
+      border: 1px solid #d32f2f;
+
+      &:hover:not(:disabled) {
+        background: #ffebee;
+      }
+    }
+
     &--submit {
       background: $darkblue;
       color: white;

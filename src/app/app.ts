@@ -3,10 +3,11 @@ import { RouterOutlet } from '@angular/router';
 import { Header } from './shared/header/header';
 import { Navbar } from './shared/navbar/navbar';
 import { Toast } from 'primeng/toast';
+import { ConfirmationModal } from './shared/confirmation-modal/confirmation-modal';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, Header, Navbar, Toast],
+  imports: [RouterOutlet, Header, Navbar, Toast, ConfirmationModal],
   templateUrl: './app.html',
   styleUrl: './app.scss',
 })

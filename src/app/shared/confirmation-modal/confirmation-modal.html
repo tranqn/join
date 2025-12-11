@@ -1,0 +1,29 @@
+@if (confirmationService.isOpen()) {
+<div class="confirmation-modal">
+  <div class="confirmation-modal__backdrop" (click)="onBackdropClick()"></div>
+
+  <div class="confirmation-modal__dialog">
+    <div class="confirmation-modal__content">
+      <h3 class="confirmation-modal__title">Delete Contact</h3>
+      <p class="confirmation-modal__message">{{ confirmationService.message() }}</p>
+
+      <div class="confirmation-modal__actions">
+        <button
+          type="button"
+          class="confirmation-modal__btn confirmation-modal__btn--no"
+          (click)="onReject()"
+        >
+          No
+        </button>
+        <button
+          type="button"
+          class="confirmation-modal__btn confirmation-modal__btn--yes"
+          (click)="onConfirm()"
+        >
+          Yes
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+}

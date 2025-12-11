@@ -117,16 +117,17 @@
 				</div>
 
 				<div class="contact-modal__actions">
+					@if (contact()) {
 					<button
 						type="button"
-						class="contact-modal__btn contact-modal__btn--cancel"
-						(click)="onClose()"
+						class="contact-modal__btn contact-modal__btn--delete"
+						(click)="onDelete()"
+						[disabled]="isSaving()"
 					>
 						Delete
-						<span class="contact-modal__btn-icon" aria-hidden="true"
-							></span
-						>
 					</button>
+					}
+
 					<button
 						type="submit"
 						class="contact-modal__btn contact-modal__btn--submit"

@@ -5,6 +5,7 @@ import { FirebaseService } from '../../../services/firebase-service';
 import { ColorService } from '../../../services/color-service';
 import { minLengthValidator, emailValidator, phoneValidator, getErrorMessage } from './contact-validators';
 import { MessageService } from 'primeng/api';
+import { ConfirmationService } from '../../../shared/confirmation-modal/confirmation.service';
 
 @Component({
   selector: 'app-contact-modal',
@@ -21,6 +22,7 @@ export class ContactModal {
   private firebaseService = inject(FirebaseService);
   private colorService = inject(ColorService);
   private messageService = inject(MessageService);
+  private confirmationService = inject(ConfirmationService);
 
   contactForm: FormGroup;
   isSaving = signal(false);
@@ -151,5 +153,38 @@ export class ContactModal {
 
   onClose() {
     this.close.emit();
+  }
+
+
+  onDelete() {
+    const currentContact = this.contact();
+    if (!currentContact) return;
+
+    this.confirmationService.show(
+      `Are you sure you want to delete ${currentContact.name}?`,
+      async () => {
+        this.isSaving.set(true);
+        try {
+          await this.firebaseService.deleteContact(currentContact.id);
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Contact successfully deleted',
+            life: 3000
+          });
+          this.close.emit();
+        } catch (error) {
+          console.error('Error deleting contact:', error);
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Failed to delete contact',
+            life: 3000
+          });
+        } finally {
+          this.isSaving.set(false);
+        }
+      }
+    );
   }
 }

@@ -1,0 +1,112 @@
+@use 'sass:map';
+@use '../../../app/styles/vars.scss' as *;
+
+.confirmation-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1001;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &__backdrop {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    animation: fadeIn 0.2s ease-out;
+  }
+
+  &__dialog {
+    position: relative;
+    z-index: 1;
+    background: $darkblue;
+    border-radius: map.get($radius, small);
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 400px;
+    animation: slideIn 0.3s ease-out;
+  }
+
+  &__content {
+    padding: $spacing-md;
+  }
+
+  &__title {
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0 0 $spacing-sm 0;
+  }
+
+  &__message {
+    color: white;
+    font-size: 16px;
+    margin: 0 0 $spacing-md 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: $spacing-sm;
+    justify-content: flex-end;
+  }
+
+  &__btn {
+    padding: $spacing-sm $spacing-md;
+    border-radius: map.get($radius, small);
+    font-size: 14px;
+    font-weight: 500;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.1s;
+    border: none;
+
+    &:hover {
+      opacity: 0.9;
+    }
+
+    &--yes {
+      background: $urgent-color;
+      color: white;
+
+      &:hover {
+        background: darken($urgent-color, 5%);
+      }
+    }
+
+    &--no {
+      background: #2a3647;
+      color: white;
+      border: 1px solid white;
+
+      &:hover {
+        background: lighten(#2a3647, 10%);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
