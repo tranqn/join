@@ -37,7 +37,6 @@ export class Contact {
 	}
 
 	onDeleteContact() {
-		this.firebaseService.deleteContact(this.selectedContactId()!);
 		this.selectedContactId.set(null);
 		this.isContactVisible.set(false);
 	}
