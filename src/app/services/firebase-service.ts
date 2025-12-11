@@ -29,10 +29,18 @@ export class FirebaseService {
 		this.unsubContacts = this.subContactsList();
 	}
 
+	/**
+	 * Gets the contacts collection reference from Firestore.
+	 * @returns The Firestore collection reference for contacts
+	 */
 	getContacts() {
 		return collection(this.firestore, 'contacts');
 	}
 
+	/**
+	 * Subscribes to the contacts list and updates the contacts signal.
+	 * @returns An unsubscribe function to stop listening to changes
+	 */
 	subContactsList() {
 		const q = query(this.getContacts(), orderBy('name'), limit(100));
 		return onSnapshot(q, (list) => {
@@ -44,6 +52,12 @@ export class FirebaseService {
 		});
 	}
 
+	/**
+	 * Converts Firestore document data to a ContactModel.
+	 * @param obj - The raw Firestore document data
+	 * @param id - The document ID
+	 * @returns A ContactModel instance
+	 */
 	setNoteObject(obj: any, id: string): ContactModel {
 		return {
 			id: id,
@@ -54,6 +68,10 @@ export class FirebaseService {
 		};
 	}
 
+	/**
+	 * Deletes a contact from Firestore.
+	 * @param docId - The ID of the contact document to delete
+	 */
 	async deleteContact(docId: string) {
 		await deleteDoc(this.getSingleDocRef('contacts', docId)).catch(
 			(err) => {
@@ -62,6 +80,10 @@ export class FirebaseService {
 		);
 	}
 
+	/**
+	 * Adds a new contact to Firestore.
+	 * @param item - The contact data to add
+	 */
 	async addContact(item: {}) {
 		const contactsCollection = collection(this.firestore, 'contacts');
 		await addDoc(contactsCollection, item).catch((err) => {
@@ -69,10 +91,20 @@ export class FirebaseService {
 		});
 	}
 
+	/**
+	 * Gets a Firestore document reference.
+	 * @param colId - The collection ID
+	 * @param docId - The document ID
+	 * @returns A Firestore document reference
+	 */
 	getSingleDocRef(colId: string, docId: string) {
 		return doc(collection(this.firestore, colId), docId);
 	}
 
+	/**
+	 * Updates an existing contact in Firestore.
+	 * @param contact - The contact with updated data
+	 */
 	async updateContact(contact: ContactModel) {
         if (contact.id) {
             let docRef = this.getSingleDocRef(
@@ -85,6 +117,11 @@ export class FirebaseService {
         }
     }
 
+	/**
+	 * Converts a ContactModel to a clean JSON object for Firestore.
+	 * @param contact - The contact to convert
+	 * @returns A plain object with contact data
+	 */
 	getCleanJson(contact: ContactModel): {} {
         return {
             id: contact.id,
