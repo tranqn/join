@@ -24,14 +24,25 @@ export class ContactDetails {
 
 	contacts = this.firebaseService.contacts();
 
+	/**
+	 * Gets the initials from a full name.
+	 * @param fullName - The full name to convert
+	 * @returns The initials of the name
+	 */
 	getInitials(fullName: string) {
 		return getShortName(fullName);
 	}
 
+	/**
+	 * Emits an event to edit the current contact.
+	 */
 	onEdit() {
 		this.editContact.emit(this.contact());
 	}
 
+	/**
+	 * Handles the deletion of the current contact with confirmation.
+	 */
 	onDelete() {
 		const currentContact = this.contact();
 
@@ -60,10 +71,16 @@ export class ContactDetails {
 		);
 	}
 
+	/**
+	 * Toggles the visibility of the contact options sidebar.
+	 */
 	showContactOptions() {
 		this.isSidebarOpen.update(value => !value);
 	}
 
+	/**
+	 * Closes the contact options sidebar.
+	 */
 	closeSidebar() {
 		this.isSidebarOpen.set(false);
 	}

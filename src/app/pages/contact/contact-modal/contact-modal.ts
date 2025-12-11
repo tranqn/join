@@ -43,6 +43,10 @@ export class ContactModal {
   }
 
 
+  /**
+   * Initializes the contact form with validators.
+   * @returns A FormGroup configured for contact data
+   */
   initializeForm(): FormGroup {
     return this.fb.group({
       name: ['', minLengthValidator(2)],
@@ -52,6 +56,9 @@ export class ContactModal {
   }
 
 
+  /**
+   * Updates the form with the current contact data or resets it if no contact is provided.
+   */
   updateFormWithContact() {
     const currentContact = this.contact();
     if (currentContact) {
@@ -66,6 +73,9 @@ export class ContactModal {
   }
 
 
+  /**
+   * Handles form submission, saving the contact data.
+   */
   async onSubmit() {
     if (this.contactForm.invalid || this.isSaving()) {
       return;
@@ -83,6 +93,9 @@ export class ContactModal {
   }
 
 
+  /**
+   * Saves the contact by either creating a new one or updating an existing one.
+   */
   async saveContact() {
     const formValue = this.contactForm.value;
     const existingContact = this.contact();
@@ -95,6 +108,10 @@ export class ContactModal {
   }
 
 
+  /**
+   * Creates a new contact with the provided form data.
+   * @param formValue - The form data containing contact information
+   */
   async createNewContact(formValue: any) {
     const newContact = {
       name: formValue.name,
@@ -112,6 +129,11 @@ export class ContactModal {
   }
 
 
+  /**
+   * Updates an existing contact with new form data.
+   * @param existing - The existing contact to update
+   * @param formValue - The form data with updated information
+   */
   async updateExistingContact(existing: ContactModel, formValue: any) {
     const updated: ContactModel = {
       ...existing,
@@ -129,12 +151,21 @@ export class ContactModal {
   }
 
 
+  /**
+   * Selects a random color from the available profile colors.
+   * @returns A random color string in hex format
+   */
   getRandomColor(): string {
     const colors = this.colorService.profilColors;
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
 
+  /**
+   * Gets the error message for a specific form field.
+   * @param fieldName - The name of the form field
+   * @returns The error message string, or empty string if no error
+   */
   getErrorMessage(fieldName: string): string {
     const control = this.contactForm.get(fieldName);
     if (control && control.invalid && control.touched) {
@@ -144,6 +175,9 @@ export class ContactModal {
   }
 
 
+  /**
+   * Handles the Escape key press to close the modal.
+   */
   @HostListener('document:keydown.escape')
   onEscapeKey() {
     if (this.isOpen()) {
@@ -152,11 +186,17 @@ export class ContactModal {
   }
 
 
+  /**
+   * Emits an event to close the modal.
+   */
   onClose() {
     this.close.emit();
   }
 
 
+  /**
+   * Handles contact deletion with confirmation dialog.
+   */
   onDelete() {
     const currentContact = this.contact();
     if (!currentContact) return;
@@ -190,6 +230,11 @@ export class ContactModal {
   }
 
 
+  /**
+   * Gets the initials from a full name.
+   * @param fullName - The full name to convert
+   * @returns The initials of the name
+   */
   getInitials(fullName: string) {
     return getShortName(fullName);
   }
