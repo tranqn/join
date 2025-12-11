@@ -6,6 +6,7 @@ import { ColorService } from '../../../services/color-service';
 import { minLengthValidator, emailValidator, phoneValidator, getErrorMessage } from './contact-validators';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from '../../../shared/confirmation-modal/confirmation.service';
+import { getShortName } from '../contact';
 
 @Component({
   selector: 'app-contact-modal',
@@ -186,5 +187,10 @@ export class ContactModal {
         }
       }
     );
+  }
+
+
+  getInitials(fullName: string) {
+    return getShortName(fullName);
   }
 }

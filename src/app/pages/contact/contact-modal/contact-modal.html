@@ -9,27 +9,37 @@
 			type="button"
 			aria-label="Close modal"
 		>
-			<span aria-hidden="true">&times;</span>
+			<img src="/icons/close_icon.svg" alt="Close" />
 		</button>
 
 		<div class="contact-modal__content">
 			<div class="contact-modal__branding">
-				<img
-					src="/icons/join_logo.svg"
-					alt="Join Logo"
-					class="contact-modal__branding-logo"
-				/>
-				<h2 class="contact-modal__branding-title">
-					{{ contact() ? 'Edit contact' : 'Add contact' }}
-				</h2>
-				<p class="contact-modal__branding-subtitle">
-					Tasks are better with a team!
-				</p>
-				<div class="contact-modal__branding-divider"></div>
+				<div class="contact-modal__branding-wrapper">
+					<img
+						src="/icons/join_logo.svg"
+						alt="Join Logo"
+						class="contact-modal__branding-logo"
+					/>
+					<h2 class="contact-modal__branding-title">
+						{{ contact() ? 'Edit contact' : 'Add contact' }}
+					</h2>
+					@if (!contact()) {
+					<p class="contact-modal__branding-subtitle">
+						Tasks are better with a team!
+					</p>
+					}
+					<div class="contact-modal__branding-divider"></div>
+				</div>
 			</div>
 
 			<div class="contact-modal__profile-icon">
+				@if (contact()) {
+				<div class="profil-icon" [style.background-color]="contact()!.color">
+					<p><strong>{{ getInitials(contact()!.name) }}</strong></p>
+				</div>
+				} @else {
 				<img src="/icons/empty_profile_icon.svg" alt="" />
+				}
 			</div>
 
 			<form
