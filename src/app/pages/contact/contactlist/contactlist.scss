@@ -20,12 +20,22 @@
 		width: 100%;
 		height: calc(100vh - 161px);
 	}
+	@include respond-max($break-md) {
+		padding-top: 50px;
+	}
 	&__header {
 		position: sticky;
 		top: 0;
 		z-index: 10;
 		background: white;
 		padding: $spacing-md;
+		@include respond-max($break-md) {
+			position: fixed;
+			top: unset;
+			bottom: 100px;
+			right: 10px;
+			background: transparent;
+		}
 	}
 
 	&__add-btn {
@@ -42,15 +52,26 @@
 		cursor: pointer;
 		transition: background 0.2s;
 		font-family: inherit;
-
+		@include respond-max($break-md) {
+			border-radius: 100%;
+			padding: .75rem;
+		}
 		&-text {
 			font-size: 16px;
 			font-weight: 500;
 			line-height: 1;
+			@include respond-max($break-md) {
+				display: none;
+			}
 		}
-
+		
 		&-icon {
 			flex-shrink: 0;
+			@include respond-max($break-md) {
+				width: 32px;
+				height: 32px;
+				object-fit: contain;
+			}
 		}
 
 		&:hover {
