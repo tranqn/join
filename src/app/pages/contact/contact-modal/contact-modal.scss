@@ -293,6 +293,10 @@
     align-items: center;
     gap: $spacing-xs;
 
+    &:hover:not(:disabled) {
+      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+    }
+
     &:disabled {
       opacity: 0.5;
       cursor: not-allowed;
@@ -306,6 +310,10 @@
       &:hover:not(:disabled) {
         border: 1px solid $light-blue;
         color: $light-blue;
+      }
+
+      @include respond-max($break-md) {
+        display: none;
       }
     }
 
