@@ -88,6 +88,7 @@
 		padding: 1rem 1.5rem;
 		border-radius: radius(medium);
 		margin-bottom: $spacing-sm;
+		cursor: pointer;
 		@include dFlex-responsive(
 			row,
 			row,
