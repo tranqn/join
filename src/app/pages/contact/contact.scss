@@ -70,6 +70,7 @@
 		overflow-x: hidden;
 		position: relative;
 		flex: 1;
+		overflow: hidden;
 		@media (max-width: 991px) {
 			display: none;
 			&.open {
