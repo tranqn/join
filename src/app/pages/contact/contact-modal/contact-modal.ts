@@ -18,6 +18,7 @@ export class ContactModal {
   isOpen = input<boolean>(false);
   contact = input<ContactModel | null>(null);
   close = output<void>();
+  isClosing = signal(false);
 
   private fb = inject(FormBuilder);
   private firebaseService = inject(FirebaseService);
@@ -181,7 +182,7 @@ export class ContactModal {
   @HostListener('document:keydown.escape')
   onEscapeKey() {
     if (this.isOpen()) {
-      this.close.emit();
+      this.onClose();
     }
   }
 
@@ -190,7 +191,11 @@ export class ContactModal {
    * Emits an event to close the modal.
    */
   onClose() {
-    this.close.emit();
+	this.isClosing.set(true);
+	setTimeout(() => {
+		this.close.emit();
+		this.isClosing.set(false);
+	}, 300);
   }
 
 

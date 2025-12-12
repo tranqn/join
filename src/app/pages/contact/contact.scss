@@ -4,7 +4,6 @@
 
 .contact {
 	background-color: #f6f7f8;
-	overflow-x: hidden;
 	position: relative;
 	@include dFlex-responsive(
 		row,
@@ -68,6 +67,7 @@
 	}
 
 	&__details {
+		overflow-x: hidden;
 		position: relative;
 		flex: 1;
 		@media (max-width: 991px) {

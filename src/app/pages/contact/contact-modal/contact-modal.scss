@@ -4,381 +4,412 @@
 @use '../../../styles/mixin.scss' as *;
 
 .contact-modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 
-  &__backdrop {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.5);
-    animation: fadeIn 0.2s ease-out;
-  }
+	&__backdrop {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		animation: fadeIn 0.2s ease-out;
+	}
+	&--closing {
+		animation: slideOut 0.3s ease-out;
+	}
 
-  &__dialog {
-    position: relative;
-    z-index: 1;
-    background: white;
-    border-radius: radius(large);
-    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 1200px;
-	height: 500px;
-    overflow: hidden;
-    animation: slideIn 0.3s ease-out;
+	&__dialog {
+		position: relative;
+		z-index: 1;
+		background: white;
+		border-radius: radius(large);
+		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+		width: 100%;
+		max-width: 1200px;
+		height: 500px;
+		overflow: hidden;
+		animation: slideIn 0.3s ease-out;
 
-    @include respond-max($break-md) {
-      height: calc(100vh - 60px);
-	  width: calc(100% - 20px);
-    }
-  }
-
-  &__close-btn {
-    position: absolute;
-    top: $spacing-md;
-    right: $spacing-md;
-    background: none;
-    border: none;
-    font-size: 28px;
-    line-height: 1;
-    color: #666;
-    cursor: pointer;
-    padding: 0;
-    width: 32px;
-    height: 32px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: color 0.2s;
-    z-index: 10;
-
-	@include respond-max($break-md) {
-		top: 10px;
-		right: 10px;
-		img {
-			filter: brightness(6);
+		@include respond-max($break-md) {
+			height: calc(100vh - 60px);
+			width: calc(100% - 20px);
+		}
+		&--closing {
+			animation: slideOut 0.35s ease-out;
 		}
 	}
 
-    &:hover {
-      color: #000;
-	  background-color: #EEEEEE;
-	  border-radius: 100%;
-    }
-  }
+	&__close-btn {
+		position: absolute;
+		top: $spacing-md;
+		right: $spacing-md;
+		background: none;
+		border: none;
+		font-size: 28px;
+		line-height: 1;
+		color: #666;
+		cursor: pointer;
+		padding: 0;
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: color 0.2s;
+		z-index: 10;
+		-webkit-tap-highlight-color: transparent;
 
-  &__content {
-	height: 100%;
-    display: flex;
-    flex-direction: row;
-    min-height: 450px;
+		&:hover {
+			background-color: #eeeeee;
+			border-radius: 100%;
+		}
 
-    @include respond-max($break-md) {
-      flex-direction: column;
-    }
-  }
+		@include respond-max($break-md) {
+			top: 10px;
+			right: 10px;
+			&:hover {
+				background-color: transparent;
+			}
+			img {
+				filter: brightness(6);
+			}
+		}
+	}
 
-  &__branding-wrapper {
-	transform: translateY(-30px);
+	&__content {
+		height: 100%;
+		display: flex;
+		flex-direction: row;
+		min-height: 450px;
 
-	@include respond-max($break-md) {
-        transform: translateY(0);
-      }
-  }
+		@include respond-max($break-md) {
+			flex-direction: column;
+		}
+	}
 
-  &__branding {
-    flex: 0 0 40%;
-    background: $darkblue;
-    padding: $spacing-lg;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    color: white;
+	&__branding-wrapper {
+		transform: translateY(-30px);
 
-	
-    @include respond-max($break-md) {
-		flex: 0 0 50%;
+		@include respond-max($break-md) {
+			transform: translateY(0);
+		}
+	}
+
+	&__branding {
+		flex: 0 0 40%;
+		background: $darkblue;
+		padding: $spacing-lg;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: flex-start;
+		color: white;
+
+		@include respond-max($break-md) {
+			flex: 0 0 50%;
+			padding: $spacing-sm;
+		}
+
+		@media (max-width: 768px) and (max-height: 700px) {
+			max-height: 250px;
+		}
+	}
+
+	&__branding-logo {
+		margin-bottom: $spacing-sm;
+		width: 50px;
+		height: auto;
+
+		@include respond-max($break-md) {
+			display: none;
+		}
+	}
+
+	&__branding-title {
+		font-size: 61px;
+		font-weight: 700;
+		margin: 0 0 $spacing-xs 0;
+		text-align: left;
+
+		@include respond-max($break-md) {
+			font-size: 36px;
+		}
+	}
+
+	&__branding-subtitle {
+		font-size: 27px;
+		font-weight: 400;
+		margin: 0 0 $spacing-sm 0;
+		text-align: left;
+		color: white;
+		opacity: 1;
+
+		@include respond-max($break-md) {
+			font-size: 20px;
+		}
+	}
+
+	&__branding-divider {
+		width: 20%;
+		height: 3px;
+		background: $light-blue;
+	}
+
+	&__profile-icon {
+		flex: 0 0 20%;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		padding: $spacing-sm;
-    }
+		background: white;
 
-	@media (max-width: 768px) and (max-height: 700px) {
-		max-height: 250px;
-	}
-  }
+		@include respond-max($break-md) {
+			position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+			background: transparent;
+			padding: 0;
+			z-index: 10;
+		}
 
-  &__branding-logo {
-    margin-bottom: $spacing-sm;
-    width: 50px;
-    height: auto;
+		@media (max-width: 768px) and (max-height: 700px) {
+			top: 250px;
+		}
 
-    @include respond-max($break-md) {
-      display: none;
-    }
-  }
+		img {
+			width: 110px;
+			height: 110px;
 
-  &__branding-title {
-    font-size: 61px;
-    font-weight: 700;
-    margin: 0 0 $spacing-xs 0;
-    text-align: left;
+			@include respond-max($break-md) {
+				width: 80px;
+				height: 80px;
+			}
+		}
 
-    @include respond-max($break-md) {
-      font-size: 36px;
-    }
-  }
+		.profil-icon {
+			border-radius: 100%;
+			border: 3px solid #fff;
+			transform: translateY(-30px);
+			box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.05);
 
-  &__branding-subtitle {
-    font-size: 27px;
-    font-weight: 400;
-    margin: 0 0 $spacing-sm 0;
-    text-align: left;
-    color: white;
-    opacity: 1;
+			@include respond-max($break-md) {
+				transform: translateY(0);
+			}
 
-    @include respond-max($break-md) {
-      font-size: 20px;
-    }
-  }
+			& > p {
+				font-size: 47px;
+				font-weight: 500;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				width: 120px;
+				height: 120px;
+				color: white;
+				margin: 0;
 
-  &__branding-divider {
-    width: 20%;
-    height: 3px;
-    background: $light-blue;
-  }
-
-  &__profile-icon {
-    flex: 0 0 20%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: $spacing-sm;
-    background: white;
-
-    @include respond-max($break-md) {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: transparent;
-      padding: 0;
-      z-index: 10;
-    }
-	
-	@media (max-width: 768px) and (max-height: 700px) {
-		top: 250px;
+				@include respond-max($break-md) {
+					font-size: 32px;
+					width: 80px;
+					height: 80px;
+				}
+			}
+		}
 	}
 
-    img {
-      width: 110px;
-      height: 110px;
+	&__form {
+		flex: 0 0 40%;
+		padding: $spacing-lg;
+		overflow-y: auto;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 
-      @include respond-max($break-md) {
-        width: 80px;
-        height: 80px;
-      }
-    }
+		@include respond-max($break-md) {
+			flex: 1;
+			padding: $spacing-sm;
+		}
+	}
 
-    .profil-icon {
-      border-radius: 100%;
-      border: 2px solid #fff;
-	  transform: translateY(-30px);
-	  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.05);
+	&__field {
+		margin-bottom: $spacing-sm;
+	}
 
-      @include respond-max($break-md) {
-        transform: translateY(0);
-      }
+	&__label {
+		display: none;
+	}
 
-      & > p {
-        font-size: 47px;
-        font-weight: 500;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 120px;
-        height: 120px;
-        color: white;
-        margin: 0;
+	&__input-wrapper {
+		position: relative;
+		display: flex;
+		align-items: center;
+	}
 
-        @include respond-max($break-md) {
-          font-size: 32px;
-          width: 80px;
-          height: 80px;
-        }
-      }
-    }
-  }
+	&__input {
+		width: 100%;
+		padding: $spacing-sm;
+		padding-right: 40px;
+		border: 1px solid #ccc;
+		border-radius: map.get($radius, small);
+		font-size: 14px;
+		font-family: inherit;
+		transition: border-color 0.1s;
+		&:-webkit-autofill,
+		&:-webkit-autofill:hover,
+		&:-webkit-autofill:focus,
+		&:-webkit-autofill:active,
+		&:-internal-autofill-selected {
+			-webkit-text-fill-color: #000000 !important;
+			-webkit-text-fill-color: #000000;
+			background-color: transparent !important;
+			background: transparent !important;
+			transition: all 5000s ease-in-out 0s !important;
+			color: #000000 !important;
+			appearance: none !important;
+			box-shadow: inset 0 0 0 1000px transparent !important;
+		}
 
-  &__form {
-    flex: 0 0 40%;
-    padding: $spacing-lg;
-    overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+		&:focus {
+			outline: none;
+			border-color: $light-blue;
+		}
 
-    @include respond-max($break-md) {
-      flex: 1;
-      padding: $spacing-sm;
-    }
-  }
+		&--error {
+			border-color: #e60026;
+		}
+	}
 
-  &__field {
-    margin-bottom: $spacing-sm;
-  }
+	&__input-icon {
+		position: absolute;
+		right: $spacing-sm;
+		width: 20px;
+		height: 20px;
+		pointer-events: none;
+	}
 
-  &__label {
-    display: none;
-  }
+	&__error {
+		display: block;
+		min-height: 20px; // Always reserve space for error messages
+		font-size: 16px;
+		color: #e60026;
+		margin-top: $spacing-xs;
+		transition: opacity 0.2s ease-out;
 
-  &__input-wrapper {
-    position: relative;
-    display: flex;
-    align-items: center;
-  }
+		&--hidden {
+			opacity: 0;
+			visibility: hidden;
+		}
+	}
 
-  &__input {
-    width: 100%;
-    padding: $spacing-sm;
-    padding-right: 40px;
-    border: 1px solid #ccc;
-    border-radius: map.get($radius, small);
-    font-size: 14px;
-    font-family: inherit;
-    transition: border-color 0.1s;
+	&__actions {
+		display: flex;
+		gap: $spacing-sm;
+		justify-content: flex-start;
 
-    &:focus {
-      outline: none;
-      border-color: $light-blue;
-    }
+		@include respond-max($break-md) {
+			justify-content: center;
+		}
+	}
 
-    &--error {
-      border-color: #ff6347;
-    }
-  }
+	&__btn {
+		padding: $spacing-sm $spacing-md;
+		border-radius: map.get($radius, small);
+		font-size: 14px;
+		font-weight: 500;
+		font-family: inherit;
+		cursor: pointer;
+		transition: all 0.1s;
+		display: flex;
+		align-items: center;
+		gap: $spacing-xs;
 
-  &__input-icon {
-    position: absolute;
-    right: $spacing-sm;
-    width: 20px;
-    height: 20px;
-    pointer-events: none;
-  }
+		&:hover:not(:disabled) {
+			box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+		}
 
-  &__error {
-    display: block;
-    min-height: 20px; // Always reserve space for error messages
-    font-size: 16px;
-    color: #ff6347;
-    margin-top: $spacing-xs;
-    transition: opacity 0.2s ease-out;
+		&:disabled {
+			opacity: 0.5;
+			cursor: not-allowed;
+		}
 
-    &--hidden {
-      opacity: 0;
-      visibility: hidden;
-    }
-  }
+		&--cancel {
+			background: white;
+			color: $darkblue;
+			border: 1px solid $darkblue;
 
-  &__actions {
-    display: flex;
-    gap: $spacing-sm;
-    justify-content: flex-start;
+			&:hover:not(:disabled) {
+				border: 1px solid $light-blue;
+				color: $light-blue;
+			}
 
-    @include respond-max($break-md) {
-      justify-content: center;
-    }
-  }
+			@include respond-max($break-md) {
+				display: none;
+			}
+		}
 
-  &__btn {
-    padding: $spacing-sm $spacing-md;
-    border-radius: map.get($radius, small);
-    font-size: 14px;
-    font-weight: 500;
-    font-family: inherit;
-    cursor: pointer;
-    transition: all 0.1s;
-    display: flex;
-    align-items: center;
-    gap: $spacing-xs;
+		&--delete {
+			background: white;
+			color: $darkblue;
+			border: 1px solid $darkblue;
 
-    &:hover:not(:disabled) {
-      box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
-    }
+			&:hover:not(:disabled) {
+				color: $light-blue;
+				border: 1px solid $light-blue;
+			}
+		}
 
-    &:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
+		&--submit {
+			background: $darkblue;
+			color: white;
+			border: none;
 
-    &--cancel {
-      background: white;
-      color: $darkblue;
-      border: 1px solid $darkblue;
+			&:hover:not(:disabled) {
+				background: $light-blue;
+			}
+		}
+	}
 
-      &:hover:not(:disabled) {
-        border: 1px solid $light-blue;
-        color: $light-blue;
-      }
-
-      @include respond-max($break-md) {
-        display: none;
-      }
-    }
-
-    &--delete {
-      background: white;
-      color: $darkblue;
-      border: 1px solid $darkblue;
-
-      &:hover:not(:disabled) {
-		color: $light-blue;
-      	border: 1px solid $light-blue;
-
-      }
-    }
-
-    &--submit {
-      background: $darkblue;
-      color: white;
-      border: none;
-
-      &:hover:not(:disabled) {
-        background: $light-blue;
-      }
-    }
-  }
-
-  &__btn-icon {
-    flex-shrink: 0;
-    order: 2;
-  }
+	&__btn-icon {
+		flex-shrink: 0;
+		order: 2;
+	}
 }
 
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
 }
 
 @keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(100%);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+@keyframes slideOut {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
 }

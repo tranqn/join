@@ -99,11 +99,17 @@
 
 		&:hover {
 			background: linear-gradient(180deg,rgba(249, 249, 249, 1) 0%, rgba(240, 240, 240, 1) 100%);
+			.contacts__initials {
+				border: 2px solid #fff;
+			}
 		}
 
 		&.active {
 			background: $darkblue;
 			color: #fff;
+			.contacts__initials {
+				border: 2px solid #fff;
+			}
 		}
 	}
 
@@ -112,7 +118,9 @@
 		width: 40px;
 		height: 40px;
 		border-radius: 100%;
+		border: 2px solid transparent;
 		@include dFlex-responsive(row, row, $justify: center, $align: center);
+
 	}
 
 	&__info {

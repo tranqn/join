@@ -52,6 +52,7 @@
 		cursor: pointer;
 		font-size: 18px;
 		transition: background 150ms ease-in-out;
+		color: #CDCDCD;
 
 		&:hover {
 			background-color: $nav-hover;
@@ -59,12 +60,17 @@
 
 		&.active {
 			background-color: $secondary-color;
+			color: white;
+			.nav-icon {
+				filter: brightness(0) invert(1);
+			}
 		}
 
 		& .nav-icon {
 			width: 24px;
 			height: 24px;
 			object-fit: contain;
+			
 		}
 	}
 }
@@ -146,6 +152,9 @@
 
 			&.active {
 				border-radius: map.get($radius, medium);
+				.nav-icon {
+					filter: brightness(0) invert(1);
+				}
 			}
 
 			.nav-icon {

@@ -13,7 +13,7 @@ export class ColorService {
 		'#14B8A6',
 		'#1F2937',
 		'#6B7280',
-		'#F3F4F6',
+		'#C3FF2B',
 		'#FBBF24',
 		'#EF4444',
 		'#06B6D4',

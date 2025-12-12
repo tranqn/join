@@ -50,10 +50,15 @@ section {
 			display: none;
 		}
 
-		.edit-btn,
-		.delete-btn {
+		.edit-btn {
+			width: 76px;
 			display: flex;
-			gap: 10px;
+			justify-content: space-between;
+		}
+		.delete-btn {
+			width: 92px;
+			display: flex;
+			justify-content: space-between;
 		}
 
 		button {
@@ -98,7 +103,8 @@ section {
 
 .profil-icon {
 	border-radius: 100%;
-	border: 2px solid #fff;
+	border: 3px solid #fff;
+	box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.05);
 	& > p {
 		@include text-style-responsive(27px, 37px, 47px, 'Inter', 500);
 		display: flex;
