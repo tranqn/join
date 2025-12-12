@@ -12,6 +12,7 @@ section {
 .board {
 	@include dFlex-responsive(row, row, space-between, center);
 	flex-wrap: wrap;
+	margin-bottom: $spacing-lg;
 	h1 {
 		margin-right: auto;
 		@include respond-max($break-xl) {

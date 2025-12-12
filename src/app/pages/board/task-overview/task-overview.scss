@@ -1,0 +1,18 @@
+@use '../../../../app/styles/vars.scss' as *;
+@use '../../../../app/styles/mixin.scss' as *;
+@use 'sass:map';
+
+.overview {
+	&__head {
+		width: 100%;
+		@include dFlex-responsive(column, row, center, center);
+		gap: $spacing-md;
+	}
+	&__column {
+		flex: 0 0 calc(25% - 15px);
+	}
+	&__title {
+		color: $darkblue;
+		@include dFlex-responsive(row, row, space-between, center);
+	}
+}
