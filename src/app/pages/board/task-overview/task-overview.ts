@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
+import { Icon } from "../../../shared/icon/icon";
 
 @Component({
 	selector: 'app-task-overview',
-	imports: [],
+	imports: [Icon],
 	templateUrl: './task-overview.html',
 	styleUrl: './task-overview.scss'
 })

@@ -1,0 +1,16 @@
+:host {
+  display: inline-flex;
+  color: inherit;
+}
+
+.icon {
+  display: block;
+  background-color: currentColor;
+  mask-size: contain;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: center;
+  transition: background-color 0.2s ease;
+}

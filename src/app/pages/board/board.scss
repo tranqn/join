@@ -48,7 +48,7 @@ section {
 		&--field {
 			border: none;
 			border-right: 1px solid $board-border;
-			height: 40px;
+			height: 30px;
 			font-size: 1.25rem;
 			@include respond-max($break-xl) {
 				width: 100%;
@@ -74,7 +74,7 @@ section {
 		color: #fff;
 		border: none;
 		border-radius: radius(medium);
-		padding: 1rem $spacing-md;
+		padding: .75rem 1rem;
 		gap: $spacing-sm;
 		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {

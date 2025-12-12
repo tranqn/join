@@ -8,10 +8,6 @@
 		@include dFlex-responsive(column, row, center, center);
 		gap: $spacing-md;
 		img {
-			padding: $spacing-xs;
-			border: 2px solid $darkblue;
-			border-radius: radius(medium);
-			cursor: pointer;
 		}
 	}
 	&__column {
@@ -21,5 +17,16 @@
 		color: $darkblue;
 		padding-left: $spacing-sm;
 		@include dFlex-responsive(row, row, space-between, center);
+		app-icon {
+			color: $darkblue;
+			padding: $spacing-xs;
+			border: 2px solid $darkblue;
+			border-radius: radius(medium);
+			cursor: pointer;
+			&:hover {
+				color: $light-blue;
+				border-color: $light-blue;
+			}
+		}
 	}
 }
