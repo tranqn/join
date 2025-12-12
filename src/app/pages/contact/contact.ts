@@ -10,7 +10,7 @@ import { FirebaseService } from '../../services/firebase-service';
  * @returns The initials of the name (e.g., "John Doe" becomes "JD")
  */
 export function getShortName(fullName: string): string {
-	return fullName.split(' ').map(n => n[0]).join('');
+	return fullName.split(' ').map(n => n[0].toUpperCase()).join('');
 }
 
 @Component({

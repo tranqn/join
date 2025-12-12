@@ -53,12 +53,18 @@ section {
 		.edit-btn {
 			width: 76px;
 			display: flex;
-			justify-content: space-between;
+			justify-content: flex-start;
+			align-items: center;
+			gap: .5rem;
+			cursor: pointer;
 		}
 		.delete-btn {
 			width: 92px;
 			display: flex;
-			justify-content: space-between;
+			justify-content: flex-start;
+			align-items: center;
+			gap: .5rem;
+			cursor: pointer;
 		}
 
 		button {
