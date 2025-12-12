@@ -7,12 +7,19 @@
 		width: 100%;
 		@include dFlex-responsive(column, row, center, center);
 		gap: $spacing-md;
+		img {
+			padding: $spacing-xs;
+			border: 2px solid $darkblue;
+			border-radius: radius(medium);
+			cursor: pointer;
+		}
 	}
 	&__column {
 		flex: 0 0 calc(25% - 15px);
 	}
 	&__title {
 		color: $darkblue;
+		padding-left: $spacing-sm;
 		@include dFlex-responsive(row, row, space-between, center);
 	}
 }
