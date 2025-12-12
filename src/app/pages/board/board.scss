@@ -1,0 +1,99 @@
+@use '../../../app/styles/vars.scss' as *;
+@use '../../../app/styles/mixin.scss' as *;
+@use 'sass:map';
+
+section {
+	padding: $spacing-xl $spacing-lg $spacing-md;
+	@include respond-max($break-md) {
+		padding: $spacing-lg $spacing-sm $spacing-md;
+	}
+}
+
+.board {
+	@include dFlex-responsive(row, row, space-between, center);
+	flex-wrap: wrap;
+	h1 {
+		margin-right: auto;
+		@include respond-max($break-xl) {
+			flex: 0 0 100%;
+			margin-bottom: $spacing-sm;
+		}
+		@include respond-max($break-md) {
+			flex: unset;
+			margin-bottom: 0;
+		}
+	}
+	&__search {
+		@include dFlex-responsive(row, row, center, center);
+		padding: .5rem 1rem;
+		border: 1px solid $board-border;
+		border-radius: radius(medium);
+		gap: 10px;
+		margin-right: 2rem;
+		@include respond-max($break-xl) {
+			margin-right: $spacing-md;
+			flex: 0 0 calc(60% - 10px);
+		}
+		@include respond-max($break-lg) {
+			margin-right: $spacing-sm;
+			flex: 0 0 calc(60% - 5px);
+		}
+		@include respond-max($break-md) {
+			margin-top: $spacing-lg;
+			margin-right: 0;
+			flex: 0 0 100%;
+			order: 1;
+		}
+		&--field {
+			border: none;
+			border-right: 1px solid $board-border;
+			height: 40px;
+			font-size: 1.25rem;
+			@include respond-max($break-xl) {
+				width: 100%;
+			}
+			&:focus {
+				outline: none;
+			}
+			&::placeholder {
+				font-size: 1.25rem;
+			}
+		}
+		&--btn {
+			border: none;
+			background: transparent;
+			img {
+				width: 25px;
+				object-fit: contain;
+			}
+		}
+	}
+	&__add {
+		background: $darkblue;
+		color: #fff;
+		border: none;
+		border-radius: radius(medium);
+		padding: 1rem $spacing-md;
+		gap: $spacing-sm;
+		@include dFlex-responsive(row, row, center, center);
+		@include respond-max($break-xl) {
+			flex: 0 0 calc(40% - 10px);
+		}
+		@include respond-max($break-lg) {
+			flex: 0 0 calc(40% - 5px);
+		}
+		@include respond-max($break-md) {
+			flex: unset;
+			width: fit-content;
+			padding: $spacing-sm;
+			span {
+				display: none;
+			}
+		}
+		img {
+			width: 25px;
+			object-fit: contain;
+			filter: brightness(6);
+		}
+	}
+}

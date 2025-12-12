@@ -1,11 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-board',
-  imports: [],
+  imports: [FormsModule],
   templateUrl: './board.html',
   styleUrl: './board.scss',
 })
 export class Board {
-
+  search = signal('');
 }

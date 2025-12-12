@@ -1,1 +1,21 @@
-<p>board works!</p>
+<section>
+	<div class="board">
+		<h1>Board</h1>
+		<div class="board__search">
+			<input
+				type="text"
+				[(ngModel)]="search"
+				class="board__search--field"
+				placeholder="Find task"
+				name="search"
+			/>
+			<button class="board__search--btn">
+				<img src="icons/search.svg" alt="Search Icon" />
+			</button>
+		</div>
+		<button class="board__add h5">
+			<span>Add Task</span>
+			<img src="icons/plus.svg" alt="Plus Icon" />
+		</button>
+	</div>
+</section>

@@ -50,7 +50,6 @@
 		align-items: center;
 		justify-content: center;
 		gap: $spacing-sm;
-		cursor: pointer;
 		transition: background 0.1s;
 		font-family: inherit;
 		&:hover {
@@ -87,7 +86,6 @@
 	&__card {
 		gap: $spacing-md;
 		padding: 1rem 1.5rem;
-		cursor: pointer;
 		border-radius: radius(medium);
 		margin-bottom: $spacing-sm;
 		@include dFlex-responsive(

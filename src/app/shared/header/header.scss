@@ -54,7 +54,6 @@
 	& .help-btn {
 		width: 20px;
 		height: 20px;
-		cursor: pointer;
 		transition: all 0.1s ease;
 		&:hover {
 			transform: scale(1.2);
@@ -70,7 +69,6 @@
 		border-radius: 50%;
 		border: 3px solid #2a3647;
 		@include dFlex-responsive(row, row, $justify: center, $align: center);
-		cursor: pointer;
 		&:hover {
 			background-color: rgba($user-hover, .12);
 		}
