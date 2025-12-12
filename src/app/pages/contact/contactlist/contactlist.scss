@@ -95,12 +95,12 @@
 			$justify: flex-start,
 			$align: center
 		);
+		.contacts__initials {
+			border: 2px solid #fff;
+		}
 
 		&:hover {
 			background: linear-gradient(180deg,rgba(249, 249, 249, 1) 0%, rgba(240, 240, 240, 1) 100%);
-			.contacts__initials {
-				border: 2px solid #fff;
-			}
 		}
 
 		&.active {
