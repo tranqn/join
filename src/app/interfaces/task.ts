@@ -1,6 +1,6 @@
 import { Contact } from "../pages/contact/contact";
 
-export interface Task {
+export interface TaskModel {
 	id: string,
 	title: string,
 	description: string,

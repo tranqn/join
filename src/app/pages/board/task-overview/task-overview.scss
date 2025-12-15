@@ -5,10 +5,8 @@
 .overview {
 	&__head {
 		width: 100%;
-		@include dFlex-responsive(column, row, center, center);
+		@include dFlex-responsive(column, row, center, flex-start);
 		gap: $spacing-md;
-		img {
-		}
 	}
 	&__column {
 		flex: 0 0 calc(25% - 15px);
@@ -16,6 +14,7 @@
 	&__title {
 		color: $darkblue;
 		padding-left: $spacing-sm;
+		margin-bottom: $spacing-md;
 		@include dFlex-responsive(row, row, space-between, center);
 		app-icon {
 			color: $darkblue;

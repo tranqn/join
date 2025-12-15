@@ -13,7 +13,7 @@ import {
 	limit,
 	where
 } from '@angular/fire/firestore';
-import { Task } from '../interfaces/task';
+import { TaskModel } from '../interfaces/task';
 
 @Injectable({
 	providedIn: 'root'
@@ -21,10 +21,10 @@ import { Task } from '../interfaces/task';
 export class Taskservice {
 	firestore: Firestore = inject(Firestore);
 
-	tasksTodo = signal<Task[]>([]);
-	tasksProgress = signal<Task[]>([]);
-	tasksFeedback = signal<Task[]>([]);
-	tasksDone = signal<Task[]>([]);
+	tasksTodo = signal<TaskModel[]>([]);
+	tasksProgress = signal<TaskModel[]>([]);
+	tasksFeedback = signal<TaskModel[]>([]);
+	tasksDone = signal<TaskModel[]>([]);
 
 	unsubTodo: () => void;
 	unsubProgress: () => void;
@@ -44,11 +44,11 @@ export class Taskservice {
 		})
 	}
 
-	subTasksList(status: string, array: WritableSignal<Task[]>) {
+	subTasksList(status: string, array: WritableSignal<TaskModel[]>) {
       let ref = collection(doc(collection(this.firestore, "tasks"), "eTNSEOMKn9dt9XGy6m9l"), status);
       const q = query(ref, limit(100));
         return onSnapshot(q, (list) => {
-            const tasks: Task[] = [];
+            const tasks: TaskModel[] = [];
             list.forEach((element) => {
                 tasks.push(this.setTaskObject(element.data(), element.id));
             });
@@ -56,7 +56,7 @@ export class Taskservice {
         });
     }
 
-	setTaskObject(obj: any, id: string): Task {
+	setTaskObject(obj: any, id: string): TaskModel {
 		return {
 			id: id,
 			title: obj.title || '',

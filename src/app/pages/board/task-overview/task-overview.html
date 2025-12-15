@@ -8,6 +8,14 @@
 						<app-icon name="plus" [size]="12"/>
 					}
 				</div>
+				<app-task-column 
+					cdkDropList 
+					[cdkDropListData]="item.id"
+					[cdkDropListConnectedTo]="connectedLists()[columns.indexOf(item)]">
+					@for (task of getTasksByStatus(item.id); track task.id) {
+						<app-task [task]="task" cdkDrag></app-task>
+					}
+				</app-task-column>
 			</div>
 		}
 	</div>
