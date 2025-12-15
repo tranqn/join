@@ -1,0 +1,46 @@
+<section>
+	<div class="task-modal">
+		<div class="task-modal__header">
+			<p>User Story</p>
+			<button (click)="closeTaskModal()">x</button>
+		</div>
+
+		<div class="task-modal__title">
+			<h1>{{ task()?.title }}</h1>
+		</div>
+
+		<div class="task-modal__description">
+			<p>Build start page with recipe recommendation.</p>
+		</div>
+
+		<div class="task-modal__meta">
+			<p>Due date:</p>
+			<span>{{ task()?.dueDate }}</span>
+		</div>
+
+		<div class="task-modal__meta">
+			<p>Priority:</p>
+			<span>{{ task()?.priority }}</span>
+		</div>
+
+		<div class="task-modal__meta">
+			<span>Assigned To:</span>
+			<div>{{ task()?.assignedTo }}</div>
+		</div>
+
+		@if(task()?.subtasks){
+		<div class="task-modal__meta">
+			<p class="h5">Subtask</p>
+			@for(item of task()?.subtasks;track $index){
+			<input type="checkbox" [name]="'subtask' + $index" />
+			<label [for]="'subtask' + $index"></label>
+			}
+		</div>
+		}
+
+		<div class="task-modal__actions">
+			<button class="delete-btn" (click)="onDelete()">Delete</button>
+			<button class="edit-btn" (click)="onEdit()">Edit</button>
+		</div>
+	</div>
+</section>

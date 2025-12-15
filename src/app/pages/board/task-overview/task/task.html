@@ -1,4 +1,4 @@
-<div class="task">
+<div class="task" (click)="openTaskModal()">
 	<h4 class="task__title">{{ task()?.title }}</h4>
 	<p class="task__description">{{ task()?.description }}</p>
 	<div class="task__meta">
@@ -6,3 +6,6 @@
 		<span class="task__category">{{ task()?.category }}</span>
 	</div>
 </div>
+@if (isOpen()) {
+	<app-task-modal (close)="closeTaskModal()"></app-task-modal>
+}
