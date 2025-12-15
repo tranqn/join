@@ -32,10 +32,10 @@ export class Taskservice {
 	unsubDone: () => void;
 
 	constructor() {
-		this.unsubTodo = this.subTasksList('to-do', this.tasksTodo);
-		this.unsubProgress = this.subTasksList('progress', this.tasksProgress);
-		this.unsubFeedback = this.subTasksList('feedback', this.tasksFeedback);
-		this.unsubDone = this.subTasksList('done', this.tasksDone);
+		this.unsubTodo = this.subTasksList(this.tasksTodo, 'todo');
+		this.unsubProgress = this.subTasksList(this.tasksProgress, 'progress');
+		this.unsubFeedback = this.subTasksList(this.tasksFeedback, 'feedback');
+		this.unsubDone = this.subTasksList(this.tasksDone, 'done');
 		effect(() => {
 			console.log('To Do',this.tasksTodo());
 			console.log('Progress',this.tasksProgress());
@@ -44,9 +44,9 @@ export class Taskservice {
 		})
 	}
 
-	subTasksList(status: string, array: WritableSignal<TaskModel[]>) {
-      let ref = collection(doc(collection(this.firestore, "tasks"), "eTNSEOMKn9dt9XGy6m9l"), status);
-      const q = query(ref, limit(100));
+	subTasksList(array: WritableSignal<TaskModel[]>, status: string) {
+      let ref = (collection(this.firestore, "tasks"));
+      const q = query(ref, where('status', '==', status), limit(100));
         return onSnapshot(q, (list) => {
             const tasks: TaskModel[] = [];
             list.forEach((element) => {
