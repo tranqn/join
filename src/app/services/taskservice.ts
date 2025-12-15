@@ -69,4 +69,12 @@ export class Taskservice {
 			subtasks: obj.subtasks || null
 		};
 	}
+
+	/**
+	 * Updates a task's status in Firestore
+	 */
+	async updateTaskStatus(taskId: string, newStatus: string) {
+		const taskRef = doc(this.firestore, 'tasks', taskId);
+		await updateDoc(taskRef, { status: newStatus });
+	}
 }

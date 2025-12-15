@@ -71,6 +71,16 @@ export class TaskOverview implements AfterViewInit {
 	}
 
 	/**
+	 * Handles task drop to update status
+	 */
+	onTaskDropped(event: CdkDragDrop<any>, targetStatus: string) {
+		const task = event.item.data;
+		if (task && task.status !== targetStatus) {
+			this.taskService.updateTaskStatus(task.id, targetStatus);
+		}
+	}
+
+	/**
 	 * Initialize connected lists after view init
 	 */
 	ngAfterViewInit() {

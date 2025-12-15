@@ -11,9 +11,10 @@
 				<app-task-column 
 					cdkDropList 
 					[cdkDropListData]="item.id"
-					[cdkDropListConnectedTo]="connectedLists()[columns.indexOf(item)]">
+					[cdkDropListConnectedTo]="connectedLists()[columns.indexOf(item)]"
+					(cdkDropListDropped)="onTaskDropped($event, item.id)">
 					@for (task of getTasksByStatus(item.id); track task.id) {
-						<app-task [task]="task" cdkDrag></app-task>
+						<app-task [task]="task" cdkDrag [cdkDragData]="task"></app-task>
 					} @empty {
 						<div class="placeholder">No tasks {{ item.title }}</div>
 					}
