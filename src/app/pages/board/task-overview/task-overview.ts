@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Icon } from "../../../shared/icon/icon";
+import { Taskservice } from '../../../services/taskservice';
 
 @Component({
 	selector: 'app-task-overview',
@@ -8,6 +9,8 @@ import { Icon } from "../../../shared/icon/icon";
 	styleUrl: './task-overview.scss'
 })
 export class TaskOverview {
+	taskService = inject(Taskservice);
+	
 	columns = [
 		{
 			title: 'To do',
