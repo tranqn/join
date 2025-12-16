@@ -50,7 +50,7 @@ export class ContactDetails {
 			`Are you sure you want to delete ${currentContact.name}?`,
 			async () => {
 				try {
-					await this.firebaseService.deleteContact(currentContact.id!);
+					await this.firebaseService.deleteItemFromCollection(currentContact.id!, 'contacts');
 					this.messageService.add({
 						severity: 'success',
 						summary: 'Success',

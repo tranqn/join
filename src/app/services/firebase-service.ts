@@ -14,6 +14,8 @@ import {
 	where
 } from '@angular/fire/firestore';
 import { ContactModel } from '../interfaces/contact';
+import { TaskModel } from '../interfaces/task';
+import { TaskModal } from '../pages/board/task-overview/task/task-modal/task-modal';
 
 @Injectable({
 	providedIn: 'root'
@@ -72,8 +74,8 @@ export class FirebaseService {
 	 * Deletes a contact from Firestore.
 	 * @param docId - The ID of the contact document to delete
 	 */
-	async deleteContact(docId: string) {
-		await deleteDoc(this.getSingleDocRef('contacts', docId)).catch(
+	async deleteItemFromCollection(docId: string, collectionName: string) {
+		await deleteDoc(this.getSingleDocRef(collectionName, docId)).catch(
 			(err) => {
 				console.log(err);
 			}
@@ -84,8 +86,8 @@ export class FirebaseService {
 	 * Adds a new contact to Firestore.
 	 * @param item - The contact data to add
 	 */
-	async addContact(item: {}) {
-		const contactsCollection = collection(this.firestore, 'contacts');
+	async addItemToCollection(item: {}, collectionName: string) {
+		const contactsCollection = collection(this.firestore, collectionName);
 		await addDoc(contactsCollection, item).catch((err) => {
 			console.error(err);
 		});
@@ -105,30 +107,61 @@ export class FirebaseService {
 	 * Updates an existing contact in Firestore.
 	 * @param contact - The contact with updated data
 	 */
-	async updateContact(contact: ContactModel) {
-        if (contact.id) {
+	async updateItem(item: ContactModel | TaskModel, collectionName: string) {
+        if (item.id) {
             let docRef = this.getSingleDocRef(
-                "contacts",
-                contact.id
+                collectionName,
+                item.id
             );
-            await updateDoc(docRef, this.getCleanJson(contact)).catch((err) => {
+            await updateDoc(docRef, this.checkModelType(item)).catch((err) => {
                 console.log(err);
             });
         }
     }
 
 	/**
+	 * Type guard to check if an item is a TaskModel.
+	 * @param item - The item to check
+	 * @returns True if the item is a TaskModel
+	 */
+	private isTaskModel(item: ContactModel | TaskModel): item is TaskModel {
+		return 'title' in item && 'description' in item;
+	}
+
+	checkModelType(item: ContactModel | TaskModel): {} {
+		if (this.isTaskModel(item)) {
+			return this.getCleanTaskJson(item);
+		} else {
+			return this.getCleanContactJson(item);
+		}
+    }
+
+	getCleanTaskJson(task: TaskModel): {} {
+		return {
+			id: task.id,
+			title: task.title,
+			description: task.description,
+			dueDate: task.dueDate,
+			priority: task.priority,
+			assignedTo: task.assignedTo,
+			category: task.category,
+			status: task.status,
+			subtasks: task.subtasks
+        };
+	}
+
+	/**
 	 * Converts a ContactModel to a clean JSON object for Firestore.
 	 * @param contact - The contact to convert
 	 * @returns A plain object with contact data
 	 */
-	getCleanJson(contact: ContactModel): {} {
-        return {
-            id: contact.id,
-            name: contact.name,
-            email: contact.email,
-            phone: contact.phone,
-			color: contact.color
-        };
+	getCleanContactJson(item: ContactModel): {} {
+		return {
+			id: item.id,
+			name: item.name,
+			email: item.email,
+			phone: item.phone,
+			color: item.color
+		};
     }
 }

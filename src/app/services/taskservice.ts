@@ -36,12 +36,6 @@ export class Taskservice {
 		this.unsubProgress = this.subTasksList(this.tasksProgress, 'progress');
 		this.unsubFeedback = this.subTasksList(this.tasksFeedback, 'feedback');
 		this.unsubDone = this.subTasksList(this.tasksDone, 'done');
-		effect(() => {
-			console.log('To Do',this.tasksTodo());
-			console.log('Progress',this.tasksProgress());
-			console.log('Feedback',this.tasksFeedback());
-			console.log('Done',this.tasksDone());
-		})
 	}
 
 	subTasksList(array: WritableSignal<TaskModel[]>, status: string) {

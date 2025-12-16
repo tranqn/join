@@ -120,7 +120,7 @@ export class ContactModal {
       phone: formValue.phone,
       color: this.getRandomColor()
     };
-    await this.firebaseService.addContact(newContact);
+    await this.firebaseService.addItemToCollection(newContact, 'contacts');
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
@@ -142,7 +142,7 @@ export class ContactModal {
       email: formValue.email,
       phone: formValue.phone
     };
-    await this.firebaseService.updateContact(updated);
+    await this.firebaseService.updateItem(updated, 'contacts');
     this.messageService.add({
       severity: 'success',
       summary: 'Success',
@@ -211,7 +211,7 @@ export class ContactModal {
       async () => {
         this.isSaving.set(true);
         try {
-          await this.firebaseService.deleteContact(currentContact.id);
+          await this.firebaseService.deleteItemFromCollection(currentContact.id, 'contacts');
           this.messageService.add({
             severity: 'success',
             summary: 'Success',

@@ -200,7 +200,7 @@ export class AddTask {
 			assignedTo: this.selectedContacts(),
 			subtasks: null
 		};
-		await this.taskService.addTask(task);
+		await this.firebaseService.addItemToCollection(task, 'tasks');
 	}
 
 	/**
