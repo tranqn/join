@@ -1,1 +1,193 @@
-<p>add-task works!</p>
+<section class="add-task">
+	<h1>Add Task</h1>
+
+	<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
+		<div class="task-form__content">
+			<!-- Left Column -->
+			<div class="task-form__column">
+				<!-- Title Field -->
+				<div class="form-group">
+					<label for="title">Title<span class="required">*</span></label>
+					<input
+						id="title"
+						type="text"
+						formControlName="title"
+						placeholder="Enter a title"
+						[class.invalid]="taskForm.get('title')?.invalid && taskForm.get('title')?.touched"
+					/>
+					@if (getErrorMessage('title')) {
+						<span class="error-message">{{ getErrorMessage('title') }}</span>
+					}
+				</div>
+
+				<!-- Description Field -->
+				<div class="form-group">
+					<label for="description">Description</label>
+					<textarea
+						id="description"
+						formControlName="description"
+						placeholder="Enter a description"
+						rows="4"
+					></textarea>
+				</div>
+
+				<!-- Assigned To Field -->
+				<div class="form-group">
+					<label>Assigned to</label>
+					<div class="contacts-wrapper">
+						<button
+							type="button"
+							class="contacts-trigger"
+							(click)="toggleContacts()"
+							[class.open]="isContactsOpen()"
+						>
+							<span>Select contacts to assign</span>
+							<img src="icons/arrow-drop-down.svg" alt="dropdown" [class.rotated]="isContactsOpen()" />
+						</button>
+
+						@if (isContactsOpen()) {
+							<div class="contacts-dropdown">
+								@for (contact of contacts; track contact.id) {
+									<div
+										class="contact-option"
+										(click)="toggleContact(contact)"
+										[class.selected]="isContactSelected(contact)"
+									>
+										<span class="contact-avatar" [style.background-color]="contact.color">
+											{{ getInitials(contact.name) }}
+										</span>
+										<span class="contact-name">{{ contact.name }}</span>
+										<span class="contact-checkbox">
+											@if (isContactSelected(contact)) {
+												<img src="icons/check-button-checked.svg" alt="selected" />
+											} @else {
+												<img src="icons/check-button.svg" alt="not selected" />
+											}
+										</span>
+									</div>
+								} @empty {
+									<div class="no-contacts">No contacts available</div>
+								}
+							</div>
+						}
+					</div>
+
+					<!-- Selected Contacts -->
+					@if (selectedContacts().length > 0) {
+						<div class="selected-contacts">
+							@for (contact of selectedContacts(); track contact.id) {
+								<span class="selected-avatar" [style.background-color]="contact.color">
+									{{ getInitials(contact.name) }}
+								</span>
+							}
+						</div>
+					}
+				</div>
+			</div>
+
+			<!-- Divider -->
+			<div class="task-form__divider"></div>
+
+			<!-- Right Column -->
+			<div class="task-form__column">
+				<!-- Due Date Field -->
+				<div class="form-group">
+					<label for="dueDate">Due date<span class="required">*</span></label>
+					<input
+						id="dueDate"
+						type="date"
+						formControlName="dueDate"
+						[min]="getMinDate()"
+						[class.invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
+					/>
+					@if (getErrorMessage('dueDate')) {
+						<span class="error-message">{{ getErrorMessage('dueDate') }}</span>
+					}
+				</div>
+
+				<!-- Priority Field -->
+				<div class="form-group">
+					<label>Prio</label>
+					<div class="priority-buttons">
+						@for (prio of priorities; track prio.value) {
+							<button
+								type="button"
+								class="priority-btn"
+								[class.urgent]="prio.value === 'urgent' && taskForm.get('priority')?.value === 'urgent'"
+								[class.medium]="prio.value === 'medium' && taskForm.get('priority')?.value === 'medium'"
+								[class.low]="prio.value === 'low' && taskForm.get('priority')?.value === 'low'"
+								[class.active]="taskForm.get('priority')?.value === prio.value"
+								(click)="setPriority(prio.value)"
+							>
+								<span>{{ prio.label }}</span>
+								<img [src]="prio.icon" [alt]="prio.label" />
+							</button>
+						}
+					</div>
+				</div>
+
+				<!-- Category Field -->
+				<div class="form-group">
+					<label>Category<span class="required">*</span></label>
+					<div class="category-wrapper">
+						<button
+							type="button"
+							class="category-trigger"
+							(click)="toggleCategory()"
+							[class.open]="isCategoryOpen()"
+							[class.invalid]="taskForm.get('category')?.invalid && taskForm.get('category')?.touched"
+						>
+							<span>{{ getSelectedCategoryLabel() }}</span>
+							<img src="icons/arrow-drop-down.svg" alt="dropdown" [class.rotated]="isCategoryOpen()" />
+						</button>
+
+						@if (isCategoryOpen()) {
+							<div class="category-dropdown">
+								@for (cat of categories; track cat.value) {
+									<div
+										class="category-option"
+										(click)="selectCategory(cat.value)"
+										[class.selected]="taskForm.get('category')?.value === cat.value"
+									>
+										{{ cat.label }}
+									</div>
+								}
+							</div>
+						}
+					</div>
+					@if (getErrorMessage('category')) {
+						<span class="error-message">{{ getErrorMessage('category') }}</span>
+					}
+				</div>
+
+				<!-- Subtasks placeholder - Person 3 will implement -->
+				<div class="form-group">
+					<label>Subtasks</label>
+					<div class="subtasks-placeholder">
+						<input type="text" placeholder="Add new subtask" disabled />
+						<span class="hint">Subtask feature coming soon</span>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Form Actions -->
+		<div class="task-form__actions">
+			<p class="required-hint"><span class="required">*</span>This field is required</p>
+			<div class="buttons">
+				<button type="button" class="btn-clear" (click)="clearForm()">
+					<span>Clear</span>
+					<img src="icons/close.svg" alt="clear" />
+				</button>
+				<button
+					type="submit"
+					class="btn-create"
+					[disabled]="isSaving()"
+				>
+					<span>{{ isSaving() ? 'Creating...' : 'Create Task' }}</span>
+					<img src="icons/check.svg" alt="create" />
+				</button>
+			</div>
+		</div>
+	</form>
+</section>
