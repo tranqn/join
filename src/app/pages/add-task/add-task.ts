@@ -5,6 +5,7 @@ import { MessageService } from 'primeng/api';
 import { Taskservice } from '../../services/taskservice';
 import { FirebaseService } from '../../services/firebase-service';
 import { ContactModel } from '../../interfaces/contact';
+import { Firestore, doc } from '@angular/fire/firestore';
 import { minLengthValidator, noPastDateValidator, requiredValidator, getErrorMessage } from './task-validators';
 
 @Component({
@@ -19,6 +20,7 @@ export class AddTask {
 	private firebaseService = inject(FirebaseService);
 	private messageService = inject(MessageService);
 	private router = inject(Router);
+	private firestore = inject(Firestore);
 
 	taskForm: FormGroup;
 	isSaving = signal(false);
@@ -190,6 +192,9 @@ export class AddTask {
 	 */
 	private async createTask() {
 		const formValue = this.taskForm.value;
+		const assignedToRefs = this.selectedContacts().map(contact => 
+			doc(this.firestore, 'contacts', contact.id)
+		);
 		const task = {
 			title: formValue.title.trim(),
 			description: formValue.description?.trim() || '',
@@ -197,7 +202,7 @@ export class AddTask {
 			priority: formValue.priority,
 			category: formValue.category === 'technical' ? 'Technical Task' : 'User Story',
 			status: 'todo',
-			assignedTo: this.selectedContacts(),
+			assignedTo: assignedToRefs,
 			subtasks: null
 		};
 		await this.firebaseService.addItemToCollection(task, 'tasks');

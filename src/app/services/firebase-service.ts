@@ -83,14 +83,33 @@ export class FirebaseService {
 	}
 
 	/**
-	 * Adds a new contact to Firestore.
-	 * @param item - The contact data to add
+	 * Adds a new contact or task to Firestore.
+	 * @param item - The contact or task data to add
 	 */
 	async addItemToCollection(item: {}, collectionName: string) {
 		const contactsCollection = collection(this.firestore, collectionName);
-		await addDoc(contactsCollection, item).catch((err) => {
+		// Clean the item before adding (removes id field and uses appropriate model cleaning)
+		const cleanedItem = this.cleanItemBeforeAdd(item, collectionName);
+		await addDoc(contactsCollection, cleanedItem).catch((err) => {
 			console.error(err);
 		});
+	}
+
+	/**
+	 * Cleans an item before adding it to Firestore.
+	 * @param item - The item to clean
+	 * @param collectionName - The collection name to determine item type
+	 * @returns Cleaned item without id field
+	 */
+	private cleanItemBeforeAdd(item: any, collectionName: string): {} {
+		if (collectionName === 'tasks') {
+			const { id, ...rest } = item;
+			return rest;
+		} else if (collectionName === 'contacts') {
+			const { id, ...rest } = item;
+			return rest;
+		}
+		return item;
 	}
 
 	/**
@@ -138,7 +157,6 @@ export class FirebaseService {
 
 	getCleanTaskJson(task: TaskModel): {} {
 		return {
-			id: task.id,
 			title: task.title,
 			description: task.description,
 			dueDate: task.dueDate,
@@ -157,7 +175,6 @@ export class FirebaseService {
 	 */
 	getCleanContactJson(item: ContactModel): {} {
 		return {
-			id: item.id,
 			name: item.name,
 			email: item.email,
 			phone: item.phone,
