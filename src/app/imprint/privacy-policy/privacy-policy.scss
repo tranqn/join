@@ -1,0 +1,35 @@
+.privacy-container {
+  max-width: 800px;
+  margin: 80px auto;
+  padding: 0 16px;
+  font-family: Arial, Helvetica, sans-serif;
+  color: #111;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 700;
+  margin-bottom: 40px;
+}
+
+section {
+  margin-bottom: 32px;
+}
+
+h2 {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: #444;
+}
+
+@media screen and (min-width: 1531px) {
+  .privacy-container {
+	margin: 80px 250px ;
+  }
+}
