@@ -2,6 +2,7 @@ import { Component, inject, signal, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
+import { DatePicker } from 'primeng/datepicker';
 import { Taskservice } from '../../services/taskservice';
 import { FirebaseService } from '../../services/firebase-service';
 import { ContactModel } from '../../interfaces/contact';
@@ -10,7 +11,7 @@ import { minLengthValidator, noPastDateValidator, requiredValidator, getErrorMes
 
 @Component({
 	selector: 'app-add-task',
-	imports: [ReactiveFormsModule],
+	imports: [ReactiveFormsModule, DatePicker],
 	templateUrl: './add-task.html',
 	styleUrl: './add-task.scss',
 })
@@ -27,6 +28,7 @@ export class AddTask {
 	isContactsOpen = signal(false);
 	isCategoryOpen = signal(false);
 	selectedContacts = signal<ContactModel[]>([]);
+	minDate = new Date();
 
 	priorities = [
 		{ value: 'urgent', label: 'Urgent', icon: 'icons/prio-alta.svg' },

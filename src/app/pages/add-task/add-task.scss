@@ -119,6 +119,134 @@
 	font-size: 0.875rem;
 }
 
+// PrimeNG DatePicker
+p-datepicker {
+	width: 100%;
+	display: block;
+	position: relative;
+
+	&.invalid ::ng-deep .p-inputtext {
+		border-color: $urgent-color;
+	}
+
+	::ng-deep {
+		.p-datepicker {
+			width: 100%;
+			position: relative;
+		}
+
+		.p-inputtext {
+			width: 100%;
+			padding: 12px 44px 12px 16px;
+			border: 1px solid $board-border;
+			border-radius: radius(medium);
+			font-size: 1rem;
+			font-family: inherit;
+			transition: border-color 100ms ease;
+
+			&:focus {
+				outline: none;
+				border-color: $light-blue;
+				box-shadow: none;
+			}
+		}
+
+		.p-datepicker-trigger {
+			background: transparent;
+			border: none;
+			color: $board-border;
+			position: absolute;
+			right: 8px;
+			top: 50%;
+			transform: translateY(-50%);
+			width: 32px;
+			height: 32px;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+
+			&:hover {
+				background: transparent;
+				color: $light-blue;
+			}
+
+			&:focus {
+				box-shadow: none;
+			}
+		}
+
+		// Calendar Panel
+		.p-datepicker-panel {
+			border: 1px solid $light-blue;
+			border-radius: radius(medium);
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+			margin-top: 4px;
+		}
+
+		.p-datepicker-header {
+			background: $darkblue;
+			color: white;
+			border-bottom: none;
+			padding: 12px;
+			border-radius: radius(medium) radius(medium) 0 0;
+
+			.p-datepicker-prev-button,
+			.p-datepicker-next-button {
+				color: white;
+				background: transparent;
+				border: none;
+
+				&:hover {
+					background: rgba(255, 255, 255, 0.1);
+				}
+			}
+
+			.p-datepicker-title {
+				.p-datepicker-select-month,
+				.p-datepicker-select-year {
+					color: white;
+					font-weight: 600;
+
+					&:hover {
+						color: $light-blue;
+					}
+				}
+			}
+		}
+
+		.p-datepicker-calendar {
+			th {
+				color: $darkblue;
+				font-weight: 600;
+			}
+
+			td {
+				padding: 4px;
+
+				span {
+					border-radius: radius(small);
+					transition: all 100ms ease;
+
+					&:hover {
+						background: rgba($light-blue, 0.1);
+					}
+				}
+
+				&.p-datepicker-today span {
+					background: rgba($light-blue, 0.2);
+					color: $darkblue;
+				}
+			}
+		}
+
+		.p-highlight {
+			background: $light-blue;
+			color: white;
+		}
+	}
+}
+
 // Contacts Dropdown
 .contacts-wrapper {
 	position: relative;
