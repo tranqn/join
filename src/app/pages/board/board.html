@@ -1,23 +1,27 @@
 <section>
-	<div class="board">
-		<h1>Board</h1>
-		<div class="board__search">
-			<input
-				type="text"
-				[(ngModel)]="search"
-				class="board__search--field"
-				placeholder="Find task"
-				name="search"
-				autocomplete="off"
-			/>
-			<button class="board__search--btn">
-				<img src="icons/search.svg" alt="Search Icon" />
-			</button>
-		</div>
-		<button class="board__add h5">
-			<span>Add Task</span>
-			<img src="icons/plus.svg" alt="Plus Icon" />
-		</button>
-	</div>
-	<app-task-overview></app-task-overview>
+  <div class="board">
+    <h1>Board</h1>
+
+    <div class="board__search">
+      <input
+        type="text"
+        class="board__search--field"
+        placeholder="Find task"
+        autocomplete="off"
+        [value]="search()"
+        (input)="search.set($any($event.target).value)"
+      />
+
+      <button class="board__search--btn">
+        <img src="icons/search.svg" alt="Search Icon" />
+      </button>
+    </div>
+
+    <button class="board__add h5">
+      <span>Add Task</span>
+      <img src="icons/plus.svg" alt="Plus Icon" />
+    </button>
+  </div>
+
+  <app-task-overview [search]="search"></app-task-overview>
 </section>
