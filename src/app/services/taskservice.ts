@@ -1,4 +1,4 @@
-import { effect, inject, Injectable, signal, WritableSignal } from '@angular/core';
+import { effect, inject, Injectable, signal, WritableSignal, Injector, runInInjectionContext } from '@angular/core';
 import {
 	Firestore,
 	collection,
@@ -18,6 +18,7 @@ import { TaskModel } from '../interfaces/task';
 })
 export class Taskservice {
 	firestore: Firestore = inject(Firestore);
+	private injector = inject(Injector);
 
 	tasksTodo = signal<TaskModel[]>([]);
 	tasksProgress = signal<TaskModel[]>([]);
@@ -74,19 +75,21 @@ export class Taskservice {
 
 		effect(() => {
 			const task = taskSignal();
-			
+
 			if (!task?.assignedTo || !Array.isArray(task.assignedTo) || task.assignedTo.length === 0) {
 				contacts.set([]);
 				return;
 			}
 
-			Promise.all(
-				task.assignedTo.map((ref) => getDoc(ref))
-			).then((docSnaps) => {
-				contacts.set(docSnaps.map(snap => snap.data()).filter(Boolean));
-			}).catch((error) => {
-				console.error('Error fetching contacts:', error);
-				contacts.set([]);
+			runInInjectionContext(this.injector, () => {
+				Promise.all(task.assignedTo!.map((ref) => getDoc(ref)))
+					.then((docSnaps) => {
+						contacts.set(docSnaps.map((snap) => snap.data()).filter(Boolean));
+					})
+					.catch((error) => {
+						console.error('Error fetching contacts:', error);
+						contacts.set([]);
+					});
 			});
 		});
 
@@ -97,23 +100,27 @@ export class Taskservice {
 	 * Updates a task's status in Firestore
 	 */
 	async updateTaskStatus(taskId: string, newStatus: string) {
-		const taskRef = doc(this.firestore, 'tasks', taskId);
-		await updateDoc(taskRef, { status: newStatus });
+		return runInInjectionContext(this.injector, async () => {
+			const taskRef = doc(this.firestore, 'tasks', taskId);
+			await updateDoc(taskRef, { status: newStatus });
+		});
 	}
 
 	/**
 	 * Updates multiple tasks' positions and optionally status in Firestore
 	 */
 	async updateTasksOrder(tasks: TaskModel[], newStatus?: string) {
-		const batch = writeBatch(this.firestore);
-		tasks.forEach((task, index) => {
-			const taskRef = doc(this.firestore, 'tasks', task.id);
-			const updates: any = { position: index };
-			if (newStatus !== undefined && task.status !== newStatus) {
-				updates.status = newStatus;
-			}
-			batch.update(taskRef, updates);
+		return runInInjectionContext(this.injector, async () => {
+			const batch = writeBatch(this.firestore);
+			tasks.forEach((task, index) => {
+				const taskRef = doc(this.firestore, 'tasks', task.id);
+				const updates: any = { position: index };
+				if (newStatus !== undefined && task.status !== newStatus) {
+					updates.status = newStatus;
+				}
+				batch.update(taskRef, updates);
+			});
+			await batch.commit();
 		});
-		await batch.commit();
 	}
 }

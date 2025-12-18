@@ -32,13 +32,11 @@ export class TaskOverview implements AfterViewInit {
 
   taskService = inject(Taskservice);
 
-  isDragging = signal(false);
-
   // 🔹 Search kommt als SIGNAL rein
   @Input({ required: true }) search!: WritableSignal<string>;
 
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
-  connectedLists = signal<CdkDropList[][]>([]);
+  connectedLists = signal<string[]>([]);
 
   columns = [
     { title: 'To do', id: 'todo', listName: 'TodoList' },
@@ -46,14 +44,6 @@ export class TaskOverview implements AfterViewInit {
     { title: 'Await feedback', id: 'feedback', listName: 'FeedbackList' },
     { title: 'Done', id: 'done', listName: 'DoneList' }
   ];
-
-  	onDragStart() {
-		this.isDragging.set(true);
-	}
-  
-	onDragEnd() {
-		this.isDragging.set(false);
-	}
 
   getTasksByStatus(status: string) {
     switch (status) {
@@ -109,10 +99,7 @@ export class TaskOverview implements AfterViewInit {
   }
 
   private updateConnectedLists() {
-    const allLists = this.dropLists.toArray();
-    const connected = allLists.map(list =>
-      allLists.filter(l => l.data !== list.data)
-    );
-    this.connectedLists.set(connected);
+    const ids = this.columns.map(col => col.id);
+    this.connectedLists.set(ids);
   }
 }

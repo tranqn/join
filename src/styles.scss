@@ -13,10 +13,19 @@ body {
 	margin: 0;
 }
 
+@keyframes rotateIn {
+	from { transform: rotate(0deg); }
+	to { transform: rotate(10deg); }
+}
+
 .cdk-drag-preview {
 	scrollbar-width: none !important;
-	box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
 	border-radius: 10px !important;
+	overflow: visible;
+	
+	.task {
+		animation: rotateIn 250ms ease-out forwards;
+	}
 }
 
 .cdk-drag-placeholder {

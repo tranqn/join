@@ -1,5 +1,15 @@
+@use '../../../../../app/styles/mixin.scss' as *;
+@use '../../../../../app/styles/vars.scss' as *;
+@use 'sass:map';
+
 :host {
 	display: block;
 	min-height: 400px;
 	width: 100%;
+	padding: $spacing-sm;
+	border: 2px dashed transparent;
+	&.cdk-drop-list-dragging {
+		border: 2px dashed $light-blue;
+		border-radius: radius(medium);
+	}
 }

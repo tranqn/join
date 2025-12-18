@@ -1,33 +1,33 @@
 <div class="overview">
-  <div class="overview__head">
-    @for (item of columns; track item.title) {
-      <div class="overview__column">
+	<div class="overview__head">
+		@for (item of columns; track item.title) {
+		<div class="overview__column">
+			<div class="overview__title h5">
+				{{ item.title }}
+				@if (!$last) {
+				<app-icon name="plus" [size]="12" />
+				}
+			</div>
 
-        <div class="overview__title h5">
-          {{ item.title }}
-          @if (!$last) {
-            <app-icon name="plus" [size]="12" />
-          }
-        </div>
-
-        <app-task-column
-          cdkDropList
-          [cdkDropListData]="item.id"
-          [cdkDropListConnectedTo]="connectedLists()[columns.indexOf(item)]"
-          (cdkDropListDropped)="onTaskDropped($event)"
-        >
-          @for (task of getFilteredTasksByStatus(item.id); track task.id) {
-            <app-task
-              [task]="task"
-              cdkDrag
-              [cdkDragData]="task"
-            />
-          } @empty {
-            <div class="placeholder">No tasks {{ item.title }}</div>
-          }
-        </app-task-column>
-
-      </div>
-    }
-  </div>
+			<app-task-column
+				cdkDropList
+				[id]="item.id"
+				[cdkDropListData]="item.id"
+				[cdkDropListConnectedTo]="connectedLists()"
+				(cdkDropListDropped)="onTaskDropped($event)"
+			>
+				@for (task of getFilteredTasksByStatus(item.id); track task.id)
+				{
+				<app-task
+					[task]="task"
+					cdkDrag
+					[cdkDragData]="task"
+				/>
+				} @empty {
+				<div class="placeholder">No tasks {{ item.title }}</div>
+				}
+			</app-task-column>
+		</div>
+		}
+	</div>
 </div>
