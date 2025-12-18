@@ -5,14 +5,14 @@
 section {
 	padding: $spacing-xl $spacing-lg $spacing-md;
 	@include respond-max($break-md) {
-		padding: $spacing-lg $spacing-sm $spacing-md;
+		padding: $spacing-lg $spacing-sm $spacing-xl;
 	}
 }
 
 .board {
-	@include dFlex-responsive(row, row, space-between, center);
 	flex-wrap: wrap;
 	margin-bottom: $spacing-lg;
+	@include dFlex-responsive(row, row, space-between, center);
 	h1 {
 		margin-right: auto;
 		@include respond-max($break-xl) {
@@ -25,12 +25,12 @@ section {
 		}
 	}
 	&__search {
-		@include dFlex-responsive(row, row, center, center);
 		padding: .5rem 1rem;
 		border: 1px solid $board-border;
 		border-radius: radius(medium);
 		gap: 10px;
 		margin-right: 2rem;
+		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {
 			margin-right: $spacing-md;
 			flex: 0 0 calc(60% - 10px);

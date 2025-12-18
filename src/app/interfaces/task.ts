@@ -1,5 +1,9 @@
 import { DocumentReference } from "@angular/fire/firestore";
-import { ContactModel } from "./contact";
+
+export interface Subtask {
+	title: string;
+	done: boolean;
+}
 
 export interface TaskModel {
 	id: string,
@@ -10,5 +14,5 @@ export interface TaskModel {
 	assignedTo: DocumentReference[] | null,
 	category: string,
 	status: string,
-	subtasks: string[] | null
+	subtasks: Subtask[] | null
 }

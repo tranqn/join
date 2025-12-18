@@ -4,10 +4,21 @@
 	</span>
 	<h4 class="task__title">{{ task()?.title }}</h4>
 	<p class="task__description">{{ task()?.description }}</p>
+	@if ((task()?.subtasks?.length ?? 0) > 0) {
+		<div class="task__subtasks">
+			<div class="task__subtasks--line">
+				<div class="task__subtasks--progress" [style.width]="getProgress(task()!.subtasks!.length, getDoneTasks())"></div>
+
+			</div>
+			<p class="task__subtasks--done">
+				{{ getDoneTasks() }}/{{ task()?.subtasks?.length }} Subtasks
+			</p>
+		</div>
+	}
 	<div class="task__meta">
 		<div class="task__assigned">
 			@for (contact of assignedContacts(); track $index) {
-				<span>{{ contact.name }}</span>
+				<span [style.background-color]="contact.color" [style.transform]="!$first ? 'translateX(' + (-5 * $index) + 'px)' : ''">{{ getInitials(contact.name) }}</span>
 			}
 		</div>
 		@if (task()?.priority == 'low') {

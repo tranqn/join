@@ -5,11 +5,25 @@
 .overview {
 	&__head {
 		width: 100%;
-		@include dFlex-responsive(column, row, center, flex-start);
 		gap: $spacing-md;
+		@include dFlex-responsive(column, row, center, flex-start);
+		@include respond-max($break-xl) {
+			flex-wrap: wrap;
+			gap: $spacing-sm;
+		}
+		@include respond-max($break-md) {
+			width: 100%;
+		}
 	}
 	&__column {
 		flex: 0 0 calc(25% - 15px);
+		@include respond-max($break-xl) {
+			flex: 0 0 calc(50% - 5px);
+		}
+		@include respond-max($break-md) {
+			flex: 0 0 100%;
+			width: 100%;
+		}
 		.placeholder {
 			padding: $spacing-sm 1rem;
 			border: 1px dashed $board-border;
