@@ -4,11 +4,10 @@ import { TaskModal } from './task-modal/task-modal';
 import { Icon } from '../../../../shared/icon/icon';
 import { Taskservice } from '../../../../services/taskservice';
 import { getShortName } from '../../../contact/contact';
-import { CdkDrag } from '@angular/cdk/drag-drop';
 
 @Component({
 	selector: 'app-task',
-	imports: [TaskModal, Icon, CdkDrag],
+	imports: [TaskModal, Icon],
 	templateUrl: './task.html',
 	styleUrl: './task.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
