@@ -1,9 +1,22 @@
 <div class="task" (click)="openTaskModal()">
+	<span class="task__category" [class]="task()?.category == 'User Story' ? 'user' : 'technical'">
+		{{ task()?.category }}
+	</span>
 	<h4 class="task__title">{{ task()?.title }}</h4>
 	<p class="task__description">{{ task()?.description }}</p>
 	<div class="task__meta">
-		<span class="task__priority">{{ task()?.priority }}</span>
-		<span class="task__category">{{ task()?.category }}</span>
+		<div class="task__assigned">
+			@for (contact of assignedContacts(); track $index) {
+				<span>{{ contact.name }}</span>
+			}
+		</div>
+		@if (task()?.priority == 'low') {
+			<app-icon name="low" [size]="18" class="low"></app-icon>
+		} @else if (task()?.priority == 'medium') {
+			<app-icon name="medium" [size]="18" class="medium"></app-icon>
+		} @else if (task()?.priority == 'urgent') {
+			<app-icon name="high" [size]="18" class="urgent"></app-icon>
+		}
 	</div>
 </div>
 @if (isOpen()) {

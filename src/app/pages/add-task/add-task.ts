@@ -195,7 +195,7 @@ export class AddTask {
 			description: formValue.description?.trim() || '',
 			dueDate: new Date(formValue.dueDate).getTime(),
 			priority: formValue.priority,
-			category: formValue.category,
+			category: formValue.category === 'technical' ? 'Technical Task' : 'User Story',
 			status: 'todo',
 			assignedTo: this.selectedContacts(),
 			subtasks: null

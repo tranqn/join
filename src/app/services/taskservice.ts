@@ -2,16 +2,13 @@ import { effect, inject, Injectable, signal, WritableSignal } from '@angular/cor
 import {
 	Firestore,
 	collection,
-	collectionData,
 	doc,
 	onSnapshot,
-	addDoc,
 	updateDoc,
-	deleteDoc,
 	query,
-	orderBy,
 	limit,
-	where
+	where,
+	getDoc
 } from '@angular/fire/firestore';
 import { TaskModel } from '../interfaces/task';
 
@@ -62,6 +59,35 @@ export class Taskservice {
 			status: obj.status || '',
 			subtasks: obj.subtasks || null
 		};
+	}
+
+	/**
+	 * Gets assigned contacts for a task by fetching the actual contact data from DocumentReferences
+	 * @param taskSignal - Function that returns the task
+	 * @returns A signal of assigned contacts
+	 */
+	getAssignedContacts(taskSignal: () => TaskModel | undefined) {
+		const contacts = signal<any[]>([]);
+
+		effect(() => {
+			const task = taskSignal();
+			
+			if (!task?.assignedTo || !Array.isArray(task.assignedTo) || task.assignedTo.length === 0) {
+				contacts.set([]);
+				return;
+			}
+
+			Promise.all(
+				task.assignedTo.map((ref) => getDoc(ref))
+			).then((docSnaps) => {
+				contacts.set(docSnaps.map(snap => snap.data()).filter(Boolean));
+			}).catch((error) => {
+				console.error('Error fetching contacts:', error);
+				contacts.set([]);
+			});
+		});
+
+		return contacts;
 	}
 
 	/**

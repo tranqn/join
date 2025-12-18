@@ -99,4 +99,16 @@ p-toast {
     	display: block;
   	}
 }
+
+app-icon {
+	&.low {
+		color: $low-color;
+	}
+	&.medium {
+		color: $medium-color;
+	}
+	&.urgent {
+		color: $urgent-color;
+	}
+}
 // Utility //

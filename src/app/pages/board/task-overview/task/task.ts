@@ -1,18 +1,23 @@
-import { Component, input, ChangeDetectionStrategy, signal } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, signal, inject } from '@angular/core';
 import { TaskModel } from '../../../../interfaces/task';
 import { TaskModal } from './task-modal/task-modal';
+import { Icon } from '../../../../shared/icon/icon';
+import { Taskservice } from '../../../../services/taskservice';
 
 @Component({
 	selector: 'app-task',
-	imports: [TaskModal],
+	imports: [TaskModal, Icon],
 	templateUrl: './task.html',
 	styleUrl: './task.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Task {
 	task = input<TaskModel>();
+	private taskService = inject(Taskservice);
 
 	isOpen = signal(false);
+
+	assignedContacts = this.taskService.getAssignedContacts(() => this.task());
 
 	openTaskModal() {
 		this.isOpen.set(true);

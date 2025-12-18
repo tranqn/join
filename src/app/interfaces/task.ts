@@ -1,4 +1,5 @@
-import { Contact } from "../pages/contact/contact";
+import { DocumentReference } from "@angular/fire/firestore";
+import { ContactModel } from "./contact";
 
 export interface TaskModel {
 	id: string,
@@ -6,7 +7,7 @@ export interface TaskModel {
 	description: string,
 	dueDate: number,
 	priority: string,
-	assignedTo: Contact[],
+	assignedTo: DocumentReference[] | null,
 	category: string,
 	status: string,
 	subtasks: string[] | null
