@@ -1,0 +1,183 @@
+@use 'sass:map';
+@use 'sass:color';
+@use '../../../../../styles/vars.scss' as *;
+@use '../../../../../styles/mixin.scss' as *;
+
+.task-modal {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: rgba(0, 0, 0, 0.3);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	z-index: 1000;
+
+	&__backdrop {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		height: 100%;
+		background: rgba(0, 0, 0, 0.5);
+		animation: fadeIn 0.2s ease-out;
+	}
+
+	&__dialog {
+		display: flex;
+		flex-direction: column;
+		background: white;
+		border-radius: 30px;
+		padding: 48px 40px;
+		max-width: 525px;
+		width: 100%;
+		max-height: 100vh;
+		overflow-y: auto;
+		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+		position: relative;
+		animation: slideIn 0.2s ease-out;
+	}
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 24px;
+		>p {
+			background-color: $story-color;
+			color: white;
+			padding: 8px 16px;
+			border-radius: 10px;
+			@include text-style-responsive(16px, 18px, 20px, 'Inter', 600);
+		}
+	}
+
+	&__close-btn {
+		background: none;
+		border: none;
+		font-size: 28px;
+		line-height: 1;
+		color: #666;
+		padding: 0;
+		width: 32px;
+		height: 32px;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: color 0.2s;
+		-webkit-tap-highlight-color: transparent;
+
+		&:hover {
+			background-color: #eeeeee;
+			border-radius: 100%;
+		}
+
+		@include respond-max($break-md) {
+			top: 10px;
+			right: 10px;
+			&:hover {
+				background-color: transparent;
+			}
+			img {
+				filter: brightness(6);
+			}
+		}
+	}
+
+	
+	&__due-date {
+		display: flex;
+		gap: 1rem
+		
+	}
+	&__priority {
+		display: flex;
+		gap: 2rem
+	}
+	&__assigned {
+		div {
+			
+		}
+		
+	}
+	&__subtasks {
+		
+	}
+
+
+	&__actions {
+		display: flex;
+		justify-content: flex-end;
+		@include respond-max($break-md) {
+			display: none;
+		}
+
+		.edit-btn {
+			width: 76px;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: .5rem;
+			cursor: pointer;
+		}
+		.delete-btn {
+			width: 92px;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+			gap: .5rem;
+			cursor: pointer;
+		}
+
+		button {
+			display: flex;
+			background: none;
+			border: none;
+			font-size: 16px;
+			color: inherit;
+			font-weight: inherit;
+		}
+
+		.edit-btn:hover,
+		.delete-btn:hover {
+			color: $light-blue;
+			font-weight: 600;
+		}
+
+		.edit-btn svg path,
+		.delete-btn svg path {
+			fill: currentColor;
+		}
+	}
+}
+
+@keyframes fadeIn {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
+
+@keyframes slideIn {
+	from {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+	to {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
+@keyframes slideOut {
+	from {
+		opacity: 1;
+		transform: translateX(0);
+	}
+	to {
+		opacity: 0;
+		transform: translateX(100%);
+	}
+}

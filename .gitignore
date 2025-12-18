@@ -48,4 +48,7 @@ Thumbs.db
 .runtimeconfig.json
 
 # Projekt-Dokumentation (nur lokal)
-PROJEKT_ERKLAERUNG_FUER_ANFAENGER.md
+/explanations
+
+# Projekt-Explanations (nur lokal)
+/src/app/explanations

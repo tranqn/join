@@ -8,15 +8,22 @@
 	box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
 	margin: 0;
 }
 
- h1, h2, h3, h4, h5, p {
+h1,
+h2,
+h3,
+h4,
+h5,
+p {
 	margin: 0;
- }
+}
 
-h1, .h1 {
+h1,
+.h1 {
 	font-size: 61px;
 	font-weight: 700;
 	@include respond-max($break-xl) {
@@ -27,22 +34,26 @@ h1, .h1 {
 	}
 }
 
-h2, .h2 {
+h2,
+.h2 {
 	font-size: 64px;
 	font-weight: 700;
 }
 
-h3, .h3 {
+h3,
+.h3 {
 	font-size: 47px;
 	font-weight: 500;
 }
 
-h4, .h4 {
+h4,
+.h4 {
 	font-size: 27px;
 	font-weight: 400;
 }
 
-h5, .h5 {
+h5,
+.h5 {
 	font-size: 20px;
 	font-weight: 700;
 }
@@ -90,14 +101,14 @@ p-toast {
 }
 .hide-mobile {
 	@include respond-max($break-md) {
-    	display: none;
-  	}
+		display: none;
+	}
 }
 .show-mobile {
 	display: none;
 	@include respond-max($break-md) {
-    	display: block;
-  	}
+		display: block;
+	}
 }
 
 app-icon {
@@ -109,6 +120,17 @@ app-icon {
 	}
 	&.urgent {
 		color: $urgent-color;
+	}
+}
+
+.mb-25 {
+	margin-bottom: 25px;
+}
+
+.text-style-task-modal {
+	@include text-style-responsive(16px, 18px, 20px, 'Inter', 400);
+	> p {
+		@include text-style-responsive(16px, 18px, 20px, 'Inter', 400);
 	}
 }
 // Utility //

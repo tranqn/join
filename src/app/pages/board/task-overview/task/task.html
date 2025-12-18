@@ -20,5 +20,5 @@
 	</div>
 </div>
 @if (isOpen()) {
-	<app-task-modal (close)="closeTaskModal()"></app-task-modal>
+	<app-task-modal [task]="task()" (close)="closeTaskModal()"></app-task-modal>
 }
