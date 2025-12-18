@@ -14,5 +14,6 @@ export interface TaskModel {
 	assignedTo: DocumentReference[] | null,
 	category: string,
 	status: string,
+	position: number,
 	subtasks: Subtask[] | null
 }

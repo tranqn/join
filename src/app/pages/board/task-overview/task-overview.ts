@@ -18,6 +18,8 @@ import {
   CdkDragDrop,
   CdkDrag,
   CdkDropList,
+  moveItemInArray,
+  transferArrayItem
 } from '@angular/cdk/drag-drop';
 
 @Component({
@@ -29,6 +31,8 @@ import {
 export class TaskOverview implements AfterViewInit {
 
   taskService = inject(Taskservice);
+
+  isDragging = signal(false);
 
   // 🔹 Search kommt als SIGNAL rein
   @Input({ required: true }) search!: WritableSignal<string>;
@@ -42,6 +46,14 @@ export class TaskOverview implements AfterViewInit {
     { title: 'Await feedback', id: 'feedback', listName: 'FeedbackList' },
     { title: 'Done', id: 'done', listName: 'DoneList' }
   ];
+
+  	onDragStart() {
+		this.isDragging.set(true);
+	}
+  
+	onDragEnd() {
+		this.isDragging.set(false);
+	}
 
   getTasksByStatus(status: string) {
     switch (status) {
@@ -67,10 +79,27 @@ export class TaskOverview implements AfterViewInit {
     );
   }
 
-  onTaskDropped(event: CdkDragDrop<any>, targetStatus: string) {
-    const task = event.item.data;
-    if (task && task.status !== targetStatus) {
-      this.taskService.updateTaskStatus(task.id, targetStatus);
+  onTaskDropped(event: CdkDragDrop<any>) {
+    const targetStatus = event.container.data;
+    const sourceStatus = event.previousContainer.data;
+    
+    if (sourceStatus === targetStatus) {
+      const tasks = [...this.getTasksByStatus(targetStatus)];
+      moveItemInArray(tasks, event.previousIndex, event.currentIndex);
+      this.taskService.updateTasksOrder(tasks);
+    } else {
+      const sourceTasks = [...this.getTasksByStatus(sourceStatus)];
+      const targetTasks = [...this.getTasksByStatus(targetStatus)];
+
+      transferArrayItem(
+        sourceTasks,
+        targetTasks,
+        event.previousIndex,
+        event.currentIndex
+      );
+
+      this.taskService.updateTasksOrder(targetTasks, targetStatus);
+      this.taskService.updateTasksOrder(sourceTasks);
     }
   }
 

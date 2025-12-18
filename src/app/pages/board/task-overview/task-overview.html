@@ -14,7 +14,7 @@
           cdkDropList
           [cdkDropListData]="item.id"
           [cdkDropListConnectedTo]="connectedLists()[columns.indexOf(item)]"
-          (cdkDropListDropped)="onTaskDropped($event, item.id)"
+          (cdkDropListDropped)="onTaskDropped($event)"
         >
           @for (task of getFilteredTasksByStatus(item.id); track task.id) {
             <app-task

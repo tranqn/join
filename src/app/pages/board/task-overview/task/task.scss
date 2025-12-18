@@ -2,6 +2,11 @@
 @use '../../../../../app/styles/mixin.scss' as *;
 @use 'sass:map';
 
+// :host {
+// 	display: block;
+// 	background: transparent !important;
+// }
+
 .task {
 	background: white;
 	border-radius: radius(medium);
@@ -9,6 +14,10 @@
 	margin-bottom: $spacing-md;
 	box-shadow: 0 0px 5px rgba(0, 0, 0, 0.2);
 	cursor: pointer;
+	// &.dragging {
+	// 	box-shadow: none !important;
+	// }
+
 	@include respond-max($break-md) {
 		max-width: 250px;
 	}

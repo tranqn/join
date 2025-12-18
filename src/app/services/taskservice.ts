@@ -8,7 +8,8 @@ import {
 	query,
 	limit,
 	where,
-	getDoc
+	getDoc,
+	writeBatch
 } from '@angular/fire/firestore';
 import { TaskModel } from '../interfaces/task';
 
@@ -43,6 +44,7 @@ export class Taskservice {
             list.forEach((element) => {
                 tasks.push(this.setTaskObject(element.data(), element.id));
             });
+            tasks.sort((a, b) => a.position - b.position);
             array.set(tasks);
         });
     }
@@ -57,6 +59,7 @@ export class Taskservice {
 			assignedTo: obj.assignedTo || null,
 			category: obj.category || '',
 			status: obj.status || '',
+			position: obj.position ?? 0,
 			subtasks: obj.subtasks || null
 		};
 	}
@@ -96,5 +99,21 @@ export class Taskservice {
 	async updateTaskStatus(taskId: string, newStatus: string) {
 		const taskRef = doc(this.firestore, 'tasks', taskId);
 		await updateDoc(taskRef, { status: newStatus });
+	}
+
+	/**
+	 * Updates multiple tasks' positions and optionally status in Firestore
+	 */
+	async updateTasksOrder(tasks: TaskModel[], newStatus?: string) {
+		const batch = writeBatch(this.firestore);
+		tasks.forEach((task, index) => {
+			const taskRef = doc(this.firestore, 'tasks', task.id);
+			const updates: any = { position: index };
+			if (newStatus !== undefined && task.status !== newStatus) {
+				updates.status = newStatus;
+			}
+			batch.update(taskRef, updates);
+		});
+		await batch.commit();
 	}
 }

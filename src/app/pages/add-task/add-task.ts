@@ -202,6 +202,7 @@ export class AddTask {
 			priority: formValue.priority,
 			category: formValue.category === 'technical' ? 'Technical Task' : 'User Story',
 			status: 'todo',
+			position: this.taskService.tasksTodo().length,
 			assignedTo: assignedToRefs,
 			subtasks: null
 		};
