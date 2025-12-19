@@ -12,6 +12,7 @@
 	@include respond-max($break-md) {
 		max-width: 250px;
 	}
+
 	&:active {
 		cursor: grabbing;
 	}

@@ -1,7 +1,6 @@
 @if (isOpen()) {
 <div class="contact-modal">
 	<div class="contact-modal__backdrop" (click)="onClose()"></div>
-
 	<div class="contact-modal__dialog" role="dialog" aria-modal="true" [class.contact-modal__dialog--closing]="isClosing()">
 		<button
 			class="contact-modal__close-btn"

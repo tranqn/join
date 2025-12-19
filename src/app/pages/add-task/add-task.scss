@@ -33,12 +33,7 @@
 	}
 
 	&__divider {
-		width: 1px;
-		background-color: $board-border;
-		@include respond-max($break-lg) {
-			width: 100%;
-			height: 1px;
-		}
+		display: none;
 	}
 
 	&__actions {
@@ -46,8 +41,6 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-top: $spacing-lg;
-		padding-top: $spacing-md;
-		border-top: 1px solid $board-border;
 		@include respond-max($break-md) {
 			flex-direction: column;
 			gap: $spacing-sm;
@@ -119,130 +112,141 @@
 	font-size: 0.875rem;
 }
 
-// PrimeNG DatePicker
-p-datepicker {
-	width: 100%;
-	display: block;
+// Custom Date Picker
+.date-picker {
 	position: relative;
 
-	&.invalid ::ng-deep .p-inputtext {
-		border-color: $urgent-color;
+	&__trigger {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 12px 16px;
+		border: 1px solid $board-border;
+		border-radius: radius(medium);
+		background: white;
+		font-size: 1rem;
+		font-family: inherit;
+		cursor: pointer;
+		transition: border-color 100ms ease;
+
+		&:hover {
+			border-color: $light-blue;
+		}
+
+		&.open {
+			border-color: $light-blue;
+			border-bottom-left-radius: 0;
+			border-bottom-right-radius: 0;
+		}
+
+		&.invalid {
+			border-color: $urgent-color;
+		}
+
+		span.placeholder {
+			color: $board-border;
+		}
+
+		img {
+			width: 20px;
+			height: 20px;
+		}
 	}
 
-	::ng-deep {
-		.p-datepicker {
-			width: 100%;
-			position: relative;
+	&__dropdown {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		background: white;
+		border: 1px solid $light-blue;
+		border-top: none;
+		border-radius: 0 0 radius(medium) radius(medium);
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+		z-index: 100;
+		padding: $spacing-xs;
+	}
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: $spacing-xs $spacing-sm;
+		background: $darkblue;
+		border-radius: radius(small);
+		margin-bottom: $spacing-xs;
+
+		span {
+			color: white;
+			font-weight: 600;
+			font-size: 0.875rem;
 		}
 
-		.p-inputtext {
-			width: 100%;
-			padding: 12px 44px 12px 16px;
-			border: 1px solid $board-border;
-			border-radius: radius(medium);
-			font-size: 1rem;
-			font-family: inherit;
-			transition: border-color 100ms ease;
-
-			&:focus {
-				outline: none;
-				border-color: $light-blue;
-				box-shadow: none;
-			}
-		}
-
-		.p-datepicker-trigger {
+		button {
 			background: transparent;
 			border: none;
-			color: $board-border;
-			position: absolute;
-			right: 8px;
-			top: 50%;
-			transform: translateY(-50%);
-			width: 32px;
-			height: 32px;
-			padding: 0;
-			display: flex;
-			align-items: center;
-			justify-content: center;
+			color: white;
+			font-size: 1rem;
+			cursor: pointer;
+			padding: 2px 6px;
+			border-radius: radius(small);
 
 			&:hover {
-				background: transparent;
-				color: $light-blue;
-			}
-
-			&:focus {
-				box-shadow: none;
+				background: rgba(255, 255, 255, 0.1);
 			}
 		}
+	}
 
-		// Calendar Panel
-		.p-datepicker-panel {
-			border: 1px solid $light-blue;
-			border-radius: radius(medium);
-			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-			margin-top: 4px;
+	&__weekdays {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
+		text-align: center;
+
+		span {
+			font-size: 0.7rem;
+			font-weight: 600;
+			color: $darkblue;
+			padding: 2px;
 		}
+	}
 
-		.p-datepicker-header {
-			background: $darkblue;
-			color: white;
-			border-bottom: none;
-			padding: 12px;
-			border-radius: radius(medium) radius(medium) 0 0;
+	&__days {
+		display: grid;
+		grid-template-columns: repeat(7, 1fr);
 
-			.p-datepicker-prev-button,
-			.p-datepicker-next-button {
-				color: white;
-				background: transparent;
-				border: none;
+		button {
+			width: 100%;
+			height: 28px;
+			border: none;
+			background: transparent;
+			border-radius: radius(small);
+			font-size: 0.75rem;
+			cursor: pointer;
+			transition: all 100ms ease;
 
-				&:hover {
-					background: rgba(255, 255, 255, 0.1);
-				}
+			&:hover:not(:disabled) {
+				background: rgba($light-blue, 0.1);
 			}
 
-			.p-datepicker-title {
-				.p-datepicker-select-month,
-				.p-datepicker-select-year {
-					color: white;
-					font-weight: 600;
-
-					&:hover {
-						color: $light-blue;
-					}
-				}
+			&.other-month {
+				color: $board-border;
 			}
-		}
 
-		.p-datepicker-calendar {
-			th {
-				color: $darkblue;
+			&.today {
+				background: rgba($light-blue, 0.2);
 				font-weight: 600;
 			}
 
-			td {
-				padding: 4px;
-
-				span {
-					border-radius: radius(small);
-					transition: all 100ms ease;
-
-					&:hover {
-						background: rgba($light-blue, 0.1);
-					}
-				}
-
-				&.p-datepicker-today span {
-					background: rgba($light-blue, 0.2);
-					color: $darkblue;
-				}
+			&.selected {
+				background: $light-blue;
+				color: white;
 			}
-		}
 
-		.p-highlight {
-			background: $light-blue;
-			color: white;
+			&:disabled {
+				color: #ccc;
+				cursor: not-allowed;
+			}
 		}
 	}
 }
@@ -321,6 +325,10 @@ p-datepicker {
 	&.selected {
 		background-color: #e8f4fd;
 	}
+
+	input[type="checkbox"] {
+		cursor: pointer;
+	}
 }
 
 .contact-avatar,
@@ -338,13 +346,12 @@ p-datepicker {
 
 .contact-name {
 	flex: 1;
+	font-weight: 400;
 }
 
 .contact-checkbox {
-	img {
-		width: 20px;
-		height: 20px;
-	}
+	width: 18px;
+	height: 18px;
 }
 
 .selected-contacts {
@@ -409,9 +416,16 @@ p-datepicker {
 	cursor: pointer;
 	transition: all 100ms ease;
 
-	img {
-		width: 20px;
-		height: 20px;
+	app-icon {
+		&.low {
+			color: $low-color;
+		}
+		&.medium {
+			color: $medium-color;
+		}
+		&.urgent {
+			color: $urgent-color;
+		}
 	}
 
 	&:hover {
@@ -421,8 +435,8 @@ p-datepicker {
 	&.active {
 		color: white;
 
-		img {
-			filter: brightness(10);
+		app-icon {
+			color: white;
 		}
 	}
 
@@ -442,28 +456,126 @@ p-datepicker {
 	}
 }
 
-// Subtasks placeholder
-.subtasks-placeholder {
+// Subtasks
+.subtask-input-wrapper {
 	position: relative;
 
-	input {
+	.subtask-input {
 		width: 100%;
-		padding: 12px 16px;
+		padding: 12px 80px 12px 16px;
 		border: 1px solid $board-border;
 		border-radius: radius(medium);
 		font-size: 1rem;
+		font-family: inherit;
 
-		&:disabled {
-			background-color: #f9f9f9;
+		&:focus {
+			outline: none;
+			border-color: $light-blue;
 		}
 	}
 
-	.hint {
-		display: block;
-		margin-top: 4px;
-		font-size: 0.75rem;
-		color: $board-border;
-		font-style: italic;
+	.subtask-actions {
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		transform: translateY(-50%);
+		display: flex;
+		gap: 4px;
+	}
+
+	.subtask-action-btn {
+		background: transparent;
+		border: none;
+		padding: 6px;
+		cursor: pointer;
+		transition: all 100ms ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: radius(small);
+
+		img {
+			width: 20px;
+			height: 20px;
+		}
+
+		&:hover {
+			background-color: rgba($light-blue, 0.1);
+		}
+	}
+}
+
+.subtask-list {
+	margin-top: $spacing-sm;
+	display: flex;
+	flex-direction: column;
+	gap: $spacing-xs;
+}
+
+.subtask-item {
+	display: flex;
+	align-items: center;
+	gap: $spacing-sm;
+	padding: $spacing-sm;
+	border: 1px solid $board-border;
+	border-radius: radius(medium);
+	transition: all 100ms ease;
+
+	&:hover {
+		background-color: #f5f5f5;
+
+		.subtask-item-actions {
+			opacity: 1;
+		}
+	}
+
+	&.editing {
+		background-color: #e8f4fd;
+		border-color: $light-blue;
+	}
+
+	.subtask-checkbox {
+		cursor: pointer;
+		width: 18px;
+		height: 18px;
+	}
+
+	.subtask-title {
+		flex: 1;
+		font-size: 0.875rem;
+
+		&.completed {
+			text-decoration: line-through;
+			color: $board-border;
+		}
+	}
+
+	.subtask-item-actions {
+		display: flex;
+		gap: $spacing-xs;
+		opacity: 0;
+		transition: opacity 100ms ease;
+	}
+
+	.subtask-item-btn {
+		background: transparent;
+		border: none;
+		padding: 4px;
+		cursor: pointer;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: radius(small);
+		transition: background-color 100ms ease;
+
+		img {
+			width: 16px;
+			height: 16px;
+		}
+
+		&:hover {
+			background-color: rgba($light-blue, 0.1);
+		}
 	}
 }
 

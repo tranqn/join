@@ -2,16 +2,17 @@ import { Component, inject, signal, HostListener } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
-import { DatePicker } from 'primeng/datepicker';
 import { Taskservice } from '../../services/taskservice';
 import { FirebaseService } from '../../services/firebase-service';
 import { ContactModel } from '../../interfaces/contact';
+import { Subtask } from '../../interfaces/task';
 import { Firestore, doc } from '@angular/fire/firestore';
+import { Icon } from '../../shared/icon/icon';
 import { minLengthValidator, noPastDateValidator, requiredValidator, getErrorMessage } from './task-validators';
 
 @Component({
 	selector: 'app-add-task',
-	imports: [ReactiveFormsModule, DatePicker],
+	imports: [ReactiveFormsModule, Icon],
 	templateUrl: './add-task.html',
 	styleUrl: './add-task.scss',
 })
@@ -27,13 +28,21 @@ export class AddTask {
 	isSaving = signal(false);
 	isContactsOpen = signal(false);
 	isCategoryOpen = signal(false);
+	isDatePickerOpen = signal(false);
 	selectedContacts = signal<ContactModel[]>([]);
-	minDate = new Date();
+
+	// Date picker state
+	viewDate = new Date();
+
+	// Subtask state
+	subtasks = signal<Subtask[]>([]);
+	subtaskInput = signal('');
+	editingSubtaskId = signal<string | null>(null);
 
 	priorities = [
-		{ value: 'urgent', label: 'Urgent', icon: 'icons/prio-alta.svg' },
-		{ value: 'medium', label: 'Medium', icon: 'icons/prio-media.svg' },
-		{ value: 'low', label: 'Low', icon: 'icons/prio-baja.svg' }
+		{ value: 'urgent', label: 'Urgent', icon: 'high' },
+		{ value: 'medium', label: 'Medium', icon: 'medium' },
+		{ value: 'low', label: 'Low', icon: 'low' }
 	];
 
 	categories = [
@@ -63,14 +72,6 @@ export class AddTask {
 			priority: ['medium'],
 			category: ['', requiredValidator()]
 		});
-	}
-
-	/**
-	 * Returns today's date in YYYY-MM-DD format for min date
-	 */
-	getMinDate(): string {
-		const today = new Date();
-		return today.toISOString().split('T')[0];
 	}
 
 	/**
@@ -154,6 +155,159 @@ export class AddTask {
 	}
 
 	/**
+	 * Toggles date picker dropdown
+	 */
+	toggleDatePicker() {
+		this.isDatePickerOpen.update(open => !open);
+		if (this.isDatePickerOpen()) {
+			this.isContactsOpen.set(false);
+			this.isCategoryOpen.set(false);
+		}
+	}
+
+	/**
+	 * Formats date for display
+	 */
+	formatDate(value: number | null): string {
+		if (!value) return 'dd/mm/yyyy';
+		const date = new Date(value);
+		const day = String(date.getDate()).padStart(2, '0');
+		const month = String(date.getMonth() + 1).padStart(2, '0');
+		const year = date.getFullYear();
+		return `${day}/${month}/${year}`;
+	}
+
+	/**
+	 * Gets current month/year for header
+	 */
+	getMonthYear(): string {
+		const months = ['January', 'February', 'March', 'April', 'May', 'June',
+			'July', 'August', 'September', 'October', 'November', 'December'];
+		return `${months[this.viewDate.getMonth()]} ${this.viewDate.getFullYear()}`;
+	}
+
+	/**
+	 * Navigate to previous month
+	 */
+	prevMonth() {
+		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
+	}
+
+	/**
+	 * Navigate to next month
+	 */
+	nextMonth() {
+		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
+	}
+
+	/**
+	 * Generates calendar days for current view
+	 */
+	getCalendarDays(): { num: number; date: Date; current: boolean; selected: boolean; today: boolean; past: boolean }[] {
+		const days = [];
+		const year = this.viewDate.getFullYear();
+		const month = this.viewDate.getMonth();
+		const firstDay = new Date(year, month, 1).getDay();
+		const daysInMonth = new Date(year, month + 1, 0).getDate();
+		const daysInPrevMonth = new Date(year, month, 0).getDate();
+		const today = new Date();
+		today.setHours(0, 0, 0, 0);
+		const selectedValue = this.taskForm.get('dueDate')?.value;
+
+		// Previous month days
+		for (let i = firstDay - 1; i >= 0; i--) {
+			const date = new Date(year, month - 1, daysInPrevMonth - i);
+			days.push({ num: daysInPrevMonth - i, date, current: false, selected: false, today: false, past: date < today });
+		}
+
+		// Current month days
+		for (let i = 1; i <= daysInMonth; i++) {
+			const date = new Date(year, month, i);
+			const isToday = date.getTime() === today.getTime();
+			const isSelected = selectedValue && new Date(selectedValue).toDateString() === date.toDateString();
+			days.push({ num: i, date, current: true, selected: isSelected, today: isToday, past: date < today });
+		}
+
+		// Next month days
+		const remaining = 42 - days.length;
+		for (let i = 1; i <= remaining; i++) {
+			const date = new Date(year, month + 1, i);
+			days.push({ num: i, date, current: false, selected: false, today: false, past: false });
+		}
+
+		return days;
+	}
+
+	/**
+	 * Selects a date and closes picker
+	 */
+	selectDate(date: Date) {
+		this.taskForm.patchValue({ dueDate: date.getTime() });
+		this.isDatePickerOpen.set(false);
+	}
+
+	/**
+	 * Adds a new subtask or updates an existing one
+	 */
+	addSubtask() {
+		const title = this.subtaskInput().trim();
+		if (!title) return;
+
+		const editingId = this.editingSubtaskId();
+		if (editingId) {
+			// Update existing subtask
+			this.subtasks.update(list =>
+				list.map(st => st.id === editingId ? { ...st, title } : st)
+			);
+			this.editingSubtaskId.set(null);
+		} else {
+			// Add new subtask
+			const newSubtask: Subtask = {
+				id: crypto.randomUUID(),
+				title,
+				completed: false
+			};
+			this.subtasks.update(list => [...list, newSubtask]);
+		}
+		this.subtaskInput.set('');
+	}
+
+	/**
+	 * Clears the subtask input
+	 */
+	clearSubtaskInput() {
+		this.subtaskInput.set('');
+		this.editingSubtaskId.set(null);
+	}
+
+	/**
+	 * Starts editing a subtask
+	 */
+	editSubtask(subtask: Subtask) {
+		this.subtaskInput.set(subtask.title);
+		this.editingSubtaskId.set(subtask.id);
+	}
+
+	/**
+	 * Deletes a subtask
+	 */
+	deleteSubtask(id: string) {
+		this.subtasks.update(list => list.filter(st => st.id !== id));
+		if (this.editingSubtaskId() === id) {
+			this.clearSubtaskInput();
+		}
+	}
+
+	/**
+	 * Toggles subtask completion
+	 */
+	toggleSubtaskComplete(id: string) {
+		this.subtasks.update(list =>
+			list.map(st => st.id === id ? { ...st, completed: !st.completed } : st)
+		);
+	}
+
+	/**
 	 * Closes dropdowns when clicking outside
 	 */
 	@HostListener('document:click', ['$event'])
@@ -164,6 +318,9 @@ export class AddTask {
 		}
 		if (!target.closest('.category-dropdown') && !target.closest('.category-trigger')) {
 			this.isCategoryOpen.set(false);
+		}
+		if (!target.closest('.date-picker')) {
+			this.isDatePickerOpen.set(false);
 		}
 	}
 
@@ -194,7 +351,7 @@ export class AddTask {
 	 */
 	private async createTask() {
 		const formValue = this.taskForm.value;
-		const assignedToRefs = this.selectedContacts().map(contact => 
+		const assignedToRefs = this.selectedContacts().map(contact =>
 			doc(this.firestore, 'contacts', contact.id)
 		);
 		const task = {
@@ -206,7 +363,7 @@ export class AddTask {
 			status: 'todo',
 			position: this.taskService.tasksTodo().length,
 			assignedTo: assignedToRefs,
-			subtasks: null
+			subtasks: this.subtasks().length > 0 ? this.subtasks() : null
 		};
 		await this.firebaseService.addItemToCollection(task, 'tasks');
 	}
@@ -247,5 +404,8 @@ export class AddTask {
 			category: ''
 		});
 		this.selectedContacts.set([]);
+		this.subtasks.set([]);
+		this.subtaskInput.set('');
+		this.editingSubtaskId.set(null);
 	}
 }

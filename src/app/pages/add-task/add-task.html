@@ -26,9 +26,87 @@
 					<textarea
 						id="description"
 						formControlName="description"
-						placeholder="Enter a description"
+						placeholder="Enter a Description"
 						rows="4"
 					></textarea>
+				</div>
+
+				<!-- Due Date Field -->
+				<div class="form-group">
+					<label for="dueDate">Due date<span class="required">*</span></label>
+					<div class="date-picker">
+						<button
+							type="button"
+							class="date-picker__trigger"
+							(click)="toggleDatePicker()"
+							[class.open]="isDatePickerOpen()"
+							[class.invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
+						>
+							<span [class.placeholder]="!taskForm.get('dueDate')?.value">
+								{{ formatDate(taskForm.get('dueDate')?.value) }}
+							</span>
+							<img src="icons/calender.svg" alt="calendar" />
+						</button>
+
+						@if (isDatePickerOpen()) {
+							<div class="date-picker__dropdown">
+								<div class="date-picker__header">
+									<button type="button" (click)="prevMonth()">‹</button>
+									<span>{{ getMonthYear() }}</span>
+									<button type="button" (click)="nextMonth()">›</button>
+								</div>
+								<div class="date-picker__weekdays">
+									@for (day of ['Su','Mo','Tu','We','Th','Fr','Sa']; track day) {
+										<span>{{ day }}</span>
+									}
+								</div>
+								<div class="date-picker__days">
+									@for (day of getCalendarDays(); track $index) {
+										<button
+											type="button"
+											[class.other-month]="!day.current"
+											[class.selected]="day.selected"
+											[class.today]="day.today"
+											[disabled]="day.past"
+											(click)="selectDate(day.date)"
+										>
+											{{ day.num }}
+										</button>
+									}
+								</div>
+							</div>
+						}
+					</div>
+					@if (getErrorMessage('dueDate')) {
+						<span class="error-message">{{ getErrorMessage('dueDate') }}</span>
+					}
+				</div>
+			</div>
+
+			<!-- Divider -->
+			<div class="task-form__divider"></div>
+
+			<!-- Right Column -->
+			<div class="task-form__column">
+				<!-- Priority Field -->
+				<div class="form-group">
+					<label>Priority</label>
+					<div class="priority-buttons">
+						@for (prio of priorities; track prio.value) {
+							<button
+								type="button"
+								class="priority-btn"
+								[class.urgent]="prio.value === 'urgent' && taskForm.get('priority')?.value === 'urgent'"
+								[class.medium]="prio.value === 'medium' && taskForm.get('priority')?.value === 'medium'"
+								[class.low]="prio.value === 'low' && taskForm.get('priority')?.value === 'low'"
+								[class.active]="taskForm.get('priority')?.value === prio.value"
+								(click)="setPriority(prio.value)"
+							>
+								<span>{{ prio.label }}</span>
+								<app-icon [name]="prio.icon" [size]="18" [class]="prio.value"></app-icon>
+							</button>
+						}
+					</div>
 				</div>
 
 				<!-- Assigned To Field -->
@@ -42,29 +120,27 @@
 							[class.open]="isContactsOpen()"
 						>
 							<span>Select contacts to assign</span>
-							<img src="icons/arrow-drop-down.svg" alt="dropdown" [class.rotated]="isContactsOpen()" />
+							<img src="icons/arrow_drop_down.svg" alt="dropdown" [class.rotated]="isContactsOpen()" />
 						</button>
 
 						@if (isContactsOpen()) {
 							<div class="contacts-dropdown">
 								@for (contact of contacts; track contact.id) {
-									<div
+									<label
 										class="contact-option"
-										(click)="toggleContact(contact)"
 										[class.selected]="isContactSelected(contact)"
 									>
 										<span class="contact-avatar" [style.background-color]="contact.color">
 											{{ getInitials(contact.name) }}
 										</span>
 										<span class="contact-name">{{ contact.name }}</span>
-										<span class="contact-checkbox">
-											@if (isContactSelected(contact)) {
-												<img src="icons/check-button-checked.svg" alt="selected" />
-											} @else {
-												<img src="icons/check-button.svg" alt="not selected" />
-											}
-										</span>
-									</div>
+										<input
+											type="checkbox"
+											[checked]="isContactSelected(contact)"
+											(change)="toggleContact(contact)"
+											class="contact-checkbox"
+										/>
+									</label>
 								} @empty {
 									<div class="no-contacts">No contacts available</div>
 								}
@@ -83,50 +159,6 @@
 						</div>
 					}
 				</div>
-			</div>
-
-			<!-- Divider -->
-			<div class="task-form__divider"></div>
-
-			<!-- Right Column -->
-			<div class="task-form__column">
-				<!-- Due Date Field -->
-				<div class="form-group">
-					<label for="dueDate">Due date<span class="required">*</span></label>
-					<p-datepicker
-						formControlName="dueDate"
-						[showIcon]="true"
-						[minDate]="minDate"
-						dateFormat="dd/mm/yy"
-						placeholder="dd/mm/yyyy"
-						appendTo="body"
-						[class.invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
-					/>
-					@if (getErrorMessage('dueDate')) {
-						<span class="error-message">{{ getErrorMessage('dueDate') }}</span>
-					}
-				</div>
-
-				<!-- Priority Field -->
-				<div class="form-group">
-					<label>Prio</label>
-					<div class="priority-buttons">
-						@for (prio of priorities; track prio.value) {
-							<button
-								type="button"
-								class="priority-btn"
-								[class.urgent]="prio.value === 'urgent' && taskForm.get('priority')?.value === 'urgent'"
-								[class.medium]="prio.value === 'medium' && taskForm.get('priority')?.value === 'medium'"
-								[class.low]="prio.value === 'low' && taskForm.get('priority')?.value === 'low'"
-								[class.active]="taskForm.get('priority')?.value === prio.value"
-								(click)="setPriority(prio.value)"
-							>
-								<span>{{ prio.label }}</span>
-								<img [src]="prio.icon" [alt]="prio.label" />
-							</button>
-						}
-					</div>
-				</div>
 
 				<!-- Category Field -->
 				<div class="form-group">
@@ -140,7 +172,7 @@
 							[class.invalid]="taskForm.get('category')?.invalid && taskForm.get('category')?.touched"
 						>
 							<span>{{ getSelectedCategoryLabel() }}</span>
-							<img src="icons/arrow-drop-down.svg" alt="dropdown" [class.rotated]="isCategoryOpen()" />
+							<img src="icons/arrow_drop_down.svg" alt="dropdown" [class.rotated]="isCategoryOpen()" />
 						</button>
 
 						@if (isCategoryOpen()) {
@@ -162,13 +194,74 @@
 					}
 				</div>
 
-				<!-- Subtasks placeholder - Person 3 will implement -->
+				<!-- Subtasks Field -->
 				<div class="form-group">
 					<label>Subtasks</label>
-					<div class="subtasks-placeholder">
-						<input type="text" placeholder="Add new subtask" disabled />
-						<span class="hint">Subtask feature coming soon</span>
+					<div class="subtask-input-wrapper">
+						<input
+							type="text"
+							placeholder="Add new subtask"
+							[value]="subtaskInput()"
+							(input)="subtaskInput.set($any($event.target).value)"
+							(keydown.enter)="addSubtask()"
+							class="subtask-input"
+						/>
+						<div class="subtask-actions">
+							<button
+								type="button"
+								class="subtask-action-btn"
+								(click)="clearSubtaskInput()"
+								title="Clear"
+							>
+								<img src="icons/close_icon2.svg" alt="clear" />
+							</button>
+							<button
+								type="button"
+								class="subtask-action-btn"
+								(click)="addSubtask()"
+								title="Add subtask"
+							>
+								<img src="icons/tick_icon.svg" alt="add" />
+							</button>
+						</div>
 					</div>
+
+					<!-- Subtask List -->
+					@if (subtasks().length > 0) {
+						<div class="subtask-list">
+							@for (subtask of subtasks(); track subtask.id) {
+								<div class="subtask-item" [class.editing]="editingSubtaskId() === subtask.id">
+									<input
+										type="checkbox"
+										[checked]="subtask.completed"
+										(change)="toggleSubtaskComplete(subtask.id)"
+										class="subtask-checkbox"
+									/>
+									<span class="subtask-title" [class.completed]="subtask.completed">
+										{{ subtask.title }}
+									</span>
+									<div class="subtask-item-actions">
+										<button
+											type="button"
+											class="subtask-item-btn"
+											(click)="deleteSubtask(subtask.id)"
+											title="Delete"
+										>
+											<img src="icons/delete.svg" alt="delete" />
+										</button>
+										<button
+											type="button"
+											class="subtask-item-btn"
+											(click)="editSubtask(subtask)"
+											title="Edit"
+										>
+											<img src="icons/tick_icon.svg" alt="edit" />
+										</button>
+									</div>
+								</div>
+							}
+						</div>
+					}
 				</div>
 			</div>
 		</div>
@@ -179,7 +272,7 @@
 			<div class="buttons">
 				<button type="button" class="btn-clear" (click)="clearForm()">
 					<span>Clear</span>
-					<img src="icons/close.svg" alt="clear" />
+					<img src="icons/close_icon2.svg" alt="clear" />
 				</button>
 				<button
 					type="submit"

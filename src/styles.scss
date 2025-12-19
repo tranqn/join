@@ -118,6 +118,11 @@ p-toast {
 	display: none;
 }
 
+// CDK Drag and Drop
+.cdk-drag-preview {
+	overflow: hidden;
+}
+
 // Utility //
 .join {
 	color: $light-blue;

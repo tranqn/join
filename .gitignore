@@ -52,3 +52,6 @@ Thumbs.db
 
 # Projekt-Explanations (nur lokal)
 /src/app/explanations
+
+# Uebungs Ordner (nur lokal)
+/src/app/exercise

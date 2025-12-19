@@ -37,7 +37,7 @@ export class Task {
 		if (!task?.subtasks || !Array.isArray(task.subtasks) || task.subtasks.length === 0) {
 			return 0;
 		}
-		return task.subtasks.filter(subtask => subtask.done).length;
+		return task.subtasks.filter(subtask => subtask.completed).length;
 	}
 
 	getProgress(length: number, done: number) {

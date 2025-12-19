@@ -23,7 +23,7 @@ export class Contact {
 	firebaseService = inject(FirebaseService);
 	
 	contactlist = viewChild.required(Contactlist);
-	contactDetails = viewChild(ContactDetails);
+	contactDetails = viewChild.required(ContactDetails);
 
 	selectedContactId = signal<string | null>(null);
 	selectedContact = computed(() => {

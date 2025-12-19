@@ -1,8 +1,9 @@
 import { DocumentReference } from "@angular/fire/firestore";
 
 export interface Subtask {
+	id: string;
 	title: string;
-	done: boolean;
+	completed: boolean;
 }
 
 export interface TaskModel {

@@ -5,3 +5,4 @@ export interface ContactModel {
 	phone: string,
 	color: string
 }
+
