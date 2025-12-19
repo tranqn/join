@@ -31,10 +31,7 @@
 		background: white;
 		border-radius: 30px;
 		padding: 48px 40px;
-		max-width: 525px;
-		width: 100%;
-		max-height: 100vh;
-		overflow-y: auto;
+		width: 525px;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		position: relative;
 		animation: slideIn 0.2s ease-out;
@@ -44,14 +41,26 @@
 		justify-content: space-between;
 		align-items: center;
 		margin-bottom: 24px;
-		>p {
+	}
+	&__category {
+		padding: 4px 24px;
+		border-radius: radius(medium);
+		color: #fff;
+		display: block;
+		width: fit-content;
+		&.user {
+			background: $story-color;
+		}
+		&.technical {
+			background: $task-color;
+		}
+		> span {
 			background-color: $story-color;
 			color: white;
-			padding: 8px 16px;
 			border-radius: 10px;
-			@include text-style-responsive(16px, 18px, 20px, 'Inter', 600);
+			@include text-style-responsive(16px, 19px, 23px, 'Inter', 400);
 		}
-	}
+}
 
 	&__close-btn {
 		background: none;
@@ -85,26 +94,60 @@
 		}
 	}
 
-	
 	&__due-date {
 		display: flex;
-		gap: 1rem
-		
+		gap: 1rem;
 	}
 	&__priority {
 		display: flex;
-		gap: 2rem
-	}
-	&__assigned {
-		div {
-			
+		gap: 2rem;
+		.task-modal__{
+			>span{
+				padding-right: 1rem;
+			}
 		}
-		
-	}
-	&__subtasks {
-		
 	}
 
+	&__assigned {
+		> div {
+			display: flex;
+			align-items: center;
+			gap: 2rem;
+			margin: 25px 0;
+			padding-left: 1rem;
+			> div {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				font-size: 16px;
+				width: 42px;
+				height: 42px;
+				border-radius: 100%;
+				color: #fff;
+			}
+		}
+	}
+
+	&__subtasks {
+		.subtasks-list {
+			display: flex;
+			flex-direction: column;
+			gap: 16px;
+			margin: 16px 0;
+		}
+		.subtask-row {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+			cursor: pointer;
+			font-size: 16px;
+
+			&:hover {
+				background-color: #eeeeee;
+				border-radius: 10px;
+			}
+		}
+	}
 
 	&__actions {
 		display: flex;
@@ -118,7 +161,7 @@
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			gap: .5rem;
+			gap: 0.5rem;
 			cursor: pointer;
 		}
 		.delete-btn {
@@ -126,7 +169,7 @@
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			gap: .5rem;
+			gap: 0.5rem;
 			cursor: pointer;
 		}
 

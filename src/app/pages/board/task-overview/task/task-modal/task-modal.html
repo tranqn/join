@@ -3,7 +3,13 @@
 
 	<div class="task-modal__dialog">
 		<div class="task-modal__header">
-			<p>{{ task()?.category }}</p>
+			<span
+				class="task-modal__category"
+				[class]="
+					task()?.category == 'User Story' ? 'user' : 'technical'
+				"
+				>{{ task()?.category }}</span
+			>
 			<button class="task-modal__close-btn" (click)="onClose()">x</button>
 		</div>
 
@@ -15,10 +21,9 @@
 			<p>{{ task()?.description }}</p>
 		</div>
 
-
 		<div class="task-modal__due-date mb-25 text-style-task-modal">
 			<p>Due date:</p>
-			<span>{{ task()?.dueDate | date: 'dd.MM.yyyy'}}</span>
+			<span>{{ task()?.dueDate | date : 'dd.MM.yyyy' }}</span>
 		</div>
 
 		<div class="task-modal__priority mb-25 text-style-task-modal">
@@ -27,26 +32,38 @@
 				<span>{{ task()?.priority }}</span>
 				@if (task()?.priority == 'low') {
 				<app-icon name="low" [size]="18" class="low"></app-icon>
-			} @else if (task()?.priority == 'medium') {
+				} @else if (task()?.priority == 'medium') {
 				<app-icon name="medium" [size]="18" class="medium"></app-icon>
-			} @else if (task()?.priority == 'urgent') {
+				} @else if (task()?.priority == 'urgent') {
 				<app-icon name="high" [size]="18" class="urgent"></app-icon>
-			}
+				}
 			</div>
 		</div>
 
 		<div class="task-modal__assigned mb-25 text-style-task-modal">
 			<span>Assigned To:</span>
-			<div>{{ task()?.assignedTo }}</div>
+			@for (contact of assignedContacts(); track $index) {
+			<div>
+				<div [style.background-color]="contact.color">
+					{{ getInitials(contact.name) }}
+				</div>
+				<p>{{ contact.name }}</p>
+			</div>
+			}
 		</div>
 
 		@if(task()?.subtasks){
 		<div class="task-modal__subtasks mb-25 text-style-task-modal">
 			<p class="h5">Subtask</p>
-			@for(item of task()?.subtasks;track $index){
-			<input type="checkbox" [id]="'subtask' + $index" />
-			<label [for]="'subtask' + $index">{{ item }}</label>
-			}
+
+			<div class="subtasks-list">
+				@for(item of task()?.subtasks;track $index){
+					<div class="subtask-row">
+						<input type="checkbox" [id]="'subtask' + $index" />
+						<label [for]="'subtask' + $index">{{ item.title }}</label>
+					</div>
+				}
+			</div>
 		</div>
 		}
 
