@@ -205,7 +205,7 @@
 							placeholder="Add new subtask"
 							[value]="subtaskInput()"
 							(input)="subtaskInput.set($any($event.target).value)"
-							(keydown.enter)="addSubtask()"
+							(keydown.enter)="$event.preventDefault(); addSubtask()"
 							class="subtask-input"
 						/>
 						<div class="subtask-actions">
