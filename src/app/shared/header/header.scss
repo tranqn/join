@@ -13,19 +13,19 @@
 	box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.75);
 	position: relative;
 	z-index: 100;
-
+	
 	@media (max-width: 991px) {
 		z-index: 200;
 	}
-
+	
 	@media (max-width: 768px) {
 		width: 100%;
 		margin-left: 0;
 		padding: 0 10px;
 	}
-
+	
 	&__row {
-		max-width: 1200px;
+		max-width: 1160px;
 		width: 100%;
 		@media (min-width: 769px) {
 			padding-left: 50px;

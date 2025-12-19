@@ -1,4 +1,4 @@
-<div class="overview">
+<div class="overview" #overview>
 	<div class="overview__head">
 		@for (item of columns; track item.title) {
 		<div class="overview__column">
@@ -22,6 +22,8 @@
 					[task]="task"
 					cdkDrag
 					[cdkDragData]="task"
+					[cdkDragStartDelay]="dragDelay()"
+					(cdkDragMoved)="onDragMoved($event)"
 				/>
 				} @empty {
 				<div class="placeholder">No tasks {{ item.title }}</div>

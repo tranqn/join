@@ -4,9 +4,13 @@ import {
   ViewChildren,
   QueryList,
   AfterViewInit,
+  OnDestroy,
   signal,
   Input,
-  WritableSignal
+  WritableSignal,
+  ViewChild,
+  ElementRef,
+  NgZone
 } from '@angular/core';
 
 import { Icon } from "../../../shared/icon/icon";
@@ -28,15 +32,21 @@ import {
   templateUrl: './task-overview.html',
   styleUrl: './task-overview.scss'
 })
-export class TaskOverview implements AfterViewInit {
+export class TaskOverview implements AfterViewInit, OnDestroy {
 
   taskService = inject(Taskservice);
+  ngZone = inject(NgZone);
 
-  // 🔹 Search kommt als SIGNAL rein
   @Input({ required: true }) search!: WritableSignal<string>;
+  @ViewChild('overview') overview!: ElementRef<HTMLDivElement>;
 
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
   connectedLists = signal<string[]>([]);
+  dragDelay = signal(100);
+  isMobile = signal(window.innerWidth < 768);
+  
+  private scrollInterval: any;
+  private currentScrollDirection: 'up' | 'down' | null = null;
 
   columns = [
     { title: 'To do', id: 'todo', listName: 'TodoList' },
@@ -55,7 +65,6 @@ export class TaskOverview implements AfterViewInit {
     }
   }
 
-  // ✅ RICHTIGE FILTERLOGIK MIT SIGNAL
   getFilteredTasksByStatus(status: string) {
     const tasks = this.getTasksByStatus(status);
     const term = this.search().toLowerCase().trim();
@@ -91,11 +100,55 @@ export class TaskOverview implements AfterViewInit {
       this.taskService.updateTasksOrder(targetTasks, targetStatus);
       this.taskService.updateTasksOrder(sourceTasks);
     }
+    
+    this.stopAutoScroll();
+  }
+
+  onDragMoved(event: any) {
+    if (!this.isMobile()) return;
+
+    const scrollThreshold = 150;
+    const y = event.pointerPosition.y;
+    const height = window.innerHeight;
+
+    if (y > height - scrollThreshold) {
+      this.startAutoScroll('down');
+    } else if (y < scrollThreshold) {
+      this.startAutoScroll('up');
+    } else {
+      this.stopAutoScroll();
+    }
+  }
+
+  private startAutoScroll(direction: 'up' | 'down') {
+    if (this.currentScrollDirection === direction) return;
+
+    this.stopAutoScroll();
+    this.currentScrollDirection = direction;
+
+    this.ngZone.runOutsideAngular(() => {
+      this.scrollInterval = setInterval(() => {
+        const scrollAmount = 20; // Ridiculous speed boost
+        window.scrollBy(0, direction === 'down' ? scrollAmount : -scrollAmount);
+      }, 16);
+    });
+  }
+
+  private stopAutoScroll() {
+    if (this.scrollInterval) {
+      clearInterval(this.scrollInterval);
+      this.scrollInterval = null;
+    }
+    this.currentScrollDirection = null;
   }
 
   ngAfterViewInit() {
     this.updateConnectedLists();
     this.dropLists.changes.subscribe(() => this.updateConnectedLists());
+  }
+
+  ngOnDestroy() {
+    this.stopAutoScroll();
   }
 
   private updateConnectedLists() {
