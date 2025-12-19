@@ -4,11 +4,12 @@ import { ContactModel } from '../../../interfaces/contact';
 import { FirebaseService } from '../../../services/firebase-service';
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from '../../../shared/confirmation-modal/confirmation.service';
+import { Icon } from "../../../shared/icon/icon";
 
 
 @Component({
 	selector: 'app-contact-details',
-	imports: [],
+	imports: [Icon],
 	templateUrl: './contact-details.html',
 	styleUrl: './contact-details.scss'
 })
