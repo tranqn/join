@@ -6,6 +6,7 @@ import {
   AfterViewInit,
   OnDestroy,
   signal,
+  computed,
   Input,
   WritableSignal,
   ViewChild,
@@ -42,8 +43,8 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 
   @ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
   connectedLists = signal<string[]>([]);
-  dragDelay = signal(100);
   isMobile = signal(window.innerWidth < 768);
+  dragDelay = computed(() => this.isMobile() ? 100 : 0);
   
   private scrollInterval: any;
   private currentScrollDirection: 'up' | 'down' | null = null;
