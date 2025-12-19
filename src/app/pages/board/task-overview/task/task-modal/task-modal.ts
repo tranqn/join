@@ -5,10 +5,12 @@ import { Icon } from '../../../../../shared/icon/icon';
 import { DatePipe } from '@angular/common';
 import { Taskservice } from '../../../../../services/taskservice';
 import { getShortName } from '../../../../contact/contact';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
 	selector: 'app-task-modal',
-	imports: [Icon, DatePipe],
+	imports: [Icon, DatePipe, ReactiveFormsModule],
 	templateUrl: './task-modal.html',
 	styleUrl: './task-modal.scss'
 })
@@ -20,9 +22,28 @@ export class TaskModal {
 	task = input<TaskModel>();
 	editTask = output<ContactModel>();
 	close = output<void>();
+	isEditMode = signal(false);
 	isClosing = signal(false);
+	priorities = signal([
+		{ value: 'urgent', label: 'Urgent', icon: 'priority_high.svg' },
+		{ value: 'medium', label: 'Medium', icon: 'priority_medium.svg' },
+		{ value: 'low', label: 'Low', icon: 'priority_low.svg' },
+	]);
+
+	taskForm = new FormGroup({
+		title: new FormControl('', [Validators.required]),
+		description: new FormControl('', [Validators.required]),
+		dueDate: new FormControl('', [Validators.required]),
+		priority: new FormControl('', [Validators.required]),
+		assignedTo: new FormControl('', [Validators.required]),
+		subtasks: new FormControl('', [Validators.required]),
+	});
 
 	constructor() {}
+
+	setPriority(priority: string) {
+		this.taskForm.get('priority')?.setValue(priority);
+	}
 
 	getInitials(name: string) {
 		return getShortName(name);
@@ -44,7 +65,9 @@ export class TaskModal {
 		}, 300);
 	}
 
-	onEdit() {}
+	onEdit() {
+		this.isEditMode.set(true);
+	}
 
 	onDelete() {}
 

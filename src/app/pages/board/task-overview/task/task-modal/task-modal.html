@@ -2,6 +2,8 @@
 	<div class="task-modal__backdrop" (click)="onClose()"></div>
 
 	<div class="task-modal__dialog">
+		@if(!isEditMode()){
+
 		<div class="task-modal__header">
 			<span
 				class="task-modal__category"
@@ -58,10 +60,10 @@
 
 			<div class="subtasks-list">
 				@for(item of task()?.subtasks;track $index){
-					<div class="subtask-row">
-						<input type="checkbox" [id]="'subtask' + $index" />
-						<label [for]="'subtask' + $index">{{ item.title }}</label>
-					</div>
+				<div class="subtask-row">
+					<input type="checkbox" [id]="'subtask' + $index" />
+					<label [for]="'subtask' + $index">{{ item.title }}</label>
+				</div>
 				}
 			</div>
 		</div>
@@ -99,5 +101,65 @@
 				<button>Edit</button>
 			</div>
 		</div>
+		} @else {
+		<div class="task-modal__edit-view">
+			<button class="task-modal__close-btn" (click)="onClose()">x</button>
+
+			<div>
+				<p>Title</p>
+				<input type="text" />
+			</div>
+
+			<div>
+				<p>Description</p>
+				<textarea></textarea>
+			</div>
+
+			<div>
+				<p>Due Date</p>
+				<input type="date" />
+			</div>
+
+			<div>
+				<p>Priority</p>
+				<div class="priority-buttons">
+					@for (prio of priorities(); track $index) {
+					<button
+						type="button"
+						class="priority-btn"
+						[class.urgent]="
+							prio.value === 'urgent' &&
+							taskForm.get('priority')?.value === 'urgent'
+						"
+						[class.medium]="
+							prio.value === 'medium' &&
+							taskForm.get('priority')?.value === 'medium'
+						"
+						[class.low]="
+							prio.value === 'low' &&
+							taskForm.get('priority')?.value === 'low'
+						"
+						[class.active]="
+							taskForm.get('priority')?.value === prio.value
+						"
+						(click)="setPriority(prio.value)"
+					>
+						<span>{{ prio.label }}</span>
+						<img [src]="prio.icon" [alt]="prio.label" />>
+					</button>
+					}
+				</div>
+			</div>
+
+			<div>
+				<p>Assigned To</p>
+			</div>
+
+			<div>
+				<p>Subtasks</p>
+				<button>Ok ✓</button>
+			</div>
+		</div>
+		}
 	</div>
 </section>

@@ -60,7 +60,7 @@
 			border-radius: 10px;
 			@include text-style-responsive(16px, 19px, 23px, 'Inter', 400);
 		}
-}
+	}
 
 	&__close-btn {
 		background: none;
@@ -101,8 +101,8 @@
 	&__priority {
 		display: flex;
 		gap: 2rem;
-		.task-modal__{
-			>span{
+		.task-modal__ {
+			> span {
 				padding-right: 1rem;
 			}
 		}
@@ -191,6 +191,58 @@
 		.edit-btn svg path,
 		.delete-btn svg path {
 			fill: currentColor;
+		}
+	}
+}
+
+
+.priority-buttons {
+	display: flex;
+	gap: 8px;
+	.priority-btn {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 8px;
+		padding: 12px 16px;
+		border: 1px solid $board-border;
+		border-radius: radius(medium);
+		background: white;
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 100ms ease;
+	
+		img {
+			width: 20px;
+			height: 20px;
+		}
+	
+		&:hover {
+			border-color: $darkblue;
+		}
+	
+		&.active {
+			color: white;
+	
+			img {
+				filter: brightness(10);
+			}
+		}
+	
+		&.urgent.active {
+			background-color: $urgent-color;
+			border-color: $urgent-color;
+		}
+	
+		&.medium.active {
+			background-color: $medium-color;
+			border-color: $medium-color;
+		}
+	
+		&.low.active {
+			background-color: $low-color;
+			border-color: $low-color;
 		}
 	}
 }
