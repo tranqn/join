@@ -19,17 +19,17 @@
 			<h1>{{ task()?.title }}</h1>
 		</div>
 
-		<div class="task-modal__description mb-25 text-style-task-modal">
+		<div class="task-modal__description mb-25">
 			<p>{{ task()?.description }}</p>
 		</div>
 
-		<div class="task-modal__due-date mb-25 text-style-task-modal">
+		<div class="task-modal__due-date mb-25">
 			<p>Due date:</p>
 			<span>{{ task()?.dueDate | date : 'dd.MM.yyyy' }}</span>
 		</div>
 
-		<div class="task-modal__priority mb-25 text-style-task-modal">
-			<p>Priority:</p>
+		<div class="task-modal__priority mb-25">
+			<label>Priority:</label>
 			<div class="task-modal__">
 				<span>{{ task()?.priority }}</span>
 				@if (task()?.priority == 'low') {
@@ -42,7 +42,7 @@
 			</div>
 		</div>
 
-		<div class="task-modal__assigned mb-25 text-style-task-modal">
+		<div class="task-modal__assigned mb-25">
 			<span>Assigned To:</span>
 			@for (contact of assignedContacts(); track $index) {
 			<div>
@@ -55,8 +55,8 @@
 		</div>
 
 		@if(task()?.subtasks){
-		<div class="task-modal__subtasks mb-25 text-style-task-modal">
-			<p class="h5">Subtask</p>
+		<div class="task-modal__subtasks mb-25">
+			<p>Subtask</p>
 
 			<div class="subtasks-list">
 				@for(item of task()?.subtasks;track $index){
@@ -102,25 +102,112 @@
 			</div>
 		</div>
 		} @else {
-		<div class="task-modal__edit-view">
-			<button class="task-modal__close-btn" (click)="onClose()">x</button>
-
-			<div>
-				<p>Title</p>
-				<input type="text" />
+		<div class="task-modal-edit" [formGroup]="taskForm">
+			<div class="task-modal-edit__close-button">
+				<button class="task-modal-edit__close-btn" (click)="onClose()">
+					x
+				</button>
+			</div>
+			<!-- Title Field -->
+			<div class="task-modal-edit__form-group">
+				<label for="title">Title<span class="required">*</span></label>
+				<input
+					id="title"
+					type="text"
+					formControlName="title"
+					placeholder="Enter a title"
+					[class.invalid]="
+						taskForm.get('title')?.invalid &&
+						taskForm.get('title')?.touched
+					"
+				/>
+				@if (getErrorMessage('title')) {
+				<span class="error-message">{{
+					getErrorMessage('title')
+				}}</span>
+				}
 			</div>
 
-			<div>
-				<p>Description</p>
-				<textarea></textarea>
+			<!-- Description Field -->
+			<div class="task-modal-edit__form-group">
+				<label for="description">Description</label>
+				<textarea
+					id="description"
+					formControlName="description"
+					placeholder="Enter a Description"
+					rows="4"
+				></textarea>
 			</div>
 
-			<div>
-				<p>Due Date</p>
-				<input type="date" />
+			<!-- Due Date Field -->
+			<div class="task-modal-edit__form-group">
+				<label for="dueDate"
+					>Due date<span class="required">*</span></label
+				>
+				<div class="date-picker">
+					<button
+						type="button"
+						class="date-picker__trigger"
+						(click)="toggleDatePicker()"
+						[class.open]="isDatePickerOpen()"
+						[class.invalid]="
+							taskForm.get('dueDate')?.invalid &&
+							taskForm.get('dueDate')?.touched
+						"
+					>
+						<span
+							[class.placeholder]="
+								!taskForm.get('dueDate')?.value
+							"
+						>
+							{{ formatDate(taskForm.get('dueDate')?.value) }}
+						</span>
+						<img src="icons/calender.svg" alt="calendar" />
+					</button>
+
+					@if (isDatePickerOpen()) {
+					<div class="date-picker__dropdown">
+						<div class="date-picker__header">
+							<button type="button" (click)="prevMonth()">
+								‹
+							</button>
+							<span>{{ getMonthYear() }}</span>
+							<button type="button" (click)="nextMonth()">
+								›
+							</button>
+						</div>
+						<div class="date-picker__weekdays">
+							@for (day of ['Su','Mo','Tu','We','Th','Fr','Sa'];
+							track day) {
+							<span>{{ day }}</span>
+							}
+						</div>
+						<div class="date-picker__days">
+							@for (day of getCalendarDays(); track $index) {
+							<button
+								type="button"
+								[class.other-month]="!day.current"
+								[class.selected]="day.selected"
+								[class.today]="day.today"
+								[disabled]="day.past"
+								(click)="selectDate(day.date)"
+							>
+								{{ day.num }}
+							</button>
+							}
+						</div>
+					</div>
+					}
+				</div>
+				@if (getErrorMessage('dueDate')) {
+				<span class="error-message">{{
+					getErrorMessage('dueDate')
+				}}</span>
+				}
 			</div>
 
-			<div>
+			<!-- Priority Field -->
+			<div class="task-modal-edit__form-group">
 				<p>Priority</p>
 				<div class="priority-buttons">
 					@for (prio of priorities(); track $index) {
@@ -145,19 +232,159 @@
 						(click)="setPriority(prio.value)"
 					>
 						<span>{{ prio.label }}</span>
-						<img [src]="prio.icon" [alt]="prio.label" />>
+						<app-icon
+							[name]="prio.icon"
+							[size]="18"
+							[class]="prio.value"
+						></app-icon>
 					</button>
 					}
 				</div>
 			</div>
 
-			<div>
-				<p>Assigned To</p>
+			<!-- Assigned To Field -->
+			<div class="task-modal-edit__form-group">
+				<label>Assigned to</label>
+				<div class="contacts-wrapper">
+					<button
+						type="button"
+						class="contacts-trigger"
+						(click)="toggleContacts()"
+						[class.open]="isContactsOpen()"
+					>
+						<span>Select contacts to assign</span>
+						<img
+							src="icons/arrow_drop_down.svg"
+							alt="dropdown"
+							[class.rotated]="isContactsOpen()"
+						/>
+					</button>
+
+					@if (isContactsOpen()) {
+					<div class="contacts-dropdown">
+						@for (contact of contacts; track contact.id) {
+						<label
+							class="contact-option"
+							[class.selected]="isContactSelected(contact)"
+						>
+							<span
+								class="contact-avatar"
+								[style.background-color]="contact.color"
+							>
+								{{ getInitials(contact.name) }}
+							</span>
+							<span class="contact-name">{{ contact.name }}</span>
+							<input
+								type="checkbox"
+								[checked]="isContactSelected(contact)"
+								(change)="toggleContact(contact)"
+								class="contact-checkbox"
+							/>
+						</label>
+						} @empty {
+						<div class="no-contacts">No contacts available</div>
+						}
+					</div>
+					}
+				</div>
+
+				<!-- Selected Contacts -->
+				@if (selectedContacts().length > 0) {
+				<div class="selected-contacts">
+					@for (contact of selectedContacts(); track contact.id) {
+					<span
+						class="selected-avatar"
+						[style.background-color]="contact.color"
+					>
+						{{ getInitials(contact.name) }}
+					</span>
+					}
+				</div>
+				}
 			</div>
 
-			<div>
-				<p>Subtasks</p>
-				<button>Ok ✓</button>
+			<!-- Subtasks Field -->
+			<div class="task-modal-edit__form-group">
+				<label>Subtasks</label>
+				<div class="subtask-input-wrapper">
+					<input
+						type="text"
+						placeholder="Add new subtask"
+						[value]="subtaskInput()"
+						(input)="subtaskInput.set($any($event.target).value)"
+						(keydown.enter)="addSubtask()"
+						class="subtask-input"
+					/>
+					<div class="subtask-actions">
+						<button
+							type="button"
+							class="subtask-action-btn"
+							(click)="clearSubtaskInput()"
+							title="Clear"
+						>
+							<img src="icons/close_icon2.svg" alt="clear" />
+						</button>
+						<button
+							type="button"
+							class="subtask-action-btn"
+							(click)="addSubtask()"
+							title="Add subtask"
+						>
+							<img src="icons/tick_icon.svg" alt="add" />
+						</button>
+					</div>
+				</div>
+
+				<!-- Subtask List -->
+				@if (subtasks().length > 0) {
+				<div class="subtask-list">
+					@for (subtask of subtasks(); track subtask.id) {
+					<div
+						class="subtask-item"
+						[class.editing]="editingSubtaskId() === subtask.id"
+					>
+						<input
+							type="checkbox"
+							[checked]="subtask.completed"
+							(change)="toggleSubtaskComplete(subtask.id)"
+							class="subtask-checkbox"
+						/>
+						<span
+							class="subtask-title"
+							[class.completed]="subtask.completed"
+						>
+							{{ subtask.title }}
+						</span>
+						<div class="subtask-item-actions">
+							<button
+								type="button"
+								class="subtask-item-btn"
+								(click)="deleteSubtask(subtask.id)"
+								title="Delete"
+							>
+								<img src="icons/delete.svg" alt="delete" />
+							</button>
+							<button
+								type="button"
+								class="subtask-item-btn"
+								(click)="editSubtask(subtask)"
+								title="Edit"
+							>
+								<img src="icons/tick_icon.svg" alt="edit" />
+							</button>
+						</div>
+					</div>
+					}
+				</div>
+				}
+			</div>
+
+			<!-- Save Button -->
+			<div class="task-modal-edit__actions">
+				<button type="button" class="btn-save" (click)="onSave()">
+					<span>Ok</span>
+					<span class="checkmark">✓</span>
+				</button>
 			</div>
 		</div>
 		}
