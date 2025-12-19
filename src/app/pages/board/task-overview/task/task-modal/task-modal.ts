@@ -33,7 +33,7 @@ export class TaskModal {
 		if (!task?.subtasks || !Array.isArray(task.subtasks) || task.subtasks.length === 0) {
 			return 0;
 		}
-		return task.subtasks.filter(subtask => subtask.done).length;
+		return task.subtasks.filter(subtask => subtask.completed).length;
 	}
 
 	closeTaskModal() {

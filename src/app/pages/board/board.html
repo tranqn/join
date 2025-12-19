@@ -17,7 +17,7 @@
       </button>
     </div>
 
-    <button class="board__add h5">
+    <button class="board__add h5" (click)="openAddTaskModal()">
       <span>Add Task</span>
       <img src="icons/plus.svg" alt="Plus Icon" />
     </button>
@@ -25,3 +25,11 @@
 
   <app-task-overview [search]="search"></app-task-overview>
 </section>
+
+@if (isAddTaskModalOpen()) {
+  <div class="modal-overlay" (click)="closeAddTaskModal()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+      <app-add-task [isModal]="true" (taskCreated)="closeAddTaskModal()"></app-add-task>
+    </div>
+  </div>
+}

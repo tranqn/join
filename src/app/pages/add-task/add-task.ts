@@ -1,4 +1,4 @@
-import { Component, inject, signal, HostListener } from '@angular/core';
+import { Component, inject, signal, HostListener, Input, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -23,6 +23,9 @@ export class AddTask {
 	private messageService = inject(MessageService);
 	private router = inject(Router);
 	private firestore = inject(Firestore);
+
+	@Input() isModal = false;
+	@Output() taskCreated = new EventEmitter<void>();
 
 	taskForm: FormGroup;
 	isSaving = signal(false);
@@ -337,7 +340,12 @@ export class AddTask {
 			await this.createTask();
 			this.showSuccessMessage();
 			this.clearForm();
-			this.router.navigate(['/board']);
+
+			if (this.isModal) {
+				this.taskCreated.emit();
+			} else {
+				this.router.navigate(['/board']);
+			}
 		} catch (error) {
 			console.error('Error creating task:', error);
 			this.showErrorMessage();

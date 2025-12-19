@@ -7,6 +7,12 @@
 		padding: $spacing-lg $spacing-sm $spacing-md;
 	}
 
+	&.modal-mode {
+		padding: $spacing-lg;
+		max-height: 80vh;
+		overflow-y: auto;
+	}
+
 	h1 {
 		margin-bottom: $spacing-lg;
 		@include respond-max($break-md) {
@@ -16,6 +22,8 @@
 }
 
 .task-form {
+	position: relative;
+
 	&__content {
 		display: flex;
 		gap: $spacing-lg;
@@ -38,17 +46,12 @@
 
 	&__actions {
 		display: flex;
-		justify-content: space-between;
+		justify-content: flex-end;
 		align-items: center;
 		margin-top: $spacing-lg;
 		@include respond-max($break-md) {
 			flex-direction: column;
 			gap: $spacing-sm;
-		}
-
-		.required-hint {
-			font-size: 0.875rem;
-			color: $board-border;
 		}
 
 		.buttons {
@@ -58,13 +61,22 @@
 	}
 }
 
+.required-hint {
+	font-size: 0.875rem;
+	color: $board-border;
+	margin: $spacing-md 0 0 0;
+	position: absolute;
+	bottom: $spacing-lg;
+	left: $spacing-lg;
+}
+
 .form-group {
 	display: flex;
 	flex-direction: column;
 	gap: 8px;
 
 	label {
-		font-weight: 700;
+		font-weight: 400;
 		font-size: 1.25rem;
 	}
 
@@ -317,6 +329,7 @@
 	padding: 10px 16px;
 	cursor: pointer;
 	transition: background-color 100ms ease;
+	font-weight: 400;
 
 	&:hover {
 		background-color: #f5f5f5;

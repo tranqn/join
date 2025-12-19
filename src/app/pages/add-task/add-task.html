@@ -1,5 +1,7 @@
-<section class="add-task">
-	<h1>Add Task</h1>
+<section class="add-task" [class.modal-mode]="isModal">
+	@if (!isModal) {
+		<h1>Add Task</h1>
+	}
 
 	<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
 		<div class="task-form__content">
@@ -266,9 +268,11 @@
 			</div>
 		</div>
 
+		<!-- Required Hint -->
+		<p class="required-hint"><span class="required">*</span>This field is required</p>
+
 		<!-- Form Actions -->
 		<div class="task-form__actions">
-			<p class="required-hint"><span class="required">*</span>This field is required</p>
 			<div class="buttons">
 				<button type="button" class="btn-clear" (click)="clearForm()">
 					<span>Clear</span>
