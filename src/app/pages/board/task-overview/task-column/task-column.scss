@@ -8,6 +8,13 @@
 	width: 100%;
 	padding: $spacing-sm;
 	border: 2px dashed transparent;
+	@include respond-max($break-md) {
+		@include dFlex-responsive(row, row, flex-start, center);
+		gap: $spacing-sm;
+		overflow: auto;
+		padding: 0 $spacing-sm $spacing-sm;
+		min-height: unset;
+	}
 	&.cdk-drop-list-dragging {
 		border: 2px dashed $light-blue;
 		border-radius: radius(medium);
