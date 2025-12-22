@@ -67,6 +67,7 @@
 					@for(item of task()?.subtasks;track $index){
 					<div class="subtask-row">
 						<input type="checkbox" [id]="'subtask' + $index" />
+						<span class="subtask-row__checkmark"></span>
 						<label [for]="'subtask' + $index">{{
 							item.title
 						}}</label>
