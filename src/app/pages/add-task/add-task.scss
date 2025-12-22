@@ -374,7 +374,11 @@
 	}
 
 	&.selected {
-		background-color: #e8f4fd;
+		background-color: $darkblue;
+
+		.contact-name {
+			color: white;
+		}
 	}
 }
 
@@ -383,6 +387,7 @@
 	width: 36px;
 	height: 36px;
 	border-radius: 50%;
+	border: 2px solid #fff;
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -393,7 +398,7 @@
 
 .contact-name {
 	flex: 1;
-	font-weight: 200;
+	font-weight: 300;
 }
 
 .contact-checkbox-wrapper {
@@ -405,6 +410,7 @@
 	flex-wrap: wrap;
 	gap: 8px;
 	margin-top: 8px;
+	color: white;
 
 	.selected-avatar {
 		width: 40px;
