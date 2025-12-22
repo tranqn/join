@@ -67,10 +67,7 @@
 .required-hint {
 	font-size: 0.875rem;
 	color: $board-border;
-	margin: $spacing-md 0 0 0;
-	position: absolute;
-	bottom: $spacing-lg;
-	left: $spacing-lg;
+	margin: $spacing-sm 0 0 0;
 }
 
 .form-group {
@@ -125,6 +122,9 @@
 .error-message {
 	color: $urgent-color;
 	font-size: 0.875rem;
+	display: block;
+	min-height: 1.25rem;
+	margin-top: 4px;
 }
 
 // Custom Date Picker
@@ -500,7 +500,14 @@
 		top: 50%;
 		transform: translateY(-50%);
 		display: flex;
-		gap: 4px;
+		align-items: center;
+		gap: 6px;
+
+		.divider {
+			width: 1px;
+			height: 32px;
+			background-color: $board-border;
+		}
 	}
 
 	.subtask-action-btn {
@@ -558,9 +565,25 @@
 		background-color: #f0f9ff;
 	}
 
+	&.editing {
+		list-style: none;
+		background-color: transparent;
+		border-radius: 0;
+		padding: $spacing-sm 0;
+		border-bottom: 1px solid $light-blue;
+
+		&:hover {
+			background-color: transparent;
+		}
+
+		.subtask-item-actions {
+			opacity: 1;
+		}
+	}
+
 	.subtask-title {
 		display: inline-block;
-		font-size: 0.875rem;
+		font-size: 1rem;
 		padding-right: 80px;
 
 		&.completed {
@@ -569,21 +592,38 @@
 		}
 	}
 
+	.subtask-edit-input {
+		width: calc(100% - 80px);
+		border: none;
+		background: transparent;
+		font-size: 1rem;
+		padding: 0 8px;
+		outline: none;
+		font-family: inherit;
+	}
+
 	.subtask-item-actions {
 		position: absolute;
 		right: $spacing-sm;
 		top: 50%;
 		transform: translateY(-50%);
 		display: flex;
-		gap: $spacing-xs;
+		align-items: center;
+		gap: 6px;
 		opacity: 0;
 		transition: opacity 100ms ease;
+
+		.divider {
+			width: 1px;
+			height: 32px;
+			background-color: $board-border;
+		}
 	}
 
 	.subtask-item-btn {
 		background: transparent;
 		border: none;
-		padding: 4px;
+		padding: 6px;
 		cursor: pointer;
 		display: flex;
 		align-items: center;
@@ -592,8 +632,8 @@
 		transition: background-color 100ms ease;
 
 		img {
-			width: 16px;
-			height: 16px;
+			width: 20px;
+			height: 20px;
 		}
 
 		&:hover {
