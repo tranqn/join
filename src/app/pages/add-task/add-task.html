@@ -144,12 +144,15 @@
 											{{ getInitials(contact.name) }}
 										</span>
 										<span class="contact-name">{{ contact.name }}</span>
-										<input
-											type="checkbox"
-											[checked]="isContactSelected(contact)"
-											(change)="toggleContact(contact)"
-											class="contact-checkbox"
-										/>
+										<div class="contact-checkbox-wrapper">
+											<input
+												type="checkbox"
+												[checked]="isContactSelected(contact)"
+												(change)="toggleContact(contact)"
+												class="contact-checkbox"
+											/>
+											<span class="checkmark"></span>
+										</div>
 									</label>
 								} @empty {
 									<div class="no-contacts">No contacts available</div>

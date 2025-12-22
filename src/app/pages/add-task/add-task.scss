@@ -48,7 +48,7 @@
 			margin-bottom: $spacing-md;
 
 			.close-btn {
-				padding: 4px;
+				padding: 8px;
 			}
 		}
 	}
@@ -376,10 +376,6 @@
 	&.selected {
 		background-color: #e8f4fd;
 	}
-
-	input[type="checkbox"] {
-		cursor: pointer;
-	}
 }
 
 .contact-avatar,
@@ -400,9 +396,8 @@
 	font-weight: 200;
 }
 
-.contact-checkbox {
-	width: 18px;
-	height: 18px;
+.contact-checkbox-wrapper {
+	@include custom-checkbox(18px, $darkblue, 'checkmark');
 }
 
 .selected-contacts {

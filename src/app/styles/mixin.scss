@@ -97,6 +97,43 @@ $break-xxl: 1400px;
 // ========================================
 // 5. ZUSÄTZLICHE HILFS-MIXINS
 // ========================================
+@mixin custom-checkbox($size: 16px, $border-color: $darkblue, $checkmark-class: 'checkmark') {
+  position: relative;
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+
+  input[type="checkbox"] {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: $size;
+    height: $size;
+    z-index: 2;
+    cursor: pointer;
+
+    &:checked + .#{$checkmark-class} {
+      background-image: url('../../../public/icons/checkboxHook.svg');
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      border: none;
+    }
+  }
+
+  .#{$checkmark-class} {
+    width: $size;
+    height: $size;
+    border: 2px solid $border-color;
+    border-radius: 3px;
+    background-color: transparent;
+    display: inline-block;
+    z-index: 1;
+    transition: all 0.1s ease;
+  }
+}
+
 @mixin custom-scrollbar($width: 6px, $thumb-color: rgba($board-border, 0.4)) {
   &::-webkit-scrollbar {
     width: $width;
