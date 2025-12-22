@@ -58,6 +58,28 @@ export class TaskModal {
 		this.isEditMode.set(true);
 	}
 
+	async toggleSubtask(index: number) {
+		const currentTask = this.task();
+		if (!currentTask || !currentTask.subtasks) return;
+
+		const updatedSubtasks = [...currentTask.subtasks];
+		updatedSubtasks[index] = {
+			...updatedSubtasks[index],
+			completed: !updatedSubtasks[index].completed
+		};
+
+		const updatedTask = {
+			...currentTask,
+			subtasks: updatedSubtasks
+		};
+
+		try {
+			await this.firebaseService.updateItem(updatedTask, 'tasks');
+		} catch (error) {
+			console.error('Error updating subtask:', error);
+		}
+	}
+
 	onDelete() {
 		const currentTask = this.task();
 		if (!currentTask) return;

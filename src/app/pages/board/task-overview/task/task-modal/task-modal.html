@@ -66,7 +66,12 @@
 				<div class="subtasks-list">
 					@for(item of task()?.subtasks;track $index){
 					<div class="subtask-row">
-						<input type="checkbox" [id]="'subtask' + $index" />
+						<input 
+							type="checkbox" 
+							[id]="'subtask' + $index" 
+							[checked]="item.completed"
+							(change)="toggleSubtask($index)"
+						/>
 						<span class="subtask-row__checkmark"></span>
 						<label [for]="'subtask' + $index">{{
 							item.title
