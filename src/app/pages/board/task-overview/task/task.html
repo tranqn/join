@@ -18,7 +18,9 @@
 	<div class="task__meta">
 		<div class="task__assigned">
 			@for (contact of assignedContacts(); track $index) {
-				<span [style.background-color]="contact.color" [style.transform]="!$first ? 'translateX(' + (-5 * $index) + 'px)' : ''">{{ getInitials(contact.name) }}</span>
+				@if ($index < 3) {
+					<span [style.background-color]="contact.color" [style.transform]="!$first ? 'translateX(' + (-5 * $index) + 'px)' : ''">{{ getInitials(contact.name) }}</span>
+				}
 			}
 		</div>
 		@if (task()?.priority == 'low') {
