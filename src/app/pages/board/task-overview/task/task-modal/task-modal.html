@@ -315,18 +315,9 @@
 
 				<!-- Subtask List -->
 				@if (subtasks().length > 0) {
-				<div class="subtask-list">
+				<ul class="subtask-list">
 					@for (subtask of subtasks(); track subtask.id) {
-					<div
-						class="subtask-item"
-						[class.editing]="editingSubtaskId() === subtask.id"
-					>
-						<input
-							type="checkbox"
-							[checked]="subtask.completed"
-							(change)="toggleSubtaskComplete(subtask.id)"
-							class="subtask-checkbox"
-						/>
+					<li class="subtask-item" [class.editing]="editingSubtaskId() === subtask.id">
 						<span
 							class="subtask-title"
 							[class.completed]="subtask.completed"
@@ -351,9 +342,9 @@
 								<img src="icons/tick_icon.svg" alt="edit" />
 							</button>
 						</div>
-					</div>
+					</li>
 					}
-				</div>
+				</ul>
 				}
 			</div>
 

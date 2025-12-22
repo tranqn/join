@@ -736,19 +736,24 @@
 
 .subtask-list {
 	margin-top: $spacing-sm;
-	display: flex;
-	flex-direction: column;
-	gap: $spacing-xs;
+	list-style-position: inside;
+	padding-left: 0;
+
+	li {
+		margin-bottom: $spacing-xs;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
 }
 
 .subtask-item {
-	display: flex;
-	align-items: center;
-	gap: $spacing-sm;
-	padding: $spacing-sm;
-	border: 1px solid $board-border;
+	display: list-item;
+	padding: $spacing-sm $spacing-md;
 	border-radius: radius(medium);
 	transition: all 100ms ease;
+	position: relative;
 
 	&:hover {
 		background-color: #f5f5f5;
@@ -763,15 +768,11 @@
 		border-color: $light-blue;
 	}
 
-	.subtask-checkbox {
-		cursor: pointer;
-		width: 18px;
-		height: 18px;
-	}
 
 	.subtask-title {
-		flex: 1;
+		display: inline-block;
 		font-size: 0.875rem;
+		padding-right: 80px;
 
 		&.completed {
 			text-decoration: line-through;
@@ -780,6 +781,10 @@
 	}
 
 	.subtask-item-actions {
+		position: absolute;
+		right: $spacing-sm;
+		top: 50%;
+		transform: translateY(-50%);
 		display: flex;
 		gap: $spacing-xs;
 		opacity: 0;
