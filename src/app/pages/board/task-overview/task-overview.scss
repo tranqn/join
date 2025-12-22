@@ -52,3 +52,15 @@
 		overflow: visible;
 	}
 }
+
+.modal-overlay {
+	@include modal-backdrop;
+	padding: $spacing-md;
+}
+
+.modal-content {
+	@include modal-dialog(1116px, 90vh);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}

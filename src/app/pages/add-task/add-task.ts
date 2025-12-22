@@ -26,6 +26,7 @@ export class AddTask {
 
 	isModal = input(false);
 	taskToEdit = input<TaskModel | null | undefined>(null);
+	initialStatus = input<string>('todo');
 	taskCreated = output<void>();
 	taskUpdated = output<void>();
 	cancel = output<void>();
@@ -36,6 +37,7 @@ export class AddTask {
 	isCategoryOpen = signal(false);
 	isDatePickerOpen = signal(false);
 	selectedContacts = signal<ContactModel[]>([]);
+	currentStatus = signal<string>('todo');
 
 	// Date picker state
 	viewDate = new Date();
@@ -64,6 +66,13 @@ export class AddTask {
 			const task = this.taskToEdit();
 			if (task) {
 				this.populateForm(task);
+			}
+		});
+
+		effect(() => {
+			const status = this.initialStatus();
+			if (status && !this.taskToEdit()) {
+				this.currentStatus.set(status);
 			}
 		});
 	}
@@ -447,18 +456,30 @@ export class AddTask {
 		const assignedToRefs = this.selectedContacts().map(contact =>
 			doc(this.firestore, 'contacts', contact.id)
 		);
+		const status = this.currentStatus();
+		const position = this.getPositionForStatus(status);
 		const task = {
 			title: formValue.title.trim(),
 			description: formValue.description?.trim() || '',
 			dueDate: new Date(formValue.dueDate).getTime(),
 			priority: formValue.priority,
 			category: formValue.category === 'technical' ? 'Technical Task' : 'User Story',
-			status: 'todo',
-			position: this.taskService.tasksTodo().length,
+			status: status,
+			position: position,
 			assignedTo: assignedToRefs,
 			subtasks: this.subtasks().length > 0 ? this.subtasks() : null
 		};
 		await this.firebaseService.addItemToCollection(task, 'tasks');
+	}
+
+	private getPositionForStatus(status: string): number {
+		switch (status) {
+			case 'todo': return this.taskService.tasksTodo().length;
+			case 'progress': return this.taskService.tasksProgress().length;
+			case 'feedback': return this.taskService.tasksFeedback().length;
+			case 'done': return this.taskService.tasksDone().length;
+			default: return this.taskService.tasksTodo().length;
+		}
 	}
 
 	/**

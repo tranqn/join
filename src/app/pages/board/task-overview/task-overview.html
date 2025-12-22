@@ -5,7 +5,12 @@
 			<div class="overview__title h5">
 				{{ item.title }}
 				@if (!$last) {
-				<app-icon name="plus" [size]="12" />
+				<app-icon
+					name="plus"
+					[size]="12"
+					(click)="openAddTaskModal(item.id)"
+					style="cursor: pointer;"
+				/>
 				}
 			</div>
 
@@ -37,3 +42,15 @@
 		}
 	</div>
 </div>
+
+@if (isAddTaskModalOpen()) {
+	<div class="modal-overlay" (click)="closeAddTaskModal()">
+		<div class="modal-content" (click)="$event.stopPropagation()">
+			<app-add-task
+				[isModal]="true"
+				[initialStatus]="selectedStatus()"
+				(taskCreated)="closeAddTaskModal()"
+			/>
+		</div>
+	</div>
+}

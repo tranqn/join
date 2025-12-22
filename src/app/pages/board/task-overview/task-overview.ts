@@ -20,6 +20,7 @@ import { TaskColumn } from "./task-column/task-column";
 import { Task } from "./task/task";
 import { TaskModal } from './task/task-modal/task-modal';
 import { TaskModel } from '../../../interfaces/task';
+import { AddTask } from '../../add-task/add-task';
 
 import {
   CdkDragDrop,
@@ -31,7 +32,7 @@ import {
 
 @Component({
   selector: 'app-task-overview',
-  imports: [Icon, TaskColumn, Task, CdkDropList, CdkDrag, TaskModal],
+  imports: [Icon, TaskColumn, Task, CdkDropList, CdkDrag, TaskModal, AddTask],
   templateUrl: './task-overview.html',
   styleUrl: './task-overview.scss'
 })
@@ -48,7 +49,9 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
   isMobile = signal(window.innerWidth < 768);
   dragDelay = computed(() => this.isMobile() ? 100 : 0);
   selectedTask = signal<TaskModel | null>(null);
-  
+  isAddTaskModalOpen = signal(false);
+  selectedStatus = signal('');
+
   private scrollInterval: any;
   private currentScrollDirection: 'up' | 'down' | null = null;
 
@@ -122,6 +125,16 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
     } else {
       this.stopAutoScroll();
     }
+  }
+
+  openAddTaskModal(status: string) {
+    this.selectedStatus.set(status);
+    this.isAddTaskModalOpen.set(true);
+  }
+
+  closeAddTaskModal() {
+    this.isAddTaskModalOpen.set(false);
+    this.selectedStatus.set('');
   }
 
   private startAutoScroll(direction: 'up' | 'down') {
