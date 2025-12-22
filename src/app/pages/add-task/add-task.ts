@@ -41,6 +41,7 @@ export class AddTask {
 	subtasks = signal<Subtask[]>([]);
 	subtaskInput = signal('');
 	editingSubtaskId = signal<string | null>(null);
+	editingSubtaskText = signal('');
 
 	priorities = [
 		{ value: 'urgent', label: 'Urgent', icon: 'high' },
@@ -284,11 +285,31 @@ export class AddTask {
 	}
 
 	/**
-	 * Starts editing a subtask
+	 * Starts editing a subtask inline
 	 */
-	editSubtask(subtask: Subtask) {
-		this.subtaskInput.set(subtask.title);
+	startEditingSubtask(subtask: Subtask) {
 		this.editingSubtaskId.set(subtask.id);
+		this.editingSubtaskText.set(subtask.title);
+	}
+
+	/**
+	 * Saves the edited subtask
+	 */
+	saveEditingSubtask() {
+		const editingId = this.editingSubtaskId();
+		const newTitle = this.editingSubtaskText().trim();
+
+		if (!editingId || !newTitle) {
+			this.editingSubtaskId.set(null);
+			this.editingSubtaskText.set('');
+			return;
+		}
+
+		this.subtasks.update(list =>
+			list.map(st => st.id === editingId ? { ...st, title: newTitle } : st)
+		);
+		this.editingSubtaskId.set(null);
+		this.editingSubtaskText.set('');
 	}
 
 	/**
@@ -297,7 +318,8 @@ export class AddTask {
 	deleteSubtask(id: string) {
 		this.subtasks.update(list => list.filter(st => st.id !== id));
 		if (this.editingSubtaskId() === id) {
-			this.clearSubtaskInput();
+			this.editingSubtaskId.set(null);
+			this.editingSubtaskText.set('');
 		}
 	}
 

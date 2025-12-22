@@ -3,82 +3,93 @@
 
 	<div class="task-modal__dialog">
 		@if(!isEditMode()){
+		<div class="task-modal__wrapper">
+			<div class="task-modal__header">
+				<span
+					class="task-modal__category"
+					[class]="
+						task()?.category == 'User Story' ? 'user' : 'technical'
+					"
+					>{{ task()?.category }}</span
+				>
+				<button class="task-modal__close-btn" (click)="onClose()">
+					<app-icon name="close_icon" [size]="16"></app-icon>
+				</button>
+			</div>
 
-		<div class="task-modal__header">
-			<span
-				class="task-modal__category"
-				[class]="
-					task()?.category == 'User Story' ? 'user' : 'technical'
-				"
-				>{{ task()?.category }}</span
-			>
-			<button class="task-modal__close-btn" (click)="onClose()">
-				<app-icon name="close_icon" [size]="16"></app-icon>
-			</button>
-		</div>
+			<div class="task-modal__title mb-25">
+				<h1>{{ task()?.title }}</h1>
+			</div>
 
-		<div class="task-modal__title mb-25">
-			<h1>{{ task()?.title }}</h1>
-		</div>
+			<div class="task-modal__description mb-25">
+				<p>{{ task()?.description }}</p>
+			</div>
 
-		<div class="task-modal__description mb-25">
-			<p>{{ task()?.description }}</p>
-		</div>
+			<div class="task-modal__due-date mb-25">
+				<p>Due date:</p>
+				<span>{{ task()?.dueDate | date : 'dd.MM.yyyy' }}</span>
+			</div>
 
-		<div class="task-modal__due-date mb-25">
-			<p>Due date:</p>
-			<span>{{ task()?.dueDate | date : 'dd.MM.yyyy' }}</span>
-		</div>
-
-		<div class="task-modal__priority mb-25">
-			<label>Priority:</label>
-			<div class="task-modal__priority--value">
-				<span>{{ task()?.priority }}</span>
-				@if (task()?.priority == 'low') {
-				<app-icon name="low" [size]="16" class="low"></app-icon>
-				} @else if (task()?.priority == 'medium') {
-				<app-icon name="medium" [size]="16" class="medium"></app-icon>
-				} @else if (task()?.priority == 'urgent') {
-				<app-icon name="high" [size]="16" class="urgent"></app-icon>
+			<div class="task-modal__priority mb-25">
+				<label>Priority:</label>
+				<div class="task-modal__priority--value">
+					<span>{{ task()?.priority }}</span>
+					@if (task()?.priority == 'low') {
+					<app-icon name="low" [size]="16" class="low"></app-icon>
+					} @else if (task()?.priority == 'medium') {
+					<app-icon
+						name="medium"
+						[size]="16"
+						class="medium"
+					></app-icon>
+					} @else if (task()?.priority == 'urgent') {
+					<app-icon name="high" [size]="16" class="urgent"></app-icon>
+					}
+				</div>
+			</div>
+			<div class="task-modal__assigned mb-25">
+				<span>Assigned To:</span>
+				@for (contact of assignedContacts(); track $index) {
+				<div>
+					<div [style.background-color]="contact.color">
+						{{ getInitials(contact.name) }}
+					</div>
+					<p>{{ contact.name }}</p>
+				</div>
 				}
 			</div>
-		</div>
 
-		<div class="task-modal__assigned mb-25">
-			<span>Assigned To:</span>
-			@for (contact of assignedContacts(); track $index) {
-			<div>
-				<div [style.background-color]="contact.color">
-					{{ getInitials(contact.name) }}
+			@if(task()?.subtasks){
+			<div class="task-modal__subtasks mb-25">
+				<p>Subtask</p>
+
+				<div class="subtasks-list">
+					@for(item of task()?.subtasks;track $index){
+					<div class="subtask-row">
+						<input type="checkbox" [id]="'subtask' + $index" />
+						<span class="subtask-row__checkmark"></span>
+						<label [for]="'subtask' + $index">{{
+							item.title
+						}}</label>
+					</div>
+					}
 				</div>
-				<p>{{ contact.name }}</p>
 			</div>
 			}
-		</div>
 
-		@if(task()?.subtasks){
-		<div class="task-modal__subtasks mb-25">
-			<p>Subtask</p>
-
-			<div class="subtasks-list">
-				@for(item of task()?.subtasks;track $index){
-				<div class="subtask-row">
-					<input type="checkbox" [id]="'subtask' + $index" />
-					<label [for]="'subtask' + $index">{{ item.title }}</label>
+			<div class="task-modal__actions">
+				<div class="delete-btn" (click)="onDelete()">
+					<app-icon
+						name="delete"
+						[size]="18"
+						class="delete"
+					></app-icon>
+					<button>Delete</button>
 				</div>
-				}
-			</div>
-		</div>
-		}
-
-		<div class="task-modal__actions">
-			<div class="delete-btn" (click)="onDelete()">
-				<app-icon name="delete" [size]="18" class="delete"></app-icon>
-				<button>Delete</button>
-			</div>
-			<div class="edit-btn" (click)="onEdit()">
-				<app-icon name="edit" [size]="18" class="edit"></app-icon>
-				<button>Edit</button>
+				<div class="edit-btn" (click)="onEdit()">
+					<app-icon name="edit" [size]="18" class="edit"></app-icon>
+					<button>Edit</button>
+				</div>
 			</div>
 		</div>
 		} @else {
@@ -319,7 +330,10 @@
 				@if (subtasks().length > 0) {
 				<ul class="subtask-list">
 					@for (subtask of subtasks(); track subtask.id) {
-					<li class="subtask-item" [class.editing]="editingSubtaskId() === subtask.id">
+					<li
+						class="subtask-item"
+						[class.editing]="editingSubtaskId() === subtask.id"
+					>
 						<span
 							class="subtask-title"
 							[class.completed]="subtask.completed"
