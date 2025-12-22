@@ -3,10 +3,7 @@
 @use 'sass:map';
 
 section {
-	padding: $spacing-xl 0 $spacing-md $spacing-lg;
-	@include respond-max($break-xl) {
-		padding: $spacing-lg $spacing-md $spacing-xl;
-	}
+	padding: $spacing-lg $spacing-md $spacing-xl;
 	@include respond-max($break-md) {
 		padding: $spacing-lg $spacing-sm $spacing-xl;
 	}
@@ -109,5 +106,8 @@ section {
 }
 
 .modal-content {
-	@include modal-dialog(900px, 90vh);
+	@include modal-dialog(1116px, 90vh);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
 }

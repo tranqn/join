@@ -15,8 +15,52 @@
 		flex-direction: column;
 		height: 100%;
 		max-width: none;
-		padding: 0;
+		padding: $spacing-lg;
 		overflow: hidden;
+
+		@include respond-max($break-md) {
+			padding: $spacing-md;
+		}
+
+		h1 {
+			display: block;
+			margin-bottom: $spacing-lg;
+			font-size: 3.5rem;
+			font-weight: 700;
+
+			@include respond-max($break-md) {
+				font-size: 2.5rem;
+				margin-bottom: $spacing-md;
+			}
+		}
+
+		.task-form__close-button {
+			position: absolute;
+			top: $spacing-lg;
+			right: $spacing-lg;
+			z-index: 10;
+
+			@include respond-max($break-md) {
+				top: $spacing-md;
+				right: $spacing-md;
+			}
+
+			.close-btn {
+				background: none;
+				border: none;
+				cursor: pointer;
+				padding: 8px;
+				border-radius: 50%;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				transition: background-color 0.2s;
+
+				&:hover {
+					background-color: #f0f0f0;
+				}
+			}
+		}
 
 		.task-form {
 			display: flex;
@@ -27,29 +71,66 @@
 			&__content {
 				flex: 1;
 				overflow-y: auto;
-				padding-right: 16px;
+				padding-right: 24px;
 				margin-bottom: $spacing-sm;
+				display: flex;
+				flex-direction: row;
+				gap: $spacing-lg;
 				@include custom-scrollbar;
+
+				@include respond-max($break-lg) {
+					flex-direction: column;
+					gap: $spacing-md;
+					padding-right: 8px;
+				}
+			}
+
+			&__column {
+				flex: 1;
+				display: flex;
+				flex-direction: column;
+				gap: $spacing-md;
+			}
+
+			&__divider {
+				display: block;
+				width: 1px;
+				background-color: #d1d1d1;
+				margin: 0 $spacing-md;
+
+				@include respond-max($break-lg) {
+					display: none;
+				}
 			}
 
 			&__actions {
 				margin-top: auto;
-				padding-top: $spacing-sm;
+				padding-top: $spacing-md;
 				background: white;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+
+				@include respond-max($break-md) {
+					flex-direction: row; // Keep them side by side if possible or stack
+					gap: $spacing-sm;
+				}
 			}
 		}
 
-		.task-form__close-button {
-			position: relative;
-			top: auto;
-			right: auto;
-			display: flex;
-			justify-content: flex-end;
-			margin-bottom: $spacing-md;
+		.required-hint {
+			margin: 0;
+		}
+	}
 
-			.close-btn {
-				padding: 8px;
-			}
+	&.edit-mode {
+		.task-form__content {
+			flex-direction: column;
+			gap: $spacing-md;
+		}
+
+		.task-form__divider {
+			display: none;
 		}
 	}
 
@@ -68,11 +149,6 @@
 		display: flex;
 		gap: $spacing-lg;
 		@include respond-max($break-lg) {
-			flex-direction: column;
-			gap: $spacing-md;
-		}
-
-		.modal-mode & {
 			flex-direction: column;
 			gap: $spacing-md;
 		}

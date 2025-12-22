@@ -1,12 +1,10 @@
-<section class="add-task" [class.modal-mode]="isModal()">
-	@if (!isModal()) {
-		<h1>Add Task</h1>
-	}
+<section class="add-task" [class.modal-mode]="isModal()" [class.edit-mode]="taskToEdit()">
+	<h1>{{ taskToEdit() ? 'Edit Task' : 'Add Task' }}</h1>
 
-	@if (taskToEdit()) {
+	@if (isModal() && taskToEdit()) {
 		<div class="task-form__close-button">
 			<button type="button" class="close-btn" (click)="cancel.emit()">
-				<app-icon name="close_icon" [size]="16"></app-icon>
+				<app-icon name="close_icon" [size]="24"></app-icon>
 			</button>
 		</div>
 	}
@@ -306,13 +304,13 @@
 			</div>
 		</div>
 
-		<!-- Required Hint -->
-		@if (!taskToEdit()) {
-			<p class="required-hint"><span class="required">*</span>This field is required</p>
-		}
-
 		<!-- Form Actions -->
 		<div class="task-form__actions">
+			@if (!taskToEdit()) {
+				<p class="required-hint"><span class="required">*</span>This field is required</p>
+			} @else {
+				<div></div>
+			}
 			<div class="buttons">
 				@if (!taskToEdit()) {
 					<button type="button" class="btn-clear" (click)="clearForm()">

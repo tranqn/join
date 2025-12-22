@@ -18,7 +18,15 @@
 		padding: 48px 40px;
 
 		&--edit {
-			padding: 48px 40px;
+			padding: 0;
+			max-width: 525px;
+			height: 90vh;
+
+			@include respond-max($break-md) {
+				width: calc(100% - 20px);
+				height: auto;
+				max-height: calc(100vh - 40px);
+			}
 		}
 
 		app-add-task {
