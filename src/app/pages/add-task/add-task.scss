@@ -376,8 +376,18 @@
 	&.selected {
 		background-color: $darkblue;
 
+		&:hover{
+			background-color: $secondary-color;
+		}
+
 		.contact-name {
 			color: white;
+		}
+
+		.contact-checkbox-wrapper {
+			.checkmark {
+				filter: brightness(8);
+			}
 		}
 	}
 }
@@ -411,6 +421,8 @@
 	gap: 8px;
 	margin-top: 8px;
 	color: white;
+
+
 
 	.selected-avatar {
 		width: 40px;
