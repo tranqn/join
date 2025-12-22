@@ -240,7 +240,8 @@
 	}
 
 	&__field {
-		margin-bottom: $spacing-sm;
+		margin-bottom: $spacing-md;
+		position: relative;
 	}
 
 	&__label {
@@ -296,17 +297,12 @@
 	}
 
 	&__error {
-		display: block;
-		min-height: 20px; // Always reserve space for error messages
-		font-size: 16px;
+		font-size: 12px;
 		color: #e60026;
-		margin-top: $spacing-xs;
+		position: absolute;
+		top: 100%;
+		left: 0;
 		transition: opacity 0.2s ease-out;
-
-		&--hidden {
-			opacity: 0;
-			visibility: hidden;
-		}
 	}
 
 	&__actions {

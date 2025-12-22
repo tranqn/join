@@ -1,11 +1,11 @@
-import { Component, inject, signal, HostListener, Input, Output, EventEmitter } from '@angular/core';
+import { Component, inject, signal, HostListener, input, output, effect } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { Taskservice } from '../../services/taskservice';
 import { FirebaseService } from '../../services/firebase-service';
 import { ContactModel } from '../../interfaces/contact';
-import { Subtask } from '../../interfaces/task';
+import { Subtask, TaskModel } from '../../interfaces/task';
 import { Firestore, doc } from '@angular/fire/firestore';
 import { Icon } from '../../shared/icon/icon';
 import { minLengthValidator, noPastDateValidator, requiredValidator, getErrorMessage } from './task-validators';
@@ -24,8 +24,11 @@ export class AddTask {
 	private router = inject(Router);
 	private firestore = inject(Firestore);
 
-	@Input() isModal = false;
-	@Output() taskCreated = new EventEmitter<void>();
+	isModal = input(false);
+	taskToEdit = input<TaskModel | null | undefined>(null);
+	taskCreated = output<void>();
+	taskUpdated = output<void>();
+	cancel = output<void>();
 
 	taskForm: FormGroup;
 	isSaving = signal(false);
@@ -56,6 +59,49 @@ export class AddTask {
 
 	constructor() {
 		this.taskForm = this.initializeForm();
+
+		effect(() => {
+			const task = this.taskToEdit();
+			if (task) {
+				this.populateForm(task);
+			}
+		});
+	}
+
+	/**
+	 * Populates the form with task data for editing
+	 */
+	private populateForm(task: TaskModel) {
+		this.taskForm.patchValue({
+			title: task.title,
+			description: task.description,
+			dueDate: this.formatDateForInput(task.dueDate),
+			priority: task.priority,
+			category: task.category === 'Technical Task' ? 'technical' : 'user-story'
+		});
+
+		// Map assignedTo refs to ContactModels
+		if (task.assignedTo) {
+			const allContacts = this.firebaseService.contacts();
+			const matchedContacts = task.assignedTo
+				.map(ref => allContacts.find(c => c.id === ref.id))
+				.filter((c): c is ContactModel => !!c);
+			this.selectedContacts.set(matchedContacts);
+		} else {
+			this.selectedContacts.set([]);
+		}
+
+		// Set subtasks
+		this.subtasks.set(task.subtasks || []);
+	}
+
+	/**
+	 * Formats timestamp to YYYY-MM-DD for date input
+	 */
+	private formatDateForInput(timestamp: number): string {
+		if (!timestamp) return '';
+		const date = new Date(timestamp);
+		return date.toISOString().split('T')[0];
 	}
 
 	/**
@@ -359,18 +405,22 @@ export class AddTask {
 		}
 		this.isSaving.set(true);
 		try {
-			await this.createTask();
-			this.showSuccessMessage();
-			this.clearForm();
-
-			if (this.isModal) {
-				this.taskCreated.emit();
+			if (this.taskToEdit()) {
+				await this.updateTask();
+				this.taskUpdated.emit();
 			} else {
-				this.router.navigate(['/board']);
+				await this.createTask();
+				if (this.isModal()) {
+					this.taskCreated.emit();
+				} else {
+					this.router.navigate(['/board']);
+				}
 			}
+			this.showSuccessMessage(!!this.taskToEdit());
+			this.clearForm();
 		} catch (error) {
-			console.error('Error creating task:', error);
-			this.showErrorMessage();
+			console.error('Error saving task:', error);
+			this.showErrorMessage(!!this.taskToEdit());
 		} finally {
 			this.isSaving.set(false);
 		}
@@ -399,13 +449,34 @@ export class AddTask {
 	}
 
 	/**
+	 * Updates the task in Firestore
+	 */
+	private async updateTask() {
+		const formValue = this.taskForm.value;
+		const assignedToRefs = this.selectedContacts().map(contact =>
+			doc(this.firestore, 'contacts', contact.id)
+		);
+		const updatedTask: TaskModel = {
+			...this.taskToEdit()!,
+			title: formValue.title.trim(),
+			description: formValue.description?.trim() || '',
+			dueDate: new Date(formValue.dueDate).getTime(),
+			priority: formValue.priority,
+			category: formValue.category === 'technical' ? 'Technical Task' : 'User Story',
+			assignedTo: assignedToRefs,
+			subtasks: this.subtasks().length > 0 ? this.subtasks() : null
+		};
+		await this.firebaseService.updateItem(updatedTask, 'tasks');
+	}
+
+	/**
 	 * Shows success toast message
 	 */
-	private showSuccessMessage() {
+	private showSuccessMessage(isUpdate: boolean) {
 		this.messageService.add({
 			severity: 'success',
 			summary: 'Success',
-			detail: 'Task created successfully',
+			detail: isUpdate ? 'Task updated successfully' : 'Task created successfully',
 			life: 3000
 		});
 	}
@@ -413,11 +484,11 @@ export class AddTask {
 	/**
 	 * Shows error toast message
 	 */
-	private showErrorMessage() {
+	private showErrorMessage(isUpdate: boolean) {
 		this.messageService.add({
 			severity: 'error',
 			summary: 'Error',
-			detail: 'Failed to create task',
+			detail: isUpdate ? 'Failed to update task' : 'Failed to create task',
 			life: 3000
 		});
 	}

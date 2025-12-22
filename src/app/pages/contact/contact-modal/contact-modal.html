@@ -66,9 +66,9 @@
 							class="contact-modal__input-icon"
 						/>
 					</div>
-					<span class="contact-modal__error" [class.contact-modal__error--hidden]="!getErrorMessage('name')">{{
-						getErrorMessage('name') || '&nbsp;'
-					}}</span>
+					@if (getErrorMessage('name')) {
+						<span class="contact-modal__error">{{ getErrorMessage('name') }}</span>
+					}
 				</div>
 
 				<div class="contact-modal__field">
@@ -93,9 +93,9 @@
 							class="contact-modal__input-icon"
 						/>
 					</div>
-					<span class="contact-modal__error" [class.contact-modal__error--hidden]="!getErrorMessage('email')">{{
-						getErrorMessage('email') || '&nbsp;'
-					}}</span>
+					@if (getErrorMessage('email')) {
+						<span class="contact-modal__error">{{ getErrorMessage('email') }}</span>
+					}
 				</div>
 
 				<div class="contact-modal__field">
@@ -120,9 +120,9 @@
 							class="contact-modal__input-icon"
 						/>
 					</div>
-					<span class="contact-modal__error" [class.contact-modal__error--hidden]="!getErrorMessage('phone')">{{
-						getErrorMessage('phone') || '&nbsp;'
-					}}</span>
+					@if (getErrorMessage('phone')) {
+						<span class="contact-modal__error">{{ getErrorMessage('phone') }}</span>
+					}
 				</div>
 
 				<div class="contact-modal__actions">

@@ -1,22 +1,22 @@
 <section class="task-modal">
 	<div class="task-modal__backdrop" (click)="onClose()"></div>
 
-	<div class="task-modal__dialog">
+	<div class="task-modal__dialog" [class.task-modal__dialog--edit]="isEditMode()">
 		@if(!isEditMode()){
-		<div class="task-modal__wrapper">
-			<div class="task-modal__header">
-				<span
-					class="task-modal__category"
-					[class]="
-						task()?.category == 'User Story' ? 'user' : 'technical'
-					"
-					>{{ task()?.category }}</span
-				>
-				<button class="task-modal__close-btn" (click)="onClose()">
-					<app-icon name="close_icon" [size]="16"></app-icon>
-				</button>
-			</div>
+		<div class="task-modal__header">
+			<span
+				class="task-modal__category"
+				[class]="
+					task()?.category == 'User Story' ? 'user' : 'technical'
+				"
+				>{{ task()?.category }}</span
+			>
+			<button class="task-modal__close-btn" (click)="onClose()">
+				<app-icon name="close_icon" [size]="16"></app-icon>
+			</button>
+		</div>
 
+		<div class="task-modal__wrapper">
 			<div class="task-modal__title mb-25">
 				<h1>{{ task()?.title }}</h1>
 			</div>
@@ -76,302 +76,29 @@
 				</div>
 			</div>
 			}
+		</div>
 
-			<div class="task-modal__actions">
-				<div class="delete-btn" (click)="onDelete()">
-					<app-icon
-						name="delete"
-						[size]="18"
-						class="delete"
-					></app-icon>
-					<button>Delete</button>
-				</div>
-				<div class="edit-btn" (click)="onEdit()">
-					<app-icon name="edit" [size]="18" class="edit"></app-icon>
-					<button>Edit</button>
-				</div>
+		<div class="task-modal__actions">
+			<div class="delete-btn" (click)="onDelete()">
+				<app-icon
+					name="delete"
+					[size]="18"
+					class="delete"
+				></app-icon>
+				<button>Delete</button>
+			</div>
+			<div class="edit-btn" (click)="onEdit()">
+				<app-icon name="edit" [size]="18" class="edit"></app-icon>
+				<button>Edit</button>
 			</div>
 		</div>
 		} @else {
-		<div class="task-modal-edit" [formGroup]="taskForm">
-			<div class="task-modal-edit__close-button">
-				<button class="task-modal-edit__close-btn" (click)="onClose()">
-					<app-icon name="close_icon" [size]="16"></app-icon>
-				</button>
-			</div>
-			<!-- Title Field -->
-			<div class="task-modal-edit__form-group">
-				<label for="title">Title<span class="required">*</span></label>
-				<input
-					id="title"
-					type="text"
-					formControlName="title"
-					placeholder="Enter a title"
-					[class.invalid]="
-						taskForm.get('title')?.invalid &&
-						taskForm.get('title')?.touched
-					"
-				/>
-				@if (getErrorMessage('title')) {
-				<span class="error-message">{{
-					getErrorMessage('title')
-				}}</span>
-				}
-			</div>
-
-			<!-- Description Field -->
-			<div class="task-modal-edit__form-group">
-				<label for="description">Description</label>
-				<textarea
-					id="description"
-					formControlName="description"
-					placeholder="Enter a Description"
-					rows="4"
-				></textarea>
-			</div>
-
-			<!-- Due Date Field -->
-			<div class="task-modal-edit__form-group">
-				<label for="dueDate"
-					>Due date<span class="required">*</span></label
-				>
-				<div class="date-picker">
-					<button
-						type="button"
-						class="date-picker__trigger"
-						(click)="toggleDatePicker()"
-						[class.open]="isDatePickerOpen()"
-						[class.invalid]="
-							taskForm.get('dueDate')?.invalid &&
-							taskForm.get('dueDate')?.touched
-						"
-					>
-						<span
-							[class.placeholder]="
-								!taskForm.get('dueDate')?.value
-							"
-						>
-							{{ formatDate(taskForm.get('dueDate')?.value) }}
-						</span>
-						<img src="icons/calender.svg" alt="calendar" />
-					</button>
-
-					@if (isDatePickerOpen()) {
-					<div class="date-picker__dropdown">
-						<div class="date-picker__header">
-							<button type="button" (click)="prevMonth()">
-								‹
-							</button>
-							<span>{{ getMonthYear() }}</span>
-							<button type="button" (click)="nextMonth()">
-								›
-							</button>
-						</div>
-						<div class="date-picker__weekdays">
-							@for (day of ['Su','Mo','Tu','We','Th','Fr','Sa'];
-							track day) {
-							<span>{{ day }}</span>
-							}
-						</div>
-						<div class="date-picker__days">
-							@for (day of getCalendarDays(); track $index) {
-							<button
-								type="button"
-								[class.other-month]="!day.current"
-								[class.selected]="day.selected"
-								[class.today]="day.today"
-								[disabled]="day.past"
-								(click)="selectDate(day.date)"
-							>
-								{{ day.num }}
-							</button>
-							}
-						</div>
-					</div>
-					}
-				</div>
-				@if (getErrorMessage('dueDate')) {
-				<span class="error-message">{{
-					getErrorMessage('dueDate')
-				}}</span>
-				}
-			</div>
-
-			<!-- Priority Field -->
-			<div class="task-modal-edit__form-group">
-				<p>Priority</p>
-				<div class="priority-buttons">
-					@for (prio of priorities(); track $index) {
-					<button
-						type="button"
-						class="priority-btn"
-						[class.urgent]="
-							prio.value === 'urgent' &&
-							taskForm.get('priority')?.value === 'urgent'
-						"
-						[class.medium]="
-							prio.value === 'medium' &&
-							taskForm.get('priority')?.value === 'medium'
-						"
-						[class.low]="
-							prio.value === 'low' &&
-							taskForm.get('priority')?.value === 'low'
-						"
-						[class.active]="
-							taskForm.get('priority')?.value === prio.value
-						"
-						(click)="setPriority(prio.value)"
-					>
-						<span>{{ prio.label }}</span>
-						<app-icon
-							[name]="prio.icon"
-							[size]="18"
-							[class]="prio.value"
-						></app-icon>
-					</button>
-					}
-				</div>
-			</div>
-
-			<!-- Assigned To Field -->
-			<div class="task-modal-edit__form-group">
-				<label>Assigned to</label>
-				<div class="contacts-wrapper">
-					<button
-						type="button"
-						class="contacts-trigger"
-						(click)="toggleContacts()"
-						[class.open]="isContactsOpen()"
-					>
-						<span>Select contacts to assign</span>
-						<img
-							src="icons/arrow_drop_down.svg"
-							alt="dropdown"
-							[class.rotated]="isContactsOpen()"
-						/>
-					</button>
-
-					@if (isContactsOpen()) {
-					<div class="contacts-dropdown">
-						@for (contact of contacts; track contact.id) {
-						<label
-							class="contact-option"
-							[class.selected]="isContactSelected(contact)"
-						>
-							<span
-								class="contact-avatar"
-								[style.background-color]="contact.color"
-							>
-								{{ getInitials(contact.name) }}
-							</span>
-							<span class="contact-name">{{ contact.name }}</span>
-							<input
-								type="checkbox"
-								[checked]="isContactSelected(contact)"
-								(change)="toggleContact(contact)"
-								class="contact-checkbox"
-							/>
-						</label>
-						} @empty {
-						<div class="no-contacts">No contacts available</div>
-						}
-					</div>
-					}
-				</div>
-
-				<!-- Selected Contacts -->
-				@if (selectedContacts().length > 0) {
-				<div class="selected-contacts">
-					@for (contact of selectedContacts(); track contact.id) {
-					<span
-						class="selected-avatar"
-						[style.background-color]="contact.color"
-					>
-						{{ getInitials(contact.name) }}
-					</span>
-					}
-				</div>
-				}
-			</div>
-
-			<!-- Subtasks Field -->
-			<div class="task-modal-edit__form-group">
-				<label>Subtasks</label>
-				<div class="subtask-input-wrapper">
-					<input
-						type="text"
-						placeholder="Add new subtask"
-						[value]="subtaskInput()"
-						(input)="subtaskInput.set($any($event.target).value)"
-						(keydown.enter)="addSubtask()"
-						class="subtask-input"
-					/>
-					<div class="subtask-actions">
-						<button
-							type="button"
-							class="subtask-action-btn"
-							(click)="clearSubtaskInput()"
-							title="Clear"
-						>
-							<img src="icons/close_icon2.svg" alt="clear" />
-						</button>
-						<button
-							type="button"
-							class="subtask-action-btn"
-							(click)="addSubtask()"
-							title="Add subtask"
-						>
-							<img src="icons/tick_icon.svg" alt="add" />
-						</button>
-					</div>
-				</div>
-
-				<!-- Subtask List -->
-				@if (subtasks().length > 0) {
-				<ul class="subtask-list">
-					@for (subtask of subtasks(); track subtask.id) {
-					<li
-						class="subtask-item"
-						[class.editing]="editingSubtaskId() === subtask.id"
-					>
-						<span
-							class="subtask-title"
-							[class.completed]="subtask.completed"
-						>
-							{{ subtask.title }}
-						</span>
-						<div class="subtask-item-actions">
-							<button
-								type="button"
-								class="subtask-item-btn"
-								(click)="deleteSubtask(subtask.id)"
-								title="Delete"
-							>
-								<img src="icons/delete.svg" alt="delete" />
-							</button>
-							<button
-								type="button"
-								class="subtask-item-btn"
-								(click)="editSubtask(subtask)"
-								title="Edit"
-							>
-								<img src="icons/tick_icon.svg" alt="edit" />
-							</button>
-						</div>
-					</li>
-					}
-				</ul>
-				}
-			</div>
-
-			<!-- Save Button -->
-			<div class="task-modal-edit__actions">
-				<button type="button" class="btn-save" (click)="onSave()">
-					<span>Ok</span>
-					<span class="checkmark">✓</span>
-				</button>
-			</div>
-		</div>
+			<app-add-task 
+				[isModal]="true" 
+				[taskToEdit]="task()" 
+				(taskUpdated)="isEditMode.set(false)"
+				(cancel)="onClose()"
+			/>
 		}
 	</div>
 </section>

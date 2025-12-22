@@ -33,14 +33,24 @@
 		padding: 48px 40px;
 		width: 525px;
 		max-height: 800px;
-		overflow: auto;
+		overflow: hidden;
 		box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 		position: relative;
 		animation: slideIn 0.2s ease-out;
 
-		
+		&--edit {
+			padding: 48px 40px;
+		}
+
+		app-add-task {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+			overflow: hidden;
+		}
 	}
 	&__wrapper {
+		flex: 1;
 		overflow-y: auto;
 		padding-right: 8px;
 		
@@ -222,6 +232,7 @@
 	&__actions {
 		display: flex;
 		justify-content: flex-end;
+		margin-top: 24px;
 		@include respond-max($break-md) {
 			display: none;
 		}
