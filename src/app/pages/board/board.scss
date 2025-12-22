@@ -110,4 +110,7 @@ section {
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	app-add-task {
+		height: 100%;
+	}
 }
