@@ -2,13 +2,14 @@
 @use '../../styles/mixin.scss' as *;
 
 .summary {
-  padding: $spacing-mdg;
-  background: #f6f8fb;
-  min-height: 100vh;
 
-  @include respond-max($break-md) {
-    padding: $spacing-md;
-  }
+  padding: $spacing-md 0 $spacing-md $spacing-lg;
+	@include respond-max($break-xl) {
+		padding: $spacing-lg $spacing-md $spacing-xl;
+	}
+	@include respond-max($break-md) {
+		padding: $spacing-lg $spacing-sm $spacing-xl;
+	}
 }
 
 /* HEADER */
@@ -205,3 +206,35 @@
 .urgent-icon {
   background: $urgent-color;
 }
+.card.horizontal {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  text-align: left;
+}
+
+/* Icon links */
+.card.horizontal .icon {
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+}
+
+/* Text rechts */
+.card.horizontal .wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.card.horizontal .value {
+  font-size: 32px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.card.horizontal .label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
