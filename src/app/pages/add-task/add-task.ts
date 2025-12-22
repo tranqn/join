@@ -101,7 +101,10 @@ export class AddTask {
 	private formatDateForInput(timestamp: number): string {
 		if (!timestamp) return '';
 		const date = new Date(timestamp);
-		return date.toISOString().split('T')[0];
+		const year = date.getUTCFullYear();
+		const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+		const day = String(date.getUTCDate()).padStart(2, '0');
+		return `${year}-${month}-${day}`;
 	}
 
 	/**
@@ -218,12 +221,12 @@ export class AddTask {
 	/**
 	 * Formats date for display
 	 */
-	formatDate(value: number | null): string {
+	formatDate(value: number | string | null): string {
 		if (!value) return 'dd/mm/yyyy';
 		const date = new Date(value);
-		const day = String(date.getDate()).padStart(2, '0');
-		const month = String(date.getMonth() + 1).padStart(2, '0');
-		const year = date.getFullYear();
+		const day = String(date.getUTCDate()).padStart(2, '0');
+		const month = String(date.getUTCMonth() + 1).padStart(2, '0');
+		const year = date.getUTCFullYear();
 		return `${day}/${month}/${year}`;
 	}
 
@@ -274,7 +277,15 @@ export class AddTask {
 		for (let i = 1; i <= daysInMonth; i++) {
 			const date = new Date(year, month, i);
 			const isToday = date.getTime() === today.getTime();
-			const isSelected = selectedValue && new Date(selectedValue).toDateString() === date.toDateString();
+			
+			let isSelected = false;
+			if (selectedValue) {
+				const selDate = new Date(selectedValue);
+				isSelected = selDate.getUTCFullYear() === year && 
+							 selDate.getUTCMonth() === month && 
+							 selDate.getUTCDate() === i;
+			}
+			
 			days.push({ num: i, date, current: true, selected: isSelected, today: isToday, past: date < today });
 		}
 
@@ -292,7 +303,9 @@ export class AddTask {
 	 * Selects a date and closes picker
 	 */
 	selectDate(date: Date) {
-		this.taskForm.patchValue({ dueDate: date.getTime() });
+		// Store as UTC midnight timestamp to avoid timezone shifts
+		const utcTimestamp = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
+		this.taskForm.patchValue({ dueDate: utcTimestamp });
 		this.isDatePickerOpen.set(false);
 	}
 

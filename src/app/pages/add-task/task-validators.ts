@@ -27,11 +27,15 @@ export function noPastDateValidator(): ValidatorFn {
 		if (!control.value) {
 			return { required: true };
 		}
+		
 		const selectedDate = new Date(control.value);
 		const today = new Date();
-		today.setHours(0, 0, 0, 0);
-		selectedDate.setHours(0, 0, 0, 0);
-		if (selectedDate < today) {
+		
+		// Create UTC midnight for comparison
+		const selectedUtc = Date.UTC(selectedDate.getUTCFullYear(), selectedDate.getUTCMonth(), selectedDate.getUTCDate());
+		const todayUtc = Date.UTC(today.getFullYear(), today.getMonth(), today.getDate());
+		
+		if (selectedUtc < todayUtc) {
 			return { pastDate: true };
 		}
 		return null;

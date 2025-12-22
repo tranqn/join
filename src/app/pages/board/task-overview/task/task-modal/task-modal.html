@@ -27,7 +27,7 @@
 
 			<div class="task-modal__due-date mb-25">
 				<p>Due date:</p>
-				<span>{{ task()?.dueDate | date : 'dd.MM.yyyy' }}</span>
+				<span>{{ task()?.dueDate | date : 'dd.MM.yyyy' : 'UTC' }}</span>
 			</div>
 
 			<div class="task-modal__priority mb-25">
