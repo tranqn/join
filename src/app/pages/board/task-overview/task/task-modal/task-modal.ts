@@ -34,6 +34,7 @@ import {
 	getErrorMessage
 } from './../../../../add-task/task-validators';
 import { AddTask } from './../../../../add-task/add-task';
+import { ConfirmationService } from '../../../../../shared/confirmation-modal/confirmation.service';
 
 @Component({
 	selector: 'app-task-modal',
@@ -44,6 +45,8 @@ import { AddTask } from './../../../../add-task/add-task';
 export class TaskModal {
 	private taskService = inject(Taskservice);
 	private firebaseService = inject(FirebaseService);
+	private confirmationService = inject(ConfirmationService);
+	private messageService = inject(MessageService);
 
 	assignedContacts = this.taskService.getAssignedContacts(() => this.task());
 
@@ -72,7 +75,9 @@ export class TaskModal {
 	taskForm = new FormGroup({
 		title: new FormControl('', [Validators.required]),
 		description: new FormControl(''),
-		dueDate: new FormControl<string | number | null>(null, [Validators.required]),
+		dueDate: new FormControl<string | number | null>(null, [
+			Validators.required
+		]),
 		priority: new FormControl('medium'),
 		assignedTo: new FormControl(''),
 		subtasks: new FormControl('')
@@ -110,7 +115,7 @@ export class TaskModal {
 
 	onEdit() {
 		this.isEditMode.set(true);
-		
+
 		// Initialize form with current task values
 		const task = this.task();
 		if (task) {
@@ -120,30 +125,66 @@ export class TaskModal {
 				dueDate: task.dueDate || '',
 				priority: task.priority || 'medium'
 			});
-			
+
 			// Initialize selectedContacts with already assigned contacts
 			// Match with contacts from FirebaseService to get proper IDs
 			const assigned = this.assignedContacts();
 			if (assigned && assigned.length > 0) {
 				const allContacts = this.contacts;
 				const matchedContacts = assigned
-					.map(a => allContacts.find(c => c.name === a.name && c.email === a.email))
+					.map((a) =>
+						allContacts.find(
+							(c) => c.name === a.name && c.email === a.email
+						)
+					)
 					.filter((c): c is ContactModel => c !== undefined);
 				this.selectedContacts.set(matchedContacts);
 			}
-			
+
 			// Initialize subtasks if present
 			if (task.subtasks && Array.isArray(task.subtasks)) {
-				this.subtasks.set(task.subtasks.map(st => ({
-					id: st.id || crypto.randomUUID(),
-					title: st.title,
-					completed: st.completed || false
-				})));
+				this.subtasks.set(
+					task.subtasks.map((st) => ({
+						id: st.id || crypto.randomUUID(),
+						title: st.title,
+						completed: st.completed || false
+					}))
+				);
 			}
 		}
 	}
 
-	onDelete() {}
+	onDelete() {
+		const currentTask = this.task();
+		if (!currentTask) return;
+
+		this.confirmationService.show(
+			`Are you sure you want to delete "${currentTask.title}"?`,
+			async () => {
+				try {
+					await this.firebaseService.deleteItemFromCollection(
+						currentTask.id!,
+						`tasks`
+					);
+					this.messageService.add({
+						severity: `success`,
+						summary: `success`,
+						detail: `Task successfully deleted`,
+						life: 3000
+					});
+					this.close.emit();
+				} catch (error) {
+					console.error(`Error deleting task:`, error);
+					this.messageService.add({
+						severity: `error`,
+						summary: `Error`,
+						detail: `Failed to delete task`,
+						life: 3000
+					});
+				}
+			}
+		);
+	}
 
 	onClose() {
 		this.isClosing.set(true);
@@ -183,14 +224,14 @@ Gets error message for a form control*/
 	 * Toggles contact dropdown visibility
 	 */
 	toggleContacts() {
-		this.isContactsOpen.update(open => !open);
+		this.isContactsOpen.update((open) => !open);
 	}
 
 	/**
 	 * Checks if a contact is selected
 	 */
 	isContactSelected(contact: ContactModel): boolean {
-		return this.selectedContacts().some(c => c.id === contact.id);
+		return this.selectedContacts().some((c) => c.id === contact.id);
 	}
 
 	/**
@@ -198,9 +239,11 @@ Gets error message for a form control*/
 	 */
 	toggleContact(contact: ContactModel) {
 		if (this.isContactSelected(contact)) {
-			this.selectedContacts.update(list => list.filter(c => c.id !== contact.id));
+			this.selectedContacts.update((list) =>
+				list.filter((c) => c.id !== contact.id)
+			);
 		} else {
-			this.selectedContacts.update(list => [...list, contact]);
+			this.selectedContacts.update((list) => [...list, contact]);
 		}
 	}
 
@@ -213,8 +256,8 @@ Gets error message for a form control*/
 
 		const editingId = this.editingSubtaskId();
 		if (editingId) {
-			this.subtasks.update(list =>
-				list.map(st => st.id === editingId ? { ...st, title } : st)
+			this.subtasks.update((list) =>
+				list.map((st) => (st.id === editingId ? { ...st, title } : st))
 			);
 			this.editingSubtaskId.set(null);
 		} else {
@@ -223,7 +266,7 @@ Gets error message for a form control*/
 				title,
 				completed: false
 			};
-			this.subtasks.update(list => [...list, newSubtask]);
+			this.subtasks.update((list) => [...list, newSubtask]);
 		}
 		this.subtaskInput.set('');
 	}
@@ -248,7 +291,7 @@ Gets error message for a form control*/
 	 * Deletes a subtask
 	 */
 	deleteSubtask(id: string) {
-		this.subtasks.update(list => list.filter(st => st.id !== id));
+		this.subtasks.update((list) => list.filter((st) => st.id !== id));
 		if (this.editingSubtaskId() === id) {
 			this.clearSubtaskInput();
 		}
@@ -258,8 +301,10 @@ Gets error message for a form control*/
 	 * Toggles subtask completion
 	 */
 	toggleSubtaskComplete(id: string) {
-		this.subtasks.update(list =>
-			list.map(st => st.id === id ? { ...st, completed: !st.completed } : st)
+		this.subtasks.update((list) =>
+			list.map((st) =>
+				st.id === id ? { ...st, completed: !st.completed } : st
+			)
 		);
 	}
 
@@ -284,29 +329,58 @@ Gets error message for a form control*/
 	 * Gets current month/year for header
 	 */
 	getMonthYear(): string {
-		const months = ['January', 'February', 'March', 'April', 'May', 'June',
-			'July', 'August', 'September', 'October', 'November', 'December'];
-		return `${months[this.viewDate.getMonth()]} ${this.viewDate.getFullYear()}`;
+		const months = [
+			'January',
+			'February',
+			'March',
+			'April',
+			'May',
+			'June',
+			'July',
+			'August',
+			'September',
+			'October',
+			'November',
+			'December'
+		];
+		return `${
+			months[this.viewDate.getMonth()]
+		} ${this.viewDate.getFullYear()}`;
 	}
 
 	/**
 	 * Navigate to previous month
 	 */
 	prevMonth() {
-		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
+		this.viewDate = new Date(
+			this.viewDate.getFullYear(),
+			this.viewDate.getMonth() - 1,
+			1
+		);
 	}
 
 	/**
 	 * Navigate to next month
 	 */
 	nextMonth() {
-		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
+		this.viewDate = new Date(
+			this.viewDate.getFullYear(),
+			this.viewDate.getMonth() + 1,
+			1
+		);
 	}
 
 	/**
 	 * Generates calendar days for current view
 	 */
-	getCalendarDays(): { num: number; date: Date; current: boolean; selected: boolean; today: boolean; past: boolean }[] {
+	getCalendarDays(): {
+		num: number;
+		date: Date;
+		current: boolean;
+		selected: boolean;
+		today: boolean;
+		past: boolean;
+	}[] {
 		const days = [];
 		const year = this.viewDate.getFullYear();
 		const month = this.viewDate.getMonth();
@@ -320,22 +394,46 @@ Gets error message for a form control*/
 		// Previous month days
 		for (let i = firstDay - 1; i >= 0; i--) {
 			const date = new Date(year, month - 1, daysInPrevMonth - i);
-			days.push({ num: daysInPrevMonth - i, date, current: false, selected: false, today: false, past: date < today });
+			days.push({
+				num: daysInPrevMonth - i,
+				date,
+				current: false,
+				selected: false,
+				today: false,
+				past: date < today
+			});
 		}
 
 		// Current month days
 		for (let i = 1; i <= daysInMonth; i++) {
 			const date = new Date(year, month, i);
 			const isToday = date.getTime() === today.getTime();
-			const isSelected = !!(selectedValue && new Date(selectedValue).toDateString() === date.toDateString());
-			days.push({ num: i, date, current: true, selected: isSelected, today: isToday, past: date < today });
+			const isSelected = !!(
+				selectedValue &&
+				new Date(selectedValue).toDateString() === date.toDateString()
+			);
+			days.push({
+				num: i,
+				date,
+				current: true,
+				selected: isSelected,
+				today: isToday,
+				past: date < today
+			});
 		}
 
 		// Next month days
 		const remaining = 42 - days.length;
 		for (let i = 1; i <= remaining; i++) {
 			const date = new Date(year, month + 1, i);
-			days.push({ num: i, date, current: false, selected: false, today: false, past: false });
+			days.push({
+				num: i,
+				date,
+				current: false,
+				selected: false,
+				today: false,
+				past: false
+			});
 		}
 
 		return days;
@@ -357,24 +455,28 @@ Gets error message for a form control*/
 			this.taskForm.markAllAsTouched();
 			return;
 		}
-		
+
 		const currentTask = this.task();
 		if (!currentTask) return;
-		
+
 		this.isSaving.set(true);
-		
+
 		try {
 			// Convert selected contacts to DocumentReferences (filter out any without valid IDs)
 			const assignedToRefs = this.selectedContacts()
-				.filter(contact => contact && contact.id)
-				.map(contact => doc(this.firebaseService.firestore, 'contacts', contact.id));
-			
+				.filter((contact) => contact && contact.id)
+				.map((contact) =>
+					doc(this.firebaseService.firestore, 'contacts', contact.id)
+				);
+
 			// Build the updated task object
 			const updatedTask: TaskModel = {
 				id: currentTask.id,
 				title: this.taskForm.get('title')?.value || '',
 				description: this.taskForm.get('description')?.value || '',
-				dueDate: Number(this.taskForm.get('dueDate')?.value) || currentTask.dueDate,
+				dueDate:
+					Number(this.taskForm.get('dueDate')?.value) ||
+					currentTask.dueDate,
 				priority: this.taskForm.get('priority')?.value || 'medium',
 				assignedTo: assignedToRefs.length > 0 ? assignedToRefs : null,
 				category: currentTask.category,
@@ -382,10 +484,10 @@ Gets error message for a form control*/
 				position: currentTask.position,
 				subtasks: this.subtasks().length > 0 ? this.subtasks() : null
 			};
-			
+
 			// Save to Firestore
 			await this.firebaseService.updateItem(updatedTask, 'tasks');
-			
+
 			// Close the edit mode
 			this.isEditMode.set(false);
 		} catch (error) {
