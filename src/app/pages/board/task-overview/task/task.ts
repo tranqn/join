@@ -1,31 +1,25 @@
-import { Component, input, ChangeDetectionStrategy, signal, inject } from '@angular/core';
+import { Component, input, ChangeDetectionStrategy, signal, inject, output } from '@angular/core';
 import { TaskModel } from '../../../../interfaces/task';
-import { TaskModal } from './task-modal/task-modal';
 import { Icon } from '../../../../shared/icon/icon';
 import { Taskservice } from '../../../../services/taskservice';
 import { getShortName } from '../../../contact/contact';
 
 @Component({
 	selector: 'app-task',
-	imports: [TaskModal, Icon],
+	imports: [Icon],
 	templateUrl: './task.html',
 	styleUrl: './task.scss',
 	changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class Task {
 	task = input<TaskModel>();
+	taskClicked = output<TaskModel>();
 	private taskService = inject(Taskservice);
-
-	isOpen = signal(false);
 
 	assignedContacts = this.taskService.getAssignedContacts(() => this.task());
 
 	openTaskModal() {
-		this.isOpen.set(true);
-	}
-
-	closeTaskModal(){
-		this.isOpen.set(false);
+		this.taskClicked.emit(this.task()!);
 	}
 
 	getInitials(name: string) {

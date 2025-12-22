@@ -18,6 +18,8 @@ import { Icon } from "../../../shared/icon/icon";
 import { Taskservice } from '../../../services/taskservice';
 import { TaskColumn } from "./task-column/task-column";
 import { Task } from "./task/task";
+import { TaskModal } from './task/task-modal/task-modal';
+import { TaskModel } from '../../../interfaces/task';
 
 import {
   CdkDragDrop,
@@ -29,7 +31,7 @@ import {
 
 @Component({
   selector: 'app-task-overview',
-  imports: [Icon, TaskColumn, Task, CdkDropList, CdkDrag],
+  imports: [Icon, TaskColumn, Task, CdkDropList, CdkDrag, TaskModal],
   templateUrl: './task-overview.html',
   styleUrl: './task-overview.scss'
 })
@@ -45,6 +47,7 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
   connectedLists = signal<string[]>([]);
   isMobile = signal(window.innerWidth < 768);
   dragDelay = computed(() => this.isMobile() ? 100 : 0);
+  selectedTask = signal<TaskModel | null>(null);
   
   private scrollInterval: any;
   private currentScrollDirection: 'up' | 'down' | null = null;

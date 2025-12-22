@@ -24,7 +24,11 @@
 					[cdkDragData]="task"
 					[cdkDragStartDelay]="dragDelay()"
 					(cdkDragMoved)="onDragMoved($event)"
+					(taskClicked)="selectedTask.set($event)"
 				/>
+				@if (selectedTask()?.id === task.id) {
+				<app-task-modal [task]="task" (close)="selectedTask.set(null)" />
+				}
 				} @empty {
 				<div class="placeholder">No tasks {{ item.title }}</div>
 				}
