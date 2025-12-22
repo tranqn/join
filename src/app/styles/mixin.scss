@@ -97,6 +97,180 @@ $break-xxl: 1400px;
 // ========================================
 // 5. ZUSÄTZLICHE HILFS-MIXINS
 // ========================================
+@mixin custom-scrollbar($width: 6px, $thumb-color: rgba($board-border, 0.4)) {
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: $thumb-color;
+    border-radius: 3px;
+    
+    &:hover {
+      background: rgba($board-border, 0.6);
+    }
+  }
+
+  scrollbar-width: thin;
+  scrollbar-color: $thumb-color transparent;
+}
+
+@mixin modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.2s ease-out;
+}
+
+@mixin modal-dialog($max-width: 1200px, $height: auto) {
+  position: relative;
+  z-index: 1001;
+  background: white;
+  border-radius: radius(large);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: $max-width;
+  height: $height;
+  overflow: hidden;
+  animation: slideIn 0.3s ease-out;
+
+  @include respond-max($break-md) {
+    width: calc(100% - 20px);
+    height: auto;
+    max-height: calc(100vh - 40px);
+  }
+}
+
+@mixin form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+
+  label {
+    font-weight: 400;
+    font-size: 1rem;
+    color: $darkblue;
+  }
+}
+
+@mixin error-message {
+  color: $urgent-color;
+  font-size: 0.75rem;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  white-space: nowrap;
+}
+
+@mixin form-input {
+  padding: 12px 16px;
+  border: 1px solid $board-border;
+  border-radius: radius(medium);
+  font-size: 1rem;
+  font-family: inherit;
+  transition: border-color 100ms ease;
+
+  &:focus {
+    outline: none;
+    border-color: $light-blue;
+  }
+
+  &::placeholder {
+    color: $board-border;
+  }
+
+  &.invalid {
+    border-color: $urgent-color;
+  }
+
+  &:disabled {
+    background-color: #f5f5f5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-base {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  border-radius: radius(medium);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 150ms ease;
+  border: 1px solid transparent;
+  
+  &:active {
+    transform: scale(0.98);
+  }
+  
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-primary {
+  background: $darkblue;
+  color: white;
+  border-color: $darkblue;
+
+  &:hover:not(:disabled) {
+    background: $light-blue;
+    border-color: $light-blue;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+}
+
+@mixin button-secondary {
+  background: white;
+  color: $darkblue;
+  border-color: $darkblue;
+
+  &:hover:not(:disabled) {
+    border-color: $light-blue;
+    color: $light-blue;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+}
+
+@mixin error-message {
+  color: $urgent-color;
+  font-size: 0.75rem;
+  position: absolute;
+  bottom: -18px;
+  left: 0;
+  white-space: nowrap;
+}
+
+@mixin form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  position: relative;
+  margin-bottom: 24px;
+
+  label {
+    font-weight: 400;
+    font-size: 1rem;
+    color: $darkblue;
+  }
+}
+
 // Container mit responsive Padding
 @mixin container {
   width: 100%;
@@ -153,6 +327,11 @@ $break-xxl: 1400px;
 // ========================================
 // KEYFRAME ANIMATIONS
 // ========================================
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
 @keyframes slideIn {
 	from {
 		transform: translateX(100%);
@@ -161,5 +340,16 @@ $break-xxl: 1400px;
 	to {
 		transform: translateX(0);
 		opacity: 1;
+	}
+}
+
+@keyframes slideOut {
+	from {
+		transform: translateX(0);
+		opacity: 1;
+	}
+	to {
+		transform: translateX(100%);
+		opacity: 0;
 	}
 }

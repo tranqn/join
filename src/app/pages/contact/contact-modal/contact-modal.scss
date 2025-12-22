@@ -4,40 +4,18 @@
 @use '../../../styles/mixin.scss' as *;
 
 .contact-modal {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: 1000;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+	@include modal-backdrop;
 
 	&__backdrop {
-		position: absolute;
-		top: 0;
-		left: 0;
-		width: 100%;
-		height: 100%;
+		@include modal-backdrop;
 		background: rgba(0, 0, 0, 0.5);
-		animation: fadeIn 0.2s ease-out;
 	}
 	&--closing {
 		animation: slideOut 0.3s ease-out;
 	}
 
 	&__dialog {
-		position: relative;
-		z-index: 1;
-		background: white;
-		border-radius: radius(large);
-		box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-		width: 100%;
-		max-width: 1200px;
-		height: 500px;
-		overflow: hidden;
-		animation: slideIn 0.3s ease-out;
+		@include modal-dialog(1200px, 500px);
 
 		@include respond-max($break-md) {
 			height: calc(100vh - 60px);
@@ -255,14 +233,9 @@
 	}
 
 	&__input {
-		width: 100%;
-		padding: $spacing-sm;
+		@include form-input;
 		padding-right: 40px;
-		border: 1px solid #ccc;
-		border-radius: map.get($radius, small);
-		font-size: 14px;
-		font-family: inherit;
-		transition: border-color 0.1s;
+
 		&:-webkit-autofill,
 		&:-webkit-autofill:hover,
 		&:-webkit-autofill:focus,
@@ -278,13 +251,8 @@
 			box-shadow: inset 0 0 0 1000px transparent !important;
 		}
 
-		&:focus {
-			outline: none;
-			border-color: $light-blue;
-		}
-
 		&--error {
-			border-color: #e60026;
+			border-color: $urgent-color;
 		}
 	}
 
@@ -297,12 +265,7 @@
 	}
 
 	&__error {
-		font-size: 12px;
-		color: #e60026;
-		position: absolute;
-		top: 100%;
-		left: 0;
-		transition: opacity 0.2s ease-out;
+		@include error-message;
 	}
 
 	&__actions {
@@ -316,34 +279,12 @@
 	}
 
 	&__btn {
-		padding: $spacing-sm $spacing-md;
-		border-radius: map.get($radius, small);
+		@include button-base;
 		font-size: 14px;
 		font-weight: 500;
-		font-family: inherit;
-		transition: all 0.1s;
-		display: flex;
-		align-items: center;
-		gap: $spacing-xs;
-
-		&:hover:not(:disabled) {
-			box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
-		}
-
-		&:disabled {
-			opacity: 0.5;
-			cursor: not-allowed;
-		}
 
 		&--cancel {
-			background: white;
-			color: $darkblue;
-			border: 1px solid $darkblue;
-
-			&:hover:not(:disabled) {
-				border: 1px solid $light-blue;
-				color: $light-blue;
-			}
+			@include button-secondary;
 
 			@include respond-max($break-md) {
 				display: none;
@@ -351,24 +292,11 @@
 		}
 
 		&--delete {
-			background: white;
-			color: $darkblue;
-			border: 1px solid $darkblue;
-
-			&:hover:not(:disabled) {
-				color: $light-blue;
-				border: 1px solid $light-blue;
-			}
+			@include button-secondary;
 		}
 
 		&--submit {
-			background: $darkblue;
-			color: white;
-			border: none;
-
-			&:hover:not(:disabled) {
-				background: $light-blue;
-			}
+			@include button-primary;
 		}
 	}
 

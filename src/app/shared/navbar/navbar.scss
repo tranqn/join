@@ -101,7 +101,7 @@
 	}
 }
 
-@media (max-width: 768px) {
+@include respond-max($break-md) {
 	.sidebar {
 		width: 100%;
 		height: 80px;
@@ -146,12 +146,12 @@
 			}
 
 			&:hover {
-				border-radius: map.get($radius, medium);
-				background-color: §darkblue;
+				border-radius: radius(medium);
+				background-color: $darkblue;
 			}
 
 			&.active {
-				border-radius: map.get($radius, medium);
+				border-radius: radius(medium);
 				.nav-icon {
 					filter: brightness(0) invert(1);
 				}

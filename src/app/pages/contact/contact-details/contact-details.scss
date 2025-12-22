@@ -26,10 +26,12 @@ section {
 		display: flex;
 		align-items: center;
 		@include spacing(gap, 35px, 55px, 75px);
-		@media (min-width: $break-lg) and (max-width: $break-xl) {
-			flex-direction: column;
-			align-items: flex-start;
-			gap: $spacing-md;
+		@include respond($break-lg) {
+			@include respond-max($break-xl) {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: $spacing-md;
+			}
 		}
 		@include respond-max($break-sm) {
 			gap: $spacing-md;

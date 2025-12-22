@@ -4,6 +4,9 @@
 
 section {
 	padding: $spacing-xl 0 $spacing-md $spacing-lg;
+	@include respond-max($break-xl) {
+		padding: $spacing-lg $spacing-md $spacing-xl;
+	}
 	@include respond-max($break-md) {
 		padding: $spacing-lg $spacing-sm $spacing-xl;
 	}
@@ -101,25 +104,10 @@ section {
 
 // Modal styles
 .modal-overlay {
-	position: fixed;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background: rgba(0, 0, 0, 0.5);
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	z-index: 1000;
+	@include modal-backdrop;
 	padding: $spacing-md;
 }
 
 .modal-content {
-	background: white;
-	border-radius: radius(large);
-	max-width: 900px;
-	width: 100%;
-	max-height: 90vh;
-	overflow: hidden;
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+	@include modal-dialog(900px, 90vh);
 }

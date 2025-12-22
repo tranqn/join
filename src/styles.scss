@@ -90,6 +90,49 @@ button {
 	cursor: pointer;
 }
 
+.btn-primary {
+	@include button-base;
+	background: $darkblue;
+	color: white;
+	border-color: $darkblue;
+
+	&:hover:not(:disabled) {
+		background: $light-blue;
+		border-color: $light-blue;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+	}
+}
+
+.btn-secondary {
+	@include button-base;
+	background: white;
+	color: $darkblue;
+	border-color: $darkblue;
+
+	&:hover:not(:disabled) {
+		border-color: $light-blue;
+		color: $light-blue;
+		box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+	}
+}
+
+// Utility Classes
+.flex-column { display: flex; flex-direction: column; }
+.flex-row { display: flex; flex-direction: row; }
+.align-center { align-items: center; }
+.justify-center { justify-content: center; }
+.justify-between { justify-content: space-between; }
+.flex-1 { flex: 1; }
+.overflow-hidden { overflow: hidden; }
+.overflow-auto { overflow: auto; }
+.w-100 { width: 100%; }
+.h-100 { height: 100%; }
+
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.mb-24 { margin-bottom: 24px; }
+.mb-32 { margin-bottom: 32px; }
+
 // PrimeNG Toast custom styles
 p-toast {
 	position: fixed;
