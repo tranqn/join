@@ -13,6 +13,11 @@ body {
 	margin: 0;
 }
 
+body:has(.task-modal),
+body:has(.modal-overlay) {
+	overflow: hidden;
+}
+
 @keyframes rotateIn {
 	from { transform: rotate(0deg); }
 	to { transform: rotate(10deg); }
