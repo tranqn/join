@@ -69,6 +69,14 @@ section {
 			}
 		}
 	}
+
+	&__actions {
+		@include dFlex-responsive(row, row, center, center);
+		@include respond-max($break-xl) {
+			margin-top: $spacing-sm;
+		}
+		gap: $spacing-sm;
+	}
 	&__add {
 		background: $darkblue;
 		color: #fff;
@@ -78,10 +86,13 @@ section {
 		gap: $spacing-sm;
 		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {
-			flex: 0 0 calc(40% - 10px);
+			flex: auto;
 		}
 		@include respond-max($break-lg) {
-			flex: 0 0 calc(40% - 5px);
+			flex: auto;
+			span {
+				display: none;
+			}
 		}
 		@include respond-max($break-md) {
 			flex: unset;
@@ -92,6 +103,35 @@ section {
 			}
 		}
 		img {
+			width: 25px;
+			object-fit: contain;
+			filter: brightness(6);
+		}
+	}
+
+	&__sort {
+		background: $darkblue;
+		color: #fff;
+		border: none;
+		border-radius: radius(medium);
+		padding: .75rem 1rem;
+		gap: $spacing-sm;
+		@include dFlex-responsive(row, row, center, center);
+		@include respond-max($break-xl) {
+			flex: 0 0 calc(25% - 10px);
+		}
+		@include respond-max($break-lg) {
+			flex: 0 0 calc(25% - 5px);
+		}
+		@include respond-max($break-md) {
+			flex: unset;
+			width: fit-content;
+			padding: $spacing-sm;
+			span {
+				display: none;
+			}
+		}
+		app-icon {
 			width: 25px;
 			object-fit: contain;
 			filter: brightness(6);

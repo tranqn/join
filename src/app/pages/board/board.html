@@ -1,35 +1,60 @@
 <section>
-  <div class="board">
-    <h1>Board</h1>
+	<div class="board">
+		<h1>Board</h1>
 
-    <div class="board__search">
-      <input
-        type="text"
-        class="board__search--field"
-        placeholder="Find task"
-        autocomplete="off"
-        [value]="search()"
-        (input)="search.set($any($event.target).value)"
-      />
+		<div class="board__search">
+			<input
+				type="text"
+				class="board__search--field"
+				placeholder="Find task"
+				autocomplete="off"
+				[value]="search()"
+				(input)="search.set($any($event.target).value)"
+			/>
 
-      <button class="board__search--btn">
-        <img src="icons/search.svg" alt="Search Icon" />
-      </button>
-    </div>
+			<button class="board__search--btn">
+				<img src="icons/search.svg" alt="Search Icon" />
+			</button>
+		</div>
 
-    <button class="board__add h5" (click)="openAddTaskModal()">
-      <span>Add Task</span>
-      <img src="icons/plus.svg" alt="Plus Icon" />
-    </button>
-  </div>
+		<div class="board__actions">
+			<button class="board__add h5" (click)="openAddTaskModal()">
+				<span>Add Task</span>
+				<img src="icons/plus.svg" alt="Plus Icon" />
+			</button>
 
-  <app-task-overview [search]="search"></app-task-overview>
+			<button
+				class="board__sort h5"
+				(click)="togglePrioritySort()"
+				[class.active]="priorityFilter() !== 'all'"
+			>
+				@switch (priorityFilter()){ @case ('all') {
+				<span>All</span>
+				} @case ('urgent') {
+				<span>Urgent</span>
+				} @case ('medium') {
+				<span>Medium</span>
+				} @case ('low') {
+				<span>Low</span>
+				} }
+				<app-icon name="filter-line" [size]="25"></app-icon>
+			</button>
+		</div>
+	</div>
+
+	<app-task-overview
+		[search]="search"
+		[priorityFilter]="priorityFilter"
+	></app-task-overview>
 </section>
 
 @if (isAddTaskModalOpen()) {
-  <div class="modal-overlay" (click)="closeAddTaskModal()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-      <app-add-task [isModal]="true" (taskCreated)="closeAddTaskModal()"></app-add-task>
-    </div>
-  </div>
+<div class="modal-overlay" (click)="closeAddTaskModal()">
+	<div class="modal-content" (click)="$event.stopPropagation()">
+		<app-add-task
+			[isModal]="true"
+			(taskCreated)="closeAddTaskModal()"
+		></app-add-task>
+	</div>
+</div>
 }
