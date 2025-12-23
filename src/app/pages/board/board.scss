@@ -15,10 +15,6 @@ section {
 	@include dFlex-responsive(row, row, space-between, center);
 	h1 {
 		margin-right: auto;
-		@include respond-max($break-xl) {
-			flex: 0 0 100%;
-			margin-bottom: $spacing-sm;
-		}
 		@include respond-max($break-md) {
 			flex: unset;
 			margin-bottom: 0;
@@ -32,15 +28,17 @@ section {
 		margin-right: 2rem;
 		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {
+			margin-top: $spacing-sm;
 			margin-right: $spacing-md;
-			flex: 0 0 calc(60% - 10px);
+			flex: 0 0 100%;
+			order: 1;
 		}
 		@include respond-max($break-lg) {
 			margin-right: $spacing-sm;
-			flex: 0 0 calc(60% - 5px);
+			flex: 0 0 100%;
 		}
 		@include respond-max($break-md) {
-			margin-top: $spacing-lg;
+			margin-top: 2.5rem;
 			margin-right: 0;
 			flex: 0 0 100%;
 			order: 1;
@@ -73,7 +71,7 @@ section {
 	&__actions {
 		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {
-			margin-top: $spacing-sm;
+			order: 0;
 		}
 		gap: $spacing-sm;
 	}

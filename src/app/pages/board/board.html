@@ -28,16 +28,21 @@
 				(click)="togglePrioritySort()"
 				[class.active]="priorityFilter() !== 'all'"
 			>
-				@switch (priorityFilter()){ @case ('all') {
-				<span>All</span>
-				} @case ('urgent') {
-				<span>Urgent</span>
-				} @case ('medium') {
-				<span>Medium</span>
-				} @case ('low') {
-				<span>Low</span>
-				} }
-				<app-icon name="filter-line" [size]="25"></app-icon>
+				@switch (priorityFilter()){ 
+					@case ('all') {
+						<span>All</span>
+						<app-icon name="filter-line" [size]="25"></app-icon>
+					} @case ('urgent') {
+						<span>Urgent</span>
+						<app-icon name="high" [size]="25"></app-icon>
+					} @case ('medium') {
+						<span>Medium</span>
+						<app-icon name="medium" [size]="25"></app-icon>
+					} @case ('low') {
+						<span>Low</span>
+						<app-icon name="low" [size]="25"></app-icon>
+					} 
+				}
 			</button>
 		</div>
 	</div>
