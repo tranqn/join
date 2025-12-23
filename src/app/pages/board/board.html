@@ -54,12 +54,21 @@
 </section>
 
 @if (isAddTaskModalOpen()) {
-<div class="modal-overlay" (click)="closeAddTaskModal()">
-	<div class="modal-content" (click)="$event.stopPropagation()">
+<div class="modal-overlay" (click)="closeAddTaskModal()" >
+	<div class="modal-content" (click)="$event.stopPropagation()" [class.modal-content--closing]="isClosing()">
+	<!-- @if (isAddTaskModalOpen()) {
+		<button type="button" class="modal-content__close-btn" (click)="closeAddTaskModal()">
+			<app-icon name="close_icon" [size]="16"></app-icon>
+		</button>
+	} -->
 		<app-add-task
 			[isModal]="true"
 			(taskCreated)="closeAddTaskModal()"
-		></app-add-task>
+		>
+		<button type="button" class="modal-content__close-btn" (click)="closeAddTaskModal()" >
+			<app-icon name="close_icon" [size]="16"></app-icon>
+		</button>
+		</app-add-task>
 	</div>
 </div>
 }

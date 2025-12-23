@@ -21,6 +21,7 @@
 			height: calc(100vh - 60px);
 			width: calc(100% - 20px);
 		}
+
 		&--closing {
 			animation: slideOut 0.35s ease-out;
 		}
@@ -235,6 +236,7 @@
 	&__input {
 		@include form-input;
 		padding-right: 40px;
+		width: 100%;
 
 		&:-webkit-autofill,
 		&:-webkit-autofill:hover,
@@ -303,35 +305,5 @@
 	&__btn-icon {
 		flex-shrink: 0;
 		order: 2;
-	}
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-	}
-	to {
-		opacity: 1;
-	}
-}
-
-@keyframes slideIn {
-	from {
-		opacity: 0;
-		transform: translateX(100%);
-	}
-	to {
-		opacity: 1;
-		transform: translateX(0);
-	}
-}
-@keyframes slideOut {
-	from {
-		opacity: 1;
-		transform: translateX(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateX(100%);
 	}
 }

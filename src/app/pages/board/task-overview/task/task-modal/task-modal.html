@@ -1,8 +1,9 @@
 <section class="task-modal">
 	<div class="task-modal__backdrop" (click)="onClose()"></div>
 
-	<div class="task-modal__dialog" [class.task-modal__dialog--edit]="isEditMode()">
+	<div class="task-modal__dialog" [class.task-modal__dialog--edit]="isEditMode()" [class.task-modal__dialog--closing]="isClosing()">
 		@if(!isEditMode()){
+
 		<div class="task-modal__header">
 			<span
 				class="task-modal__category"
@@ -12,7 +13,7 @@
 				>{{ task()?.category }}</span
 			>
 			<button class="task-modal__close-btn" (click)="onClose()">
-				<app-icon name="close_icon" [size]="16"></app-icon>
+				<app-icon class="close_icon" name="close_icon" [size]="16"></app-icon>
 			</button>
 		</div>
 
@@ -94,6 +95,7 @@
 				></app-icon>
 				<button>Delete</button>
 			</div>
+			<span class="task-modal__actions__divider"></span>
 			<div class="edit-btn" (click)="onEdit()">
 				<app-icon name="edit" [size]="18" class="edit"></app-icon>
 				<button>Edit</button>
@@ -105,7 +107,11 @@
 				[taskToEdit]="task()" 
 				(taskUpdated)="isEditMode.set(false)"
 				(cancel)="onClose()"
-			/>
+			>
+			<button class="task-modal__close-btn--edit" (click)="onClose()">
+				<app-icon name="close_icon" [size]="16"></app-icon>
+			</button>
+			</app-add-task>
 		}
 	</div>
 </section>

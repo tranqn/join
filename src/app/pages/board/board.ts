@@ -14,6 +14,7 @@ export class Board {
 	search = signal('');
 	isAddTaskModalOpen = signal(false);
 	priorityFilter = signal<'all' | 'urgent' | 'medium' | 'low'>('all');
+	isClosing = signal(false);
 
 	togglePrioritySort() {
 		const current = this.priorityFilter();
@@ -34,6 +35,10 @@ export class Board {
 	}
 
 	closeAddTaskModal() {
-		this.isAddTaskModalOpen.set(false);
+		this.isClosing.set(true);
+		setTimeout(() => {
+			this.isClosing.set(false);
+			this.isAddTaskModalOpen.set(false);
+		}, 300);
 	}
 }

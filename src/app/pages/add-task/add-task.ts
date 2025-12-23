@@ -77,6 +77,10 @@ export class AddTask {
 		});
 	}
 
+	isBoardRoute(): boolean {
+        return this.router.url === '/board';
+    }
+
 	/**
 	 * Populates the form with task data for editing
 	 */

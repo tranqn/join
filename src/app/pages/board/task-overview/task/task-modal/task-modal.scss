@@ -9,13 +9,83 @@
 	&__backdrop {
 		@include modal-backdrop;
 		background: rgba(0, 0, 0, 0.5);
+
+		&--closing {
+			animation: slideOut 0.35s ease-out;
+		}
 	}
+
+	&__close-btn {
+        background: none;
+        border: none;
+        font-size: 28px;
+        line-height: 1;
+        padding: $spacing-xs;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: color 0.2s;
+        -webkit-tap-highlight-color: transparent;
+
+		.close_icon {
+			color: #666;
+		}
+
+        &:hover {
+            background-color: #eeeeee;
+            border-radius: 100%;
+        }
+
+		&--edit {
+			margin: $spacing-md 0 $spacing-lg auto;
+			background: none;
+			border: none;
+			font-size: 28px;
+			line-height: 1;
+			padding: $spacing-xs;
+			width: 32px;
+			height: 32px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: color 0.2s;
+			-webkit-tap-highlight-color: transparent;
+			
+			app-icon {
+				color: #666;
+			}
+
+			&:hover {
+            background-color: #eeeeee;
+            border-radius: 100%;
+        	}
+		}
+
+        @include respond-max($break-md) {
+            top: 10px;
+            right: 10px;
+            &:hover {
+                background-color: transparent;
+            }
+            img {
+                filter: brightness(6);
+            }
+        }
+
+
+    }
 
 	&__dialog {
 		@include modal-dialog(525px, 800px);
 		display: flex;
 		flex-direction: column;
 		padding: 48px 40px;
+
+		&--closing {
+			animation: slideOut 0.35s ease-out;
+		}	
 
 		&--edit {
 			padding: 0;
@@ -188,12 +258,18 @@
 			display: none;
 		}
 
+		&__divider {
+			width: 1px;
+			height: 32px;
+			background-color: $board-border;
+		}
+
 		.edit-btn {
 			width: 76px;
 			display: flex;
-			justify-content: flex-start;
+			justify-content: flex-end;
 			align-items: center;
-			gap: 0.5rem;
+			gap: 5px;
 			cursor: pointer;
 		}
 		.delete-btn {
@@ -201,7 +277,7 @@
 			display: flex;
 			justify-content: flex-start;
 			align-items: center;
-			gap: 0.5rem;
+			gap: 5px;
 			cursor: pointer;
 		}
 

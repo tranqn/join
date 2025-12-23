@@ -46,13 +46,17 @@
 </div>
 
 @if (isAddTaskModalOpen()) {
-<div class="modal-overlay" (click)="closeAddTaskModal()">
-	<div class="modal-content" (click)="$event.stopPropagation()">
-		<app-add-task
-			[isModal]="true"
-			[initialStatus]="selectedStatus()"
-			(taskCreated)="closeAddTaskModal()"
-		/>
+	<div class="modal-overlay" (click)="closeAddTaskModal()">
+		<div class="modal-content" (click)="$event.stopPropagation()" [class.modal-content--closing]="isClosing()">
+			<app-add-task
+				[isModal]="true"
+				[initialStatus]="selectedStatus()"
+				(taskCreated)="closeAddTaskModal()"
+			>
+			<button type="button" class="modal-content__close-btn" (click)="closeAddTaskModal()" >
+				<app-icon name="close_icon" [size]="16"></app-icon>
+			</button>
+			</app-add-task>
+		</div>
 	</div>
-</div>
 }

@@ -56,11 +56,52 @@
 .modal-overlay {
 	@include modal-backdrop;
 	padding: $spacing-md;
+
+	&--closing {
+		animation: slideOut 0.35s ease-out;
+	}
 }
 
 .modal-content {
 	@include modal-dialog(1116px, 90vh);
 	display: flex;
 	flex-direction: column;
-	overflow: hidden;
+
+	&--closing {
+		animation: slideOut 0.35s ease-out;
+	}
+
+	&__close-btn {
+	position: absolute;
+	top: 5%;
+	right: 5%;
+	background: none;
+	border: none;
+	font-size: 28px;
+	line-height: 1;
+	color: #666;
+	padding: 0;
+	width: 32px;
+	height: 32px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	transition: color 0.2s;
+	z-index: 10;
+	-webkit-tap-highlight-color: transparent;
+
+	@include respond-max($break-md) {
+		top: 20px;
+		right: 20px;
+
+		&:hover {
+			background-color: transparent;
+		}
+	}
+
+	&:hover {
+		background-color: #eeeeee;
+		border-radius: 100%;
+	}
+	}
 }

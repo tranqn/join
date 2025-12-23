@@ -1,13 +1,9 @@
 <section class="add-task" [class.modal-mode]="isModal()" [class.edit-mode]="taskToEdit()">
-	<h1>{{ taskToEdit() ? 'Edit Task' : 'Add Task' }}</h1>
-
-	@if (isModal() && taskToEdit()) {
-		<div class="task-form__close-button">
-			<button type="button" class="close-btn" (click)="cancel.emit()">
-				<app-icon name="close_icon" [size]="24"></app-icon>
-			</button>
-		</div>
+	@if(!taskToEdit()) {
+	<h1>Add Task</h1>
 	}
+	<ng-content></ng-content>
+
 
 	<form [formGroup]="taskForm" (ngSubmit)="onSubmit()" class="task-form">
 		<div class="task-form__content">
@@ -15,7 +11,11 @@
 			<div class="task-form__column">
 				<!-- Title Field -->
 				<div class="form-group">
-					<label for="title">Title<span class="required">*</span></label>
+					<label for="title">Title
+						@if(!taskToEdit()) {
+							<span class="required">*</span>
+						}
+					</label>
 					<input
 						id="title"
 						type="text"
@@ -41,7 +41,11 @@
 
 				<!-- Due Date Field -->
 				<div class="form-group">
-					<label for="dueDate">Due date<span class="required">*</span></label>
+					<label for="dueDate">Due date
+						@if(!taskToEdit()) {
+							<span class="required">*</span>
+						}
+					</label>
 					<div class="date-picker">
 						<button
 							type="button"
@@ -173,7 +177,11 @@
 
 				<!-- Category Field -->
 				<div class="form-group">
-					<label>Category<span class="required">*</span></label>
+					<label>Category
+						@if(!taskToEdit()) {
+						<span class="required">*</span>
+						}
+					</label>
 					<div class="category-wrapper">
 						<button
 							type="button"
@@ -324,11 +332,7 @@
 					[disabled]="isSaving()"
 				>
 					<span>{{ isSaving() ? (taskToEdit() ? 'Saving...' : 'Creating...') : (taskToEdit() ? 'Ok' : 'Create Task') }}</span>
-					@if (!taskToEdit()) {
 						<img src="icons/check.svg" alt="create" />
-					} @else {
-						<span class="checkmark">✓</span>
-					}
 				</button>
 			</div>
 		</div>

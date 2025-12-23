@@ -54,6 +54,7 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 
 	isAddTaskModalOpen = signal(false);
 	selectedStatus = signal('');
+	isClosing = signal(false);
 
 	private scrollInterval: any;
 	private currentScrollDirection: 'up' | 'down' | null = null;
@@ -131,7 +132,11 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 	}
 
 	closeAddTaskModal() {
-		this.isAddTaskModalOpen.set(false);
+		this.isClosing.set(true);
+		setTimeout(() => {
+			this.isClosing.set(false);
+			this.isAddTaskModalOpen.set(false);
+		}, 300);
 		this.selectedStatus.set('');
 	}
 	onDragMoved(event: any) {
