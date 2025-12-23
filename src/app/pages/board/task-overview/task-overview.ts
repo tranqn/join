@@ -87,7 +87,7 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		let result = tasks;
 		if (term) {
 			result = tasks.filter((task) =>
-				task.title?.toLowerCase().includes(term)
+				task.title?.toLowerCase().includes(term) || task.description?.toLowerCase().includes(term)
 			);
 		}
 		const filter = this.priorityFilter();

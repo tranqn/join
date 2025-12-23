@@ -9,7 +9,7 @@
 					name="plus"
 					[size]="12"
 					(click)="openAddTaskModal(item.id)"
-					style="cursor: pointer;"
+					style="cursor: pointer"
 				/>
 				}
 			</div>
@@ -32,9 +32,11 @@
 					(taskClicked)="selectedTask.set($event)"
 				/>
 				@if (selectedTask()?.id === task.id) {
-				<app-task-modal [task]="task" (close)="selectedTask.set(null)" />
-				}
-				} @empty {
+				<app-task-modal
+					[task]="task"
+					(close)="selectedTask.set(null)"
+				/>
+				} } @empty {
 				<div class="placeholder">No tasks {{ item.title }}</div>
 				}
 			</app-task-column>
@@ -44,13 +46,13 @@
 </div>
 
 @if (isAddTaskModalOpen()) {
-	<div class="modal-overlay" (click)="closeAddTaskModal()">
-		<div class="modal-content" (click)="$event.stopPropagation()">
-			<app-add-task
-				[isModal]="true"
-				[initialStatus]="selectedStatus()"
-				(taskCreated)="closeAddTaskModal()"
-			/>
-		</div>
+<div class="modal-overlay" (click)="closeAddTaskModal()">
+	<div class="modal-content" (click)="$event.stopPropagation()">
+		<app-add-task
+			[isModal]="true"
+			[initialStatus]="selectedStatus()"
+			(taskCreated)="closeAddTaskModal()"
+		/>
 	</div>
+</div>
 }
