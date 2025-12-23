@@ -2,14 +2,15 @@
 @use '../../styles/mixin.scss' as *;
 
 .summary {
-
   padding: $spacing-md 0 $spacing-md $spacing-lg;
-	@include respond-max($break-xl) {
-		padding: $spacing-lg $spacing-md $spacing-xl;
-	}
-	@include respond-max($break-md) {
-		padding: $spacing-lg $spacing-sm $spacing-xl;
-	}
+
+  @include respond-max($break-xl) {
+    padding: $spacing-lg $spacing-md $spacing-xl;
+  }
+
+  @include respond-max($break-md) {
+    padding: $spacing-lg $spacing-sm $spacing-xl;
+  }
 }
 
 /* HEADER */
@@ -59,7 +60,6 @@
 
 /* RIGHT SIDE */
 .right {
-  text-align: left;
   padding-top: 80px;
 
   @include respond-max($break-xl) {
@@ -81,7 +81,7 @@
   }
 }
 
-/* LEFT SIDE */
+/* TOP CARDS */
 .top-cards {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
@@ -93,6 +93,7 @@
   }
 }
 
+/* URGENT */
 .urgent-card {
   background: #fff;
   border-radius: radius(large);
@@ -110,7 +111,7 @@
     color: white;
     transform: translateY(-2px);
 
-    .urgent-right .sub {
+    .sub {
       color: rgba(255, 255, 255, 0.7);
     }
   }
@@ -120,12 +121,6 @@
   display: flex;
   align-items: center;
   gap: $spacing-md;
-
-  .divider {
-    width: 2px;
-    height: 48px;
-    background: #d1d1d1;
-  }
 }
 
 .urgent-right {
@@ -142,6 +137,7 @@
   }
 }
 
+/* BOTTOM CARDS */
 .bottom-cards {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -152,19 +148,20 @@
   }
 }
 
-/* CARD */
+/* CARD BASE */
 .card {
   background: #fff;
   border-radius: radius(large);
   padding: $spacing-mdg;
-  text-align: center;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
   transition: all 0.2s ease;
   cursor: pointer;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
+  text-align: center;
 
   &:hover {
     background: $darkblue;
@@ -173,6 +170,10 @@
 
     .label {
       color: rgba(255, 255, 255, 0.7);
+    }
+
+    .icon img {
+      filter: brightness(0) invert(1);
     }
   }
 
@@ -187,40 +188,14 @@
   }
 }
 
-/* ICONS */
-.icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: $darkblue;
-
-  img {
-    width: 32px;
-    filter: brightness(0) invert(1);
-  }
-}
-
-.urgent-icon {
-  background: $urgent-color;
-}
+/* HORIZONTAL CARD (Todo / Done) */
 .card.horizontal {
-  display: flex;
+  flex-direction: row;
   align-items: center;
-  gap: 16px;
+  gap: $spacing-md;
   text-align: left;
 }
 
-/* Icon links */
-.card.horizontal .icon {
-  width: 44px;
-  height: 44px;
-  flex-shrink: 0;
-}
-
-/* Text rechts */
 .card.horizontal .wrapper {
   display: flex;
   flex-direction: column;
@@ -228,13 +203,27 @@
 }
 
 .card.horizontal .value {
-  font-size: 32px;
-  font-weight: 700;
+  font-size: 2.5rem;
   line-height: 1.2;
 }
 
-.card.horizontal .label {
-  font-size: 14px;
-  color: #6b7280;
+/* ICON */
+.icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: $darkblue;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  img {
+    width: 28px;
+    filter: brightness(0) invert(1);
+  }
 }
 
+.urgent-icon {
+  background: $urgent-color;
+}
