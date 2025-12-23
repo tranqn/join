@@ -69,15 +69,15 @@
 			overflow: hidden;
 
 			&__content {
-				overflow-y: auto;
 				padding-right: 24px;
 				margin-bottom: $spacing-sm;
 				display: flex;
 				flex-direction: row;
 				gap: $spacing-lg;
 				@include custom-scrollbar;
-
+				
 				@include respond-max($break-lg) {
+					overflow-y: auto;
 					flex-direction: column;
 					gap: $spacing-md;
 					padding-right: 8px;
@@ -126,6 +126,7 @@
 		.task-form__content {
 			flex-direction: column;
 			gap: $spacing-md;
+			overflow-y: auto;
 		}
 
 		.task-form__divider {
