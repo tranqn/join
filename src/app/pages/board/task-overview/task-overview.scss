@@ -33,7 +33,7 @@
 	}
 	&__title {
 		color: $darkblue;
-		padding-left: $spacing-sm;
+		padding: 0 $spacing-sm;
 		margin-bottom: $spacing-md;
 		@include dFlex-responsive(row, row, space-between, center);
 		app-icon {
