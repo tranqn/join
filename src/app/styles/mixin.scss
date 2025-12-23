@@ -179,7 +179,6 @@ $break-xxl: 1400px;
   width: 100%;
   max-width: $max-width;
   height: $height;
-  overflow: hidden;
   animation: slideIn 0.3s ease-out;
 
   @include respond-max($break-md) {
