@@ -34,7 +34,10 @@ import {
 	selector: 'app-task-overview',
 	imports: [Icon, TaskColumn, Task, CdkDropList, CdkDrag, TaskModal, AddTask],
 	templateUrl: './task-overview.html',
-	styleUrl: './task-overview.scss'
+	styleUrl: './task-overview.scss',
+	host: {
+		'(window:resize)': 'onResize()'
+	}
 })
 export class TaskOverview implements AfterViewInit, OnDestroy {
 	taskService = inject(Taskservice);
@@ -48,9 +51,22 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 
 	@ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 	connectedLists = signal<string[]>([]);
-	isMobile = signal(window.innerWidth < 768);
-	dragDelay = computed(() => (this.isMobile() ? 200 : 0));
+	isMobile = signal(this.checkIsMobile());
+	dragDelay = computed(() => (this.isMobile() ? 300 : 0));
 	selectedTask = signal<TaskModel | null>(null);
+
+	private checkIsMobile(): boolean {
+		if (typeof window === 'undefined') return false;
+		return (
+			window.innerWidth < 1024 ||
+			'ontouchstart' in window ||
+			(navigator as any).maxTouchPoints > 0
+		);
+	}
+
+	onResize() {
+		this.isMobile.set(this.checkIsMobile());
+	}
 
 	isAddTaskModalOpen = signal(false);
 	selectedStatus = signal('');
