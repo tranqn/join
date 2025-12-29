@@ -16,20 +16,22 @@
       <div class="top-cards">
         <div class="card horizontal">
           <div class="icon edit">
-            <img src="icons/edit.svg" alt="Edit Icon">
-          </div>
-          <div class="wrapper">
-            <div class="value">1</div>
+            <!-- <img src="icons/edit.svg" alt="Edit Icon"> -->
+			<app-icon [size]="28" name="edit"/>
+		</div>
+		<div class="wrapper">
+			<div class="value h1">1</div>
             <div class="label">To-do</div>
-          </div>
-        </div>
-
-        <div class="card horizontal">
-          <div class="icon check">
-            <img src="icons/tick_icon.svg" alt="Check Icon">
+		</div>
+	</div>
+	
+	<div class="card horizontal">
+		<div class="icon check">
+			  <app-icon [size]="28" name="tick_icon"/>
+            <!-- <img src="icons/tick_icon.svg" alt="Check Icon"> -->
           </div>
           <div class="wrapper">
-            <div class="value">1</div>
+            <div class="value h1">1</div>
             <div class="label">Done</div>
           </div>
         </div>
@@ -39,14 +41,14 @@
       <div class="urgent-card">
         <div class="urgent-left">
           <div class="icon urgent-icon">
-            <img src="icons/high.svg" alt="Urgent Icon">
+			<app-icon [size]="28" name="high"/>
           </div>
-          <div>
-            <div class="value">1</div>
+          <div class="wrapper">
+            <div class="value h1">1</div>
             <div class="label">Urgent</div>
           </div>
         </div>
-
+		<span class="divider"></span>
         <div class="urgent-right">
           <div class="date">October 16, 2022</div>
           <div class="sub">Upcoming Deadline</div>
@@ -56,17 +58,17 @@
       <!-- Bottom cards -->
       <div class="bottom-cards">
         <div class="card small">
-          <div class="value">5</div>
+          <div class="value h1">5</div>
           <div class="label">Tasks in Board</div>
         </div>
 
         <div class="card small">
-          <div class="value">2</div>
+          <div class="value h1">2</div>
           <div class="label">Tasks in Progress</div>
         </div>
 
         <div class="card small">
-          <div class="value">2</div>
+          <div class="value h1">2</div>
           <div class="label">Awaiting Feedback</div>
         </div>
       </div>
@@ -74,8 +76,8 @@
 
     <!-- RIGHT SIDE -->
     <div class="right">
-      <span>Good morning,</span>
-      <strong>Sofia Müller</strong>
+      <h2 class="h3">Good morning,</h2>
+      <h3 class="h1">Sofia Müller</h3>
     </div>
   </div>
 </section>

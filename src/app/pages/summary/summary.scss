@@ -2,228 +2,220 @@
 @use '../../styles/mixin.scss' as *;
 
 .summary {
-  padding: $spacing-md 0 $spacing-md $spacing-lg;
+	height: calc(100vh - 80px);
+	padding: $spacing-xl $spacing-md $spacing-xl $spacing-lg;
 
-  @include respond-max($break-xl) {
-    padding: $spacing-lg $spacing-md $spacing-xl;
-  }
+	@include respond-max($break-xl) {
+		padding: $spacing-lg $spacing-md $spacing-xl;
+	}
 
-  @include respond-max($break-md) {
-    padding: $spacing-lg $spacing-sm $spacing-xl;
-  }
-}
+	@include respond-max($break-md) {
+		padding: $spacing-lg $spacing-sm $spacing-xl;
+	}
+	&-header {
+		margin-bottom: $spacing-mdg;
 
-/* HEADER */
-.summary-header {
-  margin-bottom: $spacing-mdg;
+		h1 {
+			@include text-style-responsive(32px, 48px, 61px, 'Inter', 700);
+			display: flex;
+			align-items: center;
+			gap: $spacing-md;
 
-  h1 {
-    @include text-style-responsive(32px, 48px, 61px, 'Inter', 700);
-    display: flex;
-    align-items: center;
-    gap: $spacing-md;
+			small {
+				font-size: 1.5rem;
+				font-weight: 400;
+				color: #6b7280;
 
-    small {
-      font-size: 1.5rem;
-      font-weight: 400;
-      color: #6b7280;
+				@include respond-max($break-md) {
+					font-size: 1rem;
+				}
+			}
+		}
 
-      @include respond-max($break-md) {
-        font-size: 1rem;
-      }
-    }
-  }
+		.divider {
+			width: 3px;
+			height: 59px;
+			background: $light-blue;
 
-  .divider {
-    width: 3px;
-    height: 59px;
-    background: $light-blue;
+			@include respond-max($break-md) {
+				display: none;
+			}
+		}
+	}
+	&-content {
+		gap: 5rem;
+		@include dFlex-responsive(row, row, center, center);
+		> * {
+			flex: 0 0 calc(50% - 40px);
+			max-width: calc(50% - 40px);
+		}
+		@include respond-max($break-xl) {
+			grid-template-columns: 1fr;
+			gap: $spacing-lg;
+		}
+	}
 
-    @include respond-max($break-md) {
-      display: none;
-    }
-  }
-}
+	/* RIGHT SIDE */
+	.right {
+		@include respond-max($break-xl) {
+			order: -1;
+		}
 
-/* MAIN LAYOUT */
-.summary-content {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 40px;
-  align-items: start;
+		h2 {
+			color: $darkblue;
+		}
 
-  @include respond-max($break-xl) {
-    grid-template-columns: 1fr;
-    gap: $spacing-lg;
-  }
-}
-
-/* RIGHT SIDE */
-.right {
-  padding-top: 80px;
-
-  @include respond-max($break-xl) {
-    padding-top: 0;
-    order: -1;
-  }
-
-  span {
-    font-size: 2rem;
-    color: $darkblue;
-  }
-
-  strong {
-    display: block;
-    font-size: 3rem;
-    font-weight: 700;
-    color: $light-blue;
-    margin-top: 8px;
-  }
+		h3 {
+			font-weight: 700;
+			color: $light-blue;
+			margin-top: 8px;
+		}
+	}
 }
 
 /* TOP CARDS */
 .top-cards {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-md;
-  margin-bottom: $spacing-md;
+	display: grid;
+	grid-template-columns: repeat(2, 1fr);
+	gap: $spacing-md;
+	margin-bottom: $spacing-md;
 
-  @include respond-max($break-sm) {
-    grid-template-columns: 1fr;
-  }
+	@include respond-max($break-sm) {
+		grid-template-columns: 1fr;
+	}
 }
 
 /* URGENT */
 .urgent-card {
-  background: #fff;
-  border-radius: radius(large);
-  padding: $spacing-mdg;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  margin-bottom: $spacing-md;
-  transition: all 0.2s ease;
-  cursor: pointer;
+	background: #fff;
+	border-radius: radius(large);
+	padding: $spacing-mdg $spacing-lg;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+	margin-bottom: $spacing-md;
+	transition: all 0.2s ease;
+	cursor: pointer;
 
-  &:hover {
-    background: $darkblue;
-    color: white;
-    transform: translateY(-2px);
+	&:hover {
+		background: $darkblue;
+		color: white;
+		transform: scale(1.05);
 
-    .sub {
-      color: rgba(255, 255, 255, 0.7);
-    }
-  }
+		.sub {
+			color: rgba(255, 255, 255, 0.7);
+		}
+	}
+
+	& .wrapper {
+		@include dFlex-responsive(column, column, center, center);
+	}
+
+	& .divider {
+		height: 100px;
+		width: 1px;
+		background-color: $board-border;
+	}
 }
 
 .urgent-left {
-  display: flex;
-  align-items: center;
-  gap: $spacing-md;
+	display: flex;
+	align-items: center;
+	gap: $spacing-md;
 }
 
 .urgent-right {
-  text-align: left;
+	text-align: left;
 
-  .date {
-    font-weight: 700;
-    font-size: 1.25rem;
-  }
+	.date {
+		font-weight: 700;
+		font-size: 1.25rem;
+	}
 
-  .sub {
-    font-size: 1rem;
-    color: #6b7280;
-  }
+	.sub {
+		font-size: 1rem;
+		color: #6b7280;
+	}
 }
 
 /* BOTTOM CARDS */
 .bottom-cards {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: $spacing-md;
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	gap: $spacing-md;
 
-  @include respond-max($break-sm) {
-    grid-template-columns: 1fr;
-  }
+	@include respond-max($break-sm) {
+		grid-template-columns: 1fr;
+	}
 }
 
 /* CARD BASE */
 .card {
-  background: #fff;
-  border-radius: radius(large);
-  padding: $spacing-mdg;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
-  transition: all 0.2s ease;
-  cursor: pointer;
+	background: #fff;
+	border-radius: radius(large);
+	padding: $spacing-mdg;
+	box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+	transition: all 0.2s ease;
+	cursor: pointer;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 8px;
-  text-align: center;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 8px;
+	text-align: center;
 
-  &:hover {
-    background: $darkblue;
-    color: white;
-    transform: translateY(-2px);
+	&:hover {
+		background: $darkblue;
+		color: white;
+		transform: scale(1.05);
 
-    .label {
-      color: rgba(255, 255, 255, 0.7);
-    }
+		.label {
+			color: rgba(255, 255, 255, 0.7);
+		}
 
-    .icon img {
-      filter: brightness(0) invert(1);
-    }
-  }
+		.icon {
+			background: #fff;
+		}
+		app-icon {
+			color: $darkblue;
+		}
+	}
 
-  .value {
-    font-size: 3rem;
-    font-weight: 700;
-  }
+	.label {
+		font-size: 1.25rem;
+		color: #6b7280;
+		font-weight: 400;
+	}
 
-  .label {
-    font-size: 1.25rem;
-    color: #6b7280;
-  }
+	&.horizontal {
+		gap: $spacing-md;
+		text-align: left;
+		@include dFlex-responsive(row, row, center, center);
+		& .wrapper {
+			@include dFlex-responsive(column, column, center, center);
+		}
+	}
 }
 
-/* HORIZONTAL CARD (Todo / Done) */
-.card.horizontal {
-  flex-direction: row;
-  align-items: center;
-  gap: $spacing-md;
-  text-align: left;
-}
-
-.card.horizontal .wrapper {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
-
-.card.horizontal .value {
-  font-size: 2.5rem;
-  line-height: 1.2;
-}
 
 /* ICON */
 .icon {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background: $darkblue;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-shrink: 0;
+	width: 56px;
+	height: 56px;
+	border-radius: 50%;
+	background: $darkblue;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-shrink: 0;
 
-  img {
-    width: 28px;
-    filter: brightness(0) invert(1);
-  }
+	app-icon {
+		width: 28px;
+		color: #fff;
+	}
 }
 
 .urgent-icon {
-  background: $urgent-color;
+	background: $urgent-color;
 }
