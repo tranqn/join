@@ -1,15 +1,15 @@
 .legal-container {
-  max-width: 900px;
+  max-width: 800px;
   margin: 80px auto;
-  padding: 0 24px;
+  padding: 0 16px;
   font-family: Arial, Helvetica, sans-serif;
-  color: #000;
+  color: #111;
 }
 
 h1 {
   font-size: 48px;
   font-weight: 700;
-  margin-bottom: 32px;
+  margin-bottom: 40px;
 }
 
 section {
@@ -17,20 +17,20 @@ section {
 }
 
 h2 {
-  font-size: 18px;
-  font-weight: 700;
-  margin-bottom: 8px;
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 12px;
 }
 
 p,
 li {
-  font-size: 14px;
+  font-size: 16px;
   line-height: 1.6;
   color: #111;
 }
 
 ul {
-  padding-left: 18px;
+  padding-left: 16px;
   margin: 8px 0 0 0;
 }
 
@@ -40,5 +40,10 @@ a {
 
   &:hover {
     text-decoration: underline;
+  }
+}
+@media screen and (min-width: 1531px) {
+  .privacy-container {
+	margin: 80px 250px ;
   }
 }
