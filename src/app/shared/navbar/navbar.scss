@@ -23,8 +23,8 @@
 	display: flex;
 	justify-content: center;
 	margin-bottom: 200px;
-	@include respond-max($break-xl) {
-		margin-bottom: 150px;
+	@media (max-height: 850px) {
+		margin-bottom: 100px;
 	}
 
 	& .logo {
