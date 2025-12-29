@@ -31,17 +31,21 @@
         </div>
       </div>
 
-      <div class="urgent-card">
+      <div
+        class="urgent-card"
+        (click)="navigateToTask()"
+        [style.cursor]="nextUrgentTask() ? 'pointer' : 'default'"
+      >
         <div class="urgent-left">
           <div class="icon urgent-icon">
-			<app-icon [size]="28" name="high"/>
+            <app-icon [size]="28" name="high" />
           </div>
           <div class="wrapper">
             <div class="value h1">{{ urgentCount() }}</div>
             <div class="label">Urgent</div>
           </div>
         </div>
-		<span class="divider"></span>
+        <span class="divider"></span>
         <div class="urgent-right">
           <div class="date">{{ upcomingDeadline() }}</div>
           <div class="sub">Upcoming Deadline</div>

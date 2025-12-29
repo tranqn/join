@@ -11,8 +11,10 @@ import {
 	WritableSignal,
 	ViewChild,
 	ElementRef,
-	NgZone
+	NgZone,
+	effect
 } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 import { Icon } from '../../../shared/icon/icon';
 import { Taskservice } from '../../../services/taskservice';
@@ -42,6 +44,7 @@ import {
 export class TaskOverview implements AfterViewInit, OnDestroy {
 	taskService = inject(Taskservice);
 	ngZone = inject(NgZone);
+	route = inject(ActivatedRoute);
 
 	@Input({ required: true }) priorityFilter!: WritableSignal<
 		'all' | 'urgent' | 'medium' | 'low'
@@ -54,6 +57,28 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 	isMobile = signal(this.checkIsMobile());
 	dragDelay = computed(() => (this.isMobile() ? 300 : 0));
 	selectedTask = signal<TaskModel | null>(null);
+	private urlTaskHandled = false;
+
+	constructor() {
+		effect(() => {
+			if (this.urlTaskHandled) return;
+			const taskId = this.route.snapshot.queryParamMap.get('taskId');
+			if (!taskId || this.selectedTask()) return;
+
+			const allTasks = [
+				...this.taskService.tasksTodo(),
+				...this.taskService.tasksProgress(),
+				...this.taskService.tasksFeedback(),
+				...this.taskService.tasksDone()
+			];
+
+			const task = allTasks.find((t) => t.id === taskId);
+			if (task) {
+				this.selectedTask.set(task);
+				this.urlTaskHandled = true;
+			}
+		});
+	}
 
 	private checkIsMobile(): boolean {
 		if (typeof window === 'undefined') return false;

@@ -1,4 +1,5 @@
 import { Component, inject, computed } from '@angular/core';
+import { Router } from '@angular/router';
 import { Icon } from '../../shared/icon/icon';
 import { Taskservice } from '../../services/taskservice';
 
@@ -10,6 +11,7 @@ import { Taskservice } from '../../services/taskservice';
 })
 export class Summary {
   taskService = inject(Taskservice);
+  router = inject(Router);
 
   todoCount = computed(() => this.taskService.tasksTodo().length);
   doneCount = computed(() => this.taskService.tasksDone().length);
@@ -30,17 +32,32 @@ export class Summary {
 
   urgentCount = computed(() => this.urgentTasks().length);
 
-  upcomingDeadline = computed(() => {
+  nextUrgentTask = computed(() => {
     const urgent = this.urgentTasks().filter(t => t.dueDate);
-    if (urgent.length === 0) return 'No upcoming deadline';
+    if (urgent.length === 0) return null;
     
-    const dates = urgent.map(t => new Date(t.dueDate).getTime());
-    const minDate = new Date(Math.min(...dates));
+    return urgent.reduce((prev, curr) => {
+      const prevDate = new Date(prev.dueDate).getTime();
+      const currDate = new Date(curr.dueDate).getTime();
+      return prevDate < currDate ? prev : curr;
+    });
+  });
+
+  upcomingDeadline = computed(() => {
+    const task = this.nextUrgentTask();
+    if (!task) return 'No upcoming deadline';
     
-    return minDate.toLocaleDateString('en-US', {
+    return new Date(task.dueDate).toLocaleDateString('en-US', {
       year: 'numeric',
       month: 'long',
       day: 'numeric'
     });
   });
+
+  navigateToTask() {
+    const task = this.nextUrgentTask();
+    if (task) {
+      this.router.navigate(['/board'], { queryParams: { taskId: task.id } });
+    }
+  }
 }
