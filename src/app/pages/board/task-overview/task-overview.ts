@@ -49,7 +49,7 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 	@ViewChildren(CdkDropList) dropLists!: QueryList<CdkDropList>;
 	connectedLists = signal<string[]>([]);
 	isMobile = signal(window.innerWidth < 768);
-	dragDelay = computed(() => (this.isMobile() ? 100 : 0));
+	dragDelay = computed(() => (this.isMobile() ? 200 : 0));
 	selectedTask = signal<TaskModel | null>(null);
 
 	isAddTaskModalOpen = signal(false);

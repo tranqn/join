@@ -66,14 +66,26 @@ export function getErrorMessage(controlName: string, errors: ValidationErrors | 
 		return '';
 	}
 	if (errors['required']) {
-		return `${controlName} is required`;
+		return `${getFormName(controlName)} is required`;
 	}
 	if (errors['minLength']) {
 		const required = errors['minLength'].requiredLength;
-		return `${controlName} must be at least ${required} characters`;
+		return `${getFormName(controlName)} must be at least ${required} characters`;
 	}
 	if (errors['pastDate']) {
 		return 'Date cannot be in the past';
 	}
 	return 'Invalid value';
+}
+
+function getFormName(name:string) {
+	if (name === 'title') {
+		return 'Title';
+	} else if (name === 'category') {
+		return 'Category';
+	} else if (name === 'dueDate') {
+		return 'Due date';
+	} else {
+		return '';
+	}
 }

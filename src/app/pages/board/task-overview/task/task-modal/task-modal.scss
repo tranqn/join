@@ -39,7 +39,7 @@
         }
 
 		&--edit {
-			margin: $spacing-md 0 $spacing-lg auto;
+			margin: $spacing-sm 0 $spacing-md auto;
 			background: none;
 			border: none;
 			font-size: 28px;
@@ -78,11 +78,10 @@
     }
 
 	&__dialog {
-		@include modal-dialog(525px, 800px);
 		display: flex;
 		flex-direction: column;
-		padding: 48px 40px;
-
+		padding: 2rem;
+		@include modal-dialog(525px, 800px);
 		&--closing {
 			animation: slideOut 0.35s ease-out;
 		}	

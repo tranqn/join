@@ -36,7 +36,7 @@
 		padding: 0 $spacing-sm;
 		margin-bottom: $spacing-md;
 		@include dFlex-responsive(row, row, space-between, center);
-		app-icon {
+		& app-icon {
 			color: $darkblue;
 			padding: $spacing-xs;
 			border: 2px solid $darkblue;
@@ -63,10 +63,9 @@
 }
 
 .modal-content {
-	@include modal-dialog(1116px, 90vh);
 	display: flex;
 	flex-direction: column;
-
+	@include modal-dialog(1116px, 90vh);
 	&--closing {
 		animation: slideOut 0.35s ease-out;
 	}

@@ -20,6 +20,8 @@
 			@for (contact of assignedContacts(); track $index) {
 				@if ($index < 3) {
 					<span [style.background-color]="contact.color" [style.transform]="!$first ? 'translateX(' + (-5 * $index) + 'px)' : ''">{{ getInitials(contact.name) }}</span>
+				} @else if ($index === 3) {
+					<span class="contact-counter">+{{ (assignedContacts().length - 3) }}</span>
 				}
 			}
 		</div>

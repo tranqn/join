@@ -51,9 +51,9 @@
 		border-radius: 4px;
 		color: #333;
 	}
-	
+
 	&__category {
-		padding: .25rem 1rem;
+		padding: 0.25rem 1rem;
 		border-radius: radius(medium);
 		color: #fff;
 		margin-bottom: $spacing-md;
@@ -72,15 +72,15 @@
 		@include dFlex-responsive(row, row, center, center);
 		> * {
 			flex: 0 0 calc(50% - $spacing-xs);
-			max-width: calc(50% - $spacing-xs)
+			max-width: calc(50% - $spacing-xs);
 		}
 		&--line {
-			height: .5rem;
+			height: 0.5rem;
 			background: $progress-bg;
 			border-radius: radius(medium);
 		}
 		&--progress {
-			height: .5rem;
+			height: 0.5rem;
 			background: $progress-bar;
 			border-radius: radius(medium);
 		}
@@ -88,12 +88,18 @@
 
 	&__assigned {
 		@include dFlex-responsive(row, row, center, center);
-		span {
+		& span {
 			width: 32px;
 			height: 32px;
 			border-radius: 100%;
 			color: #fff;
 			@include dFlex-responsive(row, row, center, center);
+		}
+		& .contact-counter {
+			color: $light-blue;
+			border: 1px solid $light-blue;
+			transform: translateX(-15px);
+			background: #fff;
 		}
 	}
 }

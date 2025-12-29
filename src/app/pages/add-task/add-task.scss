@@ -614,7 +614,8 @@
 	margin-top: $spacing-sm;
 	list-style-position: inside;
 	padding-left: 0;
-
+	max-height: 130px;
+    overflow: auto;
 	li {
 		margin-bottom: $spacing-xs;
 

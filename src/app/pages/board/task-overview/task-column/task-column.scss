@@ -9,11 +9,11 @@
 	padding: $spacing-sm;
 	border: 2px dashed transparent;
 	@include respond-max($break-md) {
-		@include dFlex-responsive(row, row, flex-start, center);
 		gap: $spacing-sm;
 		overflow: auto;
 		padding: $spacing-sm;
 		min-height: unset;
+		@include dFlex-responsive(row, row, flex-start, center);
 	}
 	&.cdk-drop-list-dragging {
 		border: 2px dashed $light-blue;
