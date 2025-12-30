@@ -27,7 +27,7 @@
 						class="register__input"
 						[class.register__input--invalid]="nameControl?.invalid && nameControl?.touched"
 					/>
-					<img src="icons/person.svg" alt="Name" class="register__input-icon" />
+					<img src="icons/name_icon.svg" alt="Name" class="register__input-icon" />
 					@if (nameControl?.invalid && nameControl?.touched) {
 						<span class="register__error-text">
 							@if (nameControl?.errors?.['required']) {
@@ -48,7 +48,7 @@
 						class="register__input"
 						[class.register__input--invalid]="emailControl?.invalid && emailControl?.touched"
 					/>
-					<img src="icons/mail.svg" alt="Email" class="register__input-icon" />
+					<img src="icons/email_icon.svg" alt="Email" class="register__input-icon" />
 					@if (emailControl?.invalid && emailControl?.touched) {
 						<span class="register__error-text">
 							@if (emailControl?.errors?.['required']) {
@@ -75,7 +75,7 @@
 						(click)="togglePasswordVisibility()"
 						aria-label="Toggle password visibility"
 					>
-						<img src="icons/lock.svg" alt="Password" />
+						<img src="icons/password_icon.svg" alt="Password" />
 					</button>
 					@if (passwordControl?.invalid && passwordControl?.touched) {
 						<span class="register__error-text">
@@ -105,7 +105,7 @@
 						(click)="toggleConfirmPasswordVisibility()"
 						aria-label="Toggle confirm password visibility"
 					>
-						<img src="icons/lock.svg" alt="Confirm Password" />
+						<img src="icons/password_icon.svg" alt="Confirm Password" />
 					</button>
 					@if (confirmPasswordControl?.touched) {
 						<span class="register__error-text">
