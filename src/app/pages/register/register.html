@@ -83,14 +83,16 @@
 								Password is required
 							} @else if (passwordControl?.errors?.['minlength']) {
 								Password must be at least 6 characters
-							}
-						</span>
-					}
-				</div>
+						} @else if (passwordControl?.errors?.['passwordStrength']) {
+							Password must contain at least one capital letter, one number and one special character
+						}
+					</span>
+				}
+			</div>
 
-				<div class="register__input-group">
-					<input
-						id="confirmPassword"
+			<div class="register__input-group">
+				<input
+					id="confirmPassword"
 						[type]="showConfirmPassword() ? 'text' : 'password'"
 						formControlName="confirmPassword"
 						placeholder="Confirm Password"

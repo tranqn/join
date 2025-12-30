@@ -42,11 +42,9 @@ export class AuthService {
 				email,
 				password
 			);
-
 			if (userCredential.user) {
 				await updateProfile(userCredential.user, { displayName });
 			}
-
 			return { success: true, user: userCredential.user };
 		} catch (error: any) {
 			return { success: false, error: this.getErrorMessage(error.code) };

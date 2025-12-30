@@ -23,12 +23,28 @@ export class Register {
 	registerForm = this.fb.group({
 		name: ['', [Validators.required, Validators.minLength(2)]],
 		email: ['', [Validators.required, Validators.email]],
-		password: ['', [Validators.required, Validators.minLength(6)]],
+		password: ['', [Validators.required, Validators.minLength(6), this.passwordStrengthValidator]],
 		confirmPassword: ['', [Validators.required]],
 		acceptPolicy: [false, [Validators.requiredTrue]]
 	}, {
 		validators: this.passwordMatchValidator
 	});
+
+	passwordStrengthValidator(control: AbstractControl) {
+		const value = control.value;
+		
+		if (!value) {
+			return null;
+		}
+
+		const hasUpperCase = /[A-Z]/.test(value);
+		const hasNumber = /[0-9]/.test(value);
+		const hasSpecialChar = /[!@#$%^&*(),.?":{}|<>]/.test(value);
+
+		const passwordValid = hasUpperCase && hasNumber && hasSpecialChar;
+
+		return !passwordValid ? { passwordStrength: true } : null;
+	}
 
 	passwordMatchValidator(control: AbstractControl) {
 		const password = control.get('password');
