@@ -1,6 +1,11 @@
 <div class="login">
 	<header class="login__header">
-		<img src="assets/img/logo-dark.svg" alt="Join Logo" class="login__logo" />
+		<img 
+			src="assets/img/logo-dark.svg" 
+			alt="Join Logo" 
+			class="login__logo" 
+			[class.login__logo--visible]="showLogo()"
+		/>
 		<div class="login__signup">
 			<span class="login__signup-text">Not a Join user?</span>
 			<a routerLink="/register" class="login__signup-btn">Sign up</a>

@@ -92,65 +92,33 @@
 
 		.dropdown {
 			position: absolute;
-			top: 100%;
+			top: calc(100% + 10px);
 			right: 0;
-			opacity: 0;
-			visibility: hidden;
-			transform: translateY(-10px);
-			transition: all 0.3s ease;
-			pointer-events: none;
-			padding-top: 10px;
+			background: $darkblue;
+			border-radius: radius(large);
+			border-top-right-radius: 0;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+			padding: $spacing-sm;
+			min-width: 170px;
+			z-index: 1000;
 
-			.dropdown-content {
-				background: white;
-				border-radius: radius(medium);
-				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-				padding: $spacing-md;
-				min-width: 200px;
+			.dropdown-item {
+				display: block;
+				width: 100%;
+				padding: $spacing-sm $spacing-md;
+				background: none;
+				border: none;
+				color: white;
+				text-align: left;
+				text-decoration: none;
+				font-size: 0.95rem;
+				cursor: pointer;
+				transition: background-color 0.2s;
 
-				.user-info {
-					border-bottom: 1px solid #e0e0e0;
-					padding-bottom: $spacing-sm;
-					margin-bottom: $spacing-sm;
-
-					.user-name {
-						font-weight: 600;
-						color: $darkblue;
-						margin: 0 0 5px 0;
-					}
-
-					.user-email {
-						font-size: 0.85rem;
-						color: $board-border;
-						margin: 0;
-						word-break: break-word;
-					}
-				}
-
-				.logout-btn {
-					width: 100%;
-					padding: $spacing-xs $spacing-sm;
-					background: none;
-					border: 1px solid $darkblue;
-					border-radius: radius(small);
-					color: $darkblue;
-					font-weight: 600;
-					cursor: pointer;
-					transition: all 0.2s;
-
-					&:hover {
-						background-color: $darkblue;
-						color: white;
-					}
+				&:hover {
+					background-color: rgba(#fff, 0.05);
 				}
 			}
-		}
-
-		&:hover .dropdown {
-			opacity: 1;
-			visibility: visible;
-			transform: translateY(0);
-			pointer-events: all;
 		}
 	}
 }

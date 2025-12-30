@@ -1,0 +1,47 @@
+@use '../../styles/mixin.scss' as *;
+@use '../../styles/vars.scss' as *;
+
+.mobile-greeting-overlay {
+	display: none;
+
+	@include respond-max($break-md) {
+		display: flex;
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: white;
+		z-index: 9999;
+		align-items: center;
+		justify-content: center;
+		transition: opacity 0.3s ease-out;
+
+		&.fading-out {
+			opacity: 0;
+		}
+		.mobile-greeting-content {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			text-align: center;
+			padding: $spacing-lg;
+			width: 100%;
+
+			h2 {
+				font-size: 2rem;
+				color: $light-blue;
+				margin: 0 0 $spacing-sm 0;
+				font-weight: 400;
+			}
+
+			h3 {
+				font-size: 2.5rem;
+				color: $darkblue;
+				margin: 0;
+				font-weight: 700;
+			}
+		}
+	}
+}

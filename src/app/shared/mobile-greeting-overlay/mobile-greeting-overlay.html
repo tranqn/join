@@ -1,0 +1,8 @@
+@if (showGreeting()) {
+	<div class="mobile-greeting-overlay" [class.fading-out]="isFadingOut()">
+		<div class="mobile-greeting-content">
+			<h2>{{ getGreeting() }},</h2>
+			<h3>{{ getUserName() }}</h3>
+		</div>
+	</div>
+}

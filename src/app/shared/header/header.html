@@ -13,20 +13,22 @@
 			/>
 			}
 			<div class="user-menu">
-				<div class="user-icon">
+				<div class="user-icon" (click)="toggleDropdown($event)">
 					<span>{{ getInitials() }}</span>
 				</div>
-				<div class="dropdown">
-					<div class="dropdown-content">
-						<div class="user-info">
-							<p class="user-name">{{ getUserName() }}</p>
-							<p class="user-email">{{ authService.currentUser()?.email || 'Guest User' }}</p>
-						</div>
-						<button class="logout-btn" (click)="logout()">
+				@if (isDropdownOpen()) {
+					<div class="dropdown">
+						<a routerLink="/legal-notice" class="dropdown-item">
+							Legal Notice
+						</a>
+						<a routerLink="/privacy-policy" class="dropdown-item">
+							Privacy Policy
+						</a>
+						<button class="dropdown-item" (click)="logout()">
 							Log out
 						</button>
 					</div>
-				</div>
+				}
 			</div>
 		</div>
 	</div>

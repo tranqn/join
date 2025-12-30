@@ -1,4 +1,4 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../services/auth.service';
 
@@ -7,10 +7,14 @@ import { AuthService } from '../../services/auth.service';
   imports: [RouterLink],
   templateUrl: './header.html',
   styleUrl: './header.scss',
+  host: {
+    '(document:click)': 'onDocumentClick($event)'
+  }
 })
 export class Header {
 	router = inject(Router);
 	authService = inject(AuthService);
+	isDropdownOpen = signal(false);
 
 	/**
 	 * Checks if the current route is the help page.
@@ -38,5 +42,17 @@ export class Header {
 			return (parts[0][0] + parts[1][0]).toUpperCase();
 		}
 		return name.substring(0, 2).toUpperCase();
+	}
+
+	toggleDropdown(event: Event) {
+		event.stopPropagation();
+		this.isDropdownOpen.update(v => !v);
+	}
+
+	onDocumentClick(event: MouseEvent) {
+		const target = event.target as HTMLElement;
+		if (!target.closest('.user-menu')) {
+			this.isDropdownOpen.set(false);
+		}
 	}
 }
