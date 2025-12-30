@@ -3,7 +3,7 @@
 @use 'sass:map';
 
 section {
-	padding: $spacing-lg $spacing-md $spacing-xl;
+	padding: $spacing-lg 2rem $spacing-xl;
 	@include respond-max($break-md) {
 		padding: $spacing-lg $spacing-sm $spacing-xl;
 	}

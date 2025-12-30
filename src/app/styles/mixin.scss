@@ -263,7 +263,7 @@ $break-xxl: 1400px;
 @mixin button-primary {
   background: $darkblue;
   color: white;
-  border-color: $darkblue;
+  border: 1px solid $darkblue;
 
   &:hover:not(:disabled) {
     background: $light-blue;
@@ -275,13 +275,20 @@ $break-xxl: 1400px;
 @mixin button-secondary {
   background: white;
   color: $darkblue;
-  border-color: $darkblue;
+  border: 1px solid $darkblue;
 
   &:hover:not(:disabled) {
     border-color: $light-blue;
     color: $light-blue;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
+}
+
+@mixin greyHover {
+	&:hover {
+		background-color: #eeeeee;
+		border-radius: 100%;
+	}
 }
 
 @mixin error-message {

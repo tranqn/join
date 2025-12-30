@@ -47,15 +47,15 @@ export const routes: Routes = [
 			{
 				path: 'help',
 				component: Help
+			},
+			{
+				path: 'privacy-policy',
+				component: PrivacyPolicy
+			},
+			{
+				path: 'legal-notice',
+				component: LegalNotice
 			}
 		]
 	},
-	{
-		path: 'privacy-policy',
-		component: PrivacyPolicy
-	},
-	{
-		path: 'legal-notice',
-		component: LegalNotice
-	}
 ];

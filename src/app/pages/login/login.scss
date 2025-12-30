@@ -31,30 +31,29 @@
 		display: flex;
 		align-items: center;
 		gap: $spacing-md;
-	}
-
-	&__signup-text {
-		color: $darkblue;
-		font-size: 1rem;
-
-		@include respond-max($break-sm) {
-			display: none;
+		&-text {
+			color: $darkblue;
+			font-size: 1rem;
+	
+			@include respond-max($break-sm) {
+				display: none;
+			}
+		}
+	
+		&-btn {
+			padding: $spacing-sm $spacing-md;
+			border-radius: radius(small);
+			text-decoration: none;
+			font-weight: 600;
+			transition: background-color 0.2s;
+			@include button-primary();
+	
+			&:hover {
+				background-color: $nav-hover;
+			}
 		}
 	}
 
-	&__signup-btn {
-		background-color: $darkblue;
-		color: white;
-		padding: $spacing-sm $spacing-md;
-		border-radius: radius(small);
-		text-decoration: none;
-		font-weight: 600;
-		transition: background-color 0.2s;
-
-		&:hover {
-			background-color: $nav-hover;
-		}
-	}
 
 	&__content {
 		flex: 1;
@@ -196,32 +195,23 @@
 		cursor: pointer;
 		transition: all 0.2s;
 		border: 2px solid transparent;
-
 		&:disabled {
 			opacity: 0.6;
 			cursor: not-allowed;
 		}
-
+		
 		&--primary {
 			background-color: $darkblue;
 			color: white;
 			border-color: $darkblue;
-
-			&:hover:not(:disabled) {
-				background-color: $nav-hover;
-				border-color: $nav-hover;
-			}
+			@include button-primary();
 		}
-
+		
 		&--secondary {
 			background-color: white;
 			color: $darkblue;
 			border-color: $darkblue;
-
-			&:hover:not(:disabled) {
-				background-color: $darkblue;
-				color: white;
-			}
+			@include button-secondary();
 		}
 	}
 

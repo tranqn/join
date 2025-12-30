@@ -28,15 +28,10 @@
         justify-content: center;
         transition: color 0.2s;
         -webkit-tap-highlight-color: transparent;
-
+		@include greyHover();
 		.close_icon {
 			color: #666;
 		}
-
-        &:hover {
-            background-color: #eeeeee;
-            border-radius: 100%;
-        }
 
 		&--edit {
 			margin: $spacing-sm 0 $spacing-md auto;

@@ -58,10 +58,11 @@
 		align-items: center;
 		justify-content: center;
 		transition: transform 0.2s;
-
+		
 		&:hover {
 			transform: translateX(-3px);
 		}
+		@include greyHover();
 
 		img {
 			width: 24px;
@@ -207,15 +208,8 @@
 		font-weight: 600;
 		cursor: pointer;
 		transition: all 0.2s;
-		background-color: $darkblue;
-		color: white;
-		border: 2px solid $darkblue;
 		margin-top: $spacing-sm;
-
-		&:hover:not(:disabled) {
-			background-color: $nav-hover;
-			border-color: $nav-hover;
-		}
+		@include button-primary();
 
 		&:disabled {
 			opacity: 0.6;
