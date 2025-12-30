@@ -166,10 +166,11 @@
 	}
 
 	&__error-text {
-		display: block;
 		color: $error;
 		font-size: 0.85rem;
-		margin-top: $spacing-xs;
+		position: absolute;
+		bottom: -15px;
+		left: 10px;
 	}
 
 	&__buttons {
