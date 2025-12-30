@@ -1,0 +1,65 @@
+@use '../../../../styles/vars.scss' as *;
+@use '../../../../styles/mixin.scss' as *;
+
+.priority-buttons {
+	display: flex;
+	gap: $spacing-sm;
+	@include respond-max($break-sm) {
+		flex-direction: column;
+	}
+}
+
+.priority-btn {
+	flex: 1;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	padding: $spacing-sm;
+	border: 1px solid $board-border;
+	border-radius: radius(medium);
+	background: white;
+	font-size: 1rem;
+	font-weight: 400;
+	cursor: pointer;
+	transition: all 100ms ease;
+
+	app-icon {
+		&.low {
+			color: $low-color;
+		}
+		&.medium {
+			color: $medium-color;
+		}
+		&.urgent {
+			color: $urgent-color;
+		}
+	}
+
+	&:hover:not(.active) {
+		box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
+	}
+
+	&.active {
+		color: white;
+
+		app-icon {
+			color: white;
+		}
+	}
+
+	&.urgent.active {
+		background-color: $urgent-color;
+		border-color: $urgent-color;
+	}
+
+	&.medium.active {
+		background-color: $medium-color;
+		border-color: $medium-color;
+	}
+
+	&.low.active {
+		background-color: $low-color;
+		border-color: $low-color;
+	}
+}

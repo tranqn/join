@@ -1,0 +1,91 @@
+<div class="subtask-input-wrapper">
+	<input
+		type="text"
+		placeholder="Add new subtask"
+		[value]="subtaskInput()"
+		(input)="subtaskInput.set($any($event.target).value)"
+		(keydown.enter)="$event.preventDefault(); addSubtask()"
+		class="subtask-input"
+	/>
+	<div class="subtask-actions">
+		<button
+			type="button"
+			class="subtask-action-btn"
+			(click)="clearSubtaskInput()"
+			title="Clear"
+		>
+			<img src="icons/close_icon2.svg" alt="clear" />
+		</button>
+		<span class="divider"></span>
+		<button
+			type="button"
+			class="subtask-action-btn"
+			(click)="addSubtask()"
+			title="Add subtask"
+		>
+			<img src="icons/tick_icon.svg" alt="add" />
+		</button>
+	</div>
+</div>
+
+@if (subtasks().length > 0) {
+	<ul class="subtask-list">
+		@for (subtask of subtasks(); track subtask.id) {
+			<li class="subtask-item" [class.done]="subtask.completed" [class.editing]="editingSubtaskId() === subtask.id">
+				@if (editingSubtaskId() === subtask.id) {
+					<input
+						type="text"
+						class="subtask-edit-input"
+						[value]="editingSubtaskText()"
+						(input)="editingSubtaskText.set($any($event.target).value)"
+						(keydown.enter)="$event.preventDefault(); saveEditingSubtask()"
+						(blur)="saveEditingSubtask()"
+					/>
+				} @else {
+					<span class="subtask-title" [class.completed]="subtask.completed">
+						{{ subtask.title }}
+					</span>
+				}
+				<div class="subtask-item-actions">
+					@if (editingSubtaskId() === subtask.id) {
+						<button
+							type="button"
+							class="subtask-item-btn"
+							(click)="deleteSubtask(subtask.id)"
+							title="Delete"
+						>
+							<img src="icons/delete.svg" alt="delete" />
+						</button>
+						<span class="divider"></span>
+						<button
+							type="button"
+							class="subtask-item-btn"
+							(click)="saveEditingSubtask()"
+							title="Save"
+						>
+							<img src="icons/tick_icon.svg" alt="save" />
+						</button>
+					} @else {
+						<button
+							type="button"
+							class="subtask-item-btn"
+							(click)="startEditingSubtask(subtask)"
+							title="Edit"
+						>
+							<img src="icons/edit.svg" alt="edit" />
+						</button>
+						<span class="divider"></span>
+						<button
+							type="button"
+							class="subtask-item-btn"
+							(click)="deleteSubtask(subtask.id)"
+							title="Delete"
+						>
+							<img src="icons/delete.svg" alt="delete" />
+						</button>
+					}
+				</div>
+			</li>
+		}
+	</ul>
+}

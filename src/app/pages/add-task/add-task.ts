@@ -1,4 +1,4 @@
-import { Component, inject, signal, HostListener, input, output, effect } from '@angular/core';
+import { Component, inject, signal, input, output, effect } from '@angular/core';
 import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -7,12 +7,23 @@ import { FirebaseService } from '../../services/firebase-service';
 import { ContactModel } from '../../interfaces/contact';
 import { Subtask, TaskModel } from '../../interfaces/task';
 import { Firestore, doc } from '@angular/fire/firestore';
-import { Icon } from '../../shared/icon/icon';
 import { minLengthValidator, noPastDateValidator, requiredValidator, getErrorMessage } from './task-validators';
+import { PriorityButtons } from './components/priority-buttons/priority-buttons';
+import { CategorySelect } from './components/category-select/category-select';
+import { DatePicker } from './components/date-picker/date-picker';
+import { ContactAssignment } from './components/contact-assignment/contact-assignment';
+import { SubtaskManagement } from './components/subtask-management/subtask-management';
 
 @Component({
 	selector: 'app-add-task',
-	imports: [ReactiveFormsModule, Icon],
+	imports: [
+		ReactiveFormsModule,
+		PriorityButtons,
+		CategorySelect,
+		DatePicker,
+		ContactAssignment,
+		SubtaskManagement
+	],
 	templateUrl: './add-task.html',
 	styleUrl: './add-task.scss',
 })
@@ -33,31 +44,9 @@ export class AddTask {
 
 	taskForm: FormGroup;
 	isSaving = signal(false);
-	isContactsOpen = signal(false);
-	isCategoryOpen = signal(false);
-	isDatePickerOpen = signal(false);
 	selectedContacts = signal<ContactModel[]>([]);
-	currentStatus = signal<string>('todo');
-
-	// Date picker state
-	viewDate = new Date();
-
-	// Subtask state
 	subtasks = signal<Subtask[]>([]);
-	subtaskInput = signal('');
-	editingSubtaskId = signal<string | null>(null);
-	editingSubtaskText = signal('');
-
-	priorities = [
-		{ value: 'urgent', label: 'Urgent', icon: 'high' },
-		{ value: 'medium', label: 'Medium', icon: 'medium' },
-		{ value: 'low', label: 'Low', icon: 'low' }
-	];
-
-	categories = [
-		{ value: 'technical', label: 'Technical Task' },
-		{ value: 'user-story', label: 'User Story' }
-	];
+	currentStatus = signal<string>('todo');
 
 	constructor() {
 		this.taskForm = this.initializeForm();
@@ -78,22 +67,18 @@ export class AddTask {
 	}
 
 	isBoardRoute(): boolean {
-        return this.router.url === '/board';
-    }
+		return this.router.url === '/board';
+	}
 
-	/**
-	 * Populates the form with task data for editing
-	 */
 	private populateForm(task: TaskModel) {
 		this.taskForm.patchValue({
 			title: task.title,
 			description: task.description,
-			dueDate: this.formatDateForInput(task.dueDate),
+			dueDate: task.dueDate,
 			priority: task.priority,
 			category: task.category === 'Technical Task' ? 'technical' : 'user-story'
 		});
 
-		// Map assignedTo refs to ContactModels
 		if (task.assignedTo) {
 			const allContacts = this.firebaseService.contacts();
 			const matchedContacts = task.assignedTo
@@ -104,32 +89,9 @@ export class AddTask {
 			this.selectedContacts.set([]);
 		}
 
-		// Set subtasks
 		this.subtasks.set(task.subtasks || []);
 	}
 
-	/**
-	 * Formats timestamp to YYYY-MM-DD for date input
-	 */
-	private formatDateForInput(timestamp: number): string {
-		if (!timestamp) return '';
-		const date = new Date(timestamp);
-		const year = date.getUTCFullYear();
-		const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-		const day = String(date.getUTCDate()).padStart(2, '0');
-		return `${year}-${month}-${day}`;
-	}
-
-	/**
-	 * Gets available contacts from FirebaseService
-	 */
-	get contacts() {
-		return this.firebaseService.contacts();
-	}
-
-	/**
-	 * Initializes the task form with validators
-	 */
 	private initializeForm(): FormGroup {
 		return this.fb.group({
 			title: ['', minLengthValidator(2)],
@@ -140,78 +102,6 @@ export class AddTask {
 		});
 	}
 
-	/**
-	 * Toggles contact dropdown visibility
-	 */
-	toggleContacts() {
-		this.isContactsOpen.update(open => !open);
-		if (this.isContactsOpen()) {
-			this.isCategoryOpen.set(false);
-		}
-	}
-
-	/**
-	 * Toggles category dropdown visibility
-	 */
-	toggleCategory() {
-		this.isCategoryOpen.update(open => !open);
-		if (this.isCategoryOpen()) {
-			this.isContactsOpen.set(false);
-		}
-	}
-
-	/**
-	 * Checks if a contact is selected
-	 */
-	isContactSelected(contact: ContactModel): boolean {
-		return this.selectedContacts().some(c => c.id === contact.id);
-	}
-
-	/**
-	 * Toggles a contact selection
-	 */
-	toggleContact(contact: ContactModel) {
-		if (this.isContactSelected(contact)) {
-			this.selectedContacts.update(list => list.filter(c => c.id !== contact.id));
-		} else {
-			this.selectedContacts.update(list => [...list, contact]);
-		}
-	}
-
-	/**
-	 * Selects a category and closes dropdown
-	 */
-	selectCategory(value: string) {
-		this.taskForm.patchValue({ category: value });
-		this.isCategoryOpen.set(false);
-	}
-
-	/**
-	 * Gets the selected category label
-	 */
-	getSelectedCategoryLabel(): string {
-		const value = this.taskForm.get('category')?.value;
-		const category = this.categories.find(c => c.value === value);
-		return category?.label || 'Select task category';
-	}
-
-	/**
-	 * Sets the priority value
-	 */
-	setPriority(value: string) {
-		this.taskForm.patchValue({ priority: value });
-	}
-
-	/**
-	 * Gets initials from a full name
-	 */
-	getInitials(fullName: string): string {
-		return fullName.split(' ').map(n => n[0]?.toUpperCase() || '').join('');
-	}
-
-	/**
-	 * Gets error message for a form control
-	 */
 	getErrorMessage(controlName: string): string {
 		const control = this.taskForm.get(controlName);
 		if (control && control.invalid && control.touched) {
@@ -220,210 +110,26 @@ export class AddTask {
 		return '';
 	}
 
-	/**
-	 * Toggles date picker dropdown
-	 */
-	toggleDatePicker() {
-		this.isDatePickerOpen.update(open => !open);
-		if (this.isDatePickerOpen()) {
-			this.isContactsOpen.set(false);
-			this.isCategoryOpen.set(false);
-		}
+	onPrioritySelected(value: string) {
+		this.taskForm.patchValue({ priority: value });
 	}
 
-	/**
-	 * Formats date for display
-	 */
-	formatDate(value: number | string | null): string {
-		if (!value) return 'dd/mm/yyyy';
-		const date = new Date(value);
-		const day = String(date.getUTCDate()).padStart(2, '0');
-		const month = String(date.getUTCMonth() + 1).padStart(2, '0');
-		const year = date.getUTCFullYear();
-		return `${day}/${month}/${year}`;
+	onCategorySelected(value: string) {
+		this.taskForm.patchValue({ category: value });
 	}
 
-	/**
-	 * Gets current month/year for header
-	 */
-	getMonthYear(): string {
-		const months = ['January', 'February', 'March', 'April', 'May', 'June',
-			'July', 'August', 'September', 'October', 'November', 'December'];
-		return `${months[this.viewDate.getMonth()]} ${this.viewDate.getFullYear()}`;
+	onDateSelected(timestamp: number) {
+		this.taskForm.patchValue({ dueDate: timestamp });
 	}
 
-	/**
-	 * Navigate to previous month
-	 */
-	prevMonth() {
-		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
+	onContactsChanged(contacts: ContactModel[]) {
+		this.selectedContacts.set(contacts);
 	}
 
-	/**
-	 * Navigate to next month
-	 */
-	nextMonth() {
-		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
+	onSubtasksChanged(subtasks: Subtask[]) {
+		this.subtasks.set(subtasks);
 	}
 
-	/**
-	 * Generates calendar days for current view
-	 */
-	getCalendarDays(): { num: number; date: Date; current: boolean; selected: boolean; today: boolean; past: boolean }[] {
-		const days = [];
-		const year = this.viewDate.getFullYear();
-		const month = this.viewDate.getMonth();
-		const firstDay = new Date(year, month, 1).getDay();
-		const daysInMonth = new Date(year, month + 1, 0).getDate();
-		const daysInPrevMonth = new Date(year, month, 0).getDate();
-		const today = new Date();
-		today.setHours(0, 0, 0, 0);
-		const selectedValue = this.taskForm.get('dueDate')?.value;
-
-		// Previous month days
-		for (let i = firstDay - 1; i >= 0; i--) {
-			const date = new Date(year, month - 1, daysInPrevMonth - i);
-			days.push({ num: daysInPrevMonth - i, date, current: false, selected: false, today: false, past: date < today });
-		}
-
-		// Current month days
-		for (let i = 1; i <= daysInMonth; i++) {
-			const date = new Date(year, month, i);
-			const isToday = date.getTime() === today.getTime();
-			
-			let isSelected = false;
-			if (selectedValue) {
-				const selDate = new Date(selectedValue);
-				isSelected = selDate.getUTCFullYear() === year && 
-							 selDate.getUTCMonth() === month && 
-							 selDate.getUTCDate() === i;
-			}
-			
-			days.push({ num: i, date, current: true, selected: isSelected, today: isToday, past: date < today });
-		}
-
-		// Next month days
-		const remaining = 42 - days.length;
-		for (let i = 1; i <= remaining; i++) {
-			const date = new Date(year, month + 1, i);
-			days.push({ num: i, date, current: false, selected: false, today: false, past: false });
-		}
-
-		return days;
-	}
-
-	/**
-	 * Selects a date and closes picker
-	 */
-	selectDate(date: Date) {
-		// Store as UTC midnight timestamp to avoid timezone shifts
-		const utcTimestamp = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
-		this.taskForm.patchValue({ dueDate: utcTimestamp });
-		this.isDatePickerOpen.set(false);
-	}
-
-	/**
-	 * Adds a new subtask or updates an existing one
-	 */
-	addSubtask() {
-		const title = this.subtaskInput().trim();
-		if (!title) return;
-
-		const editingId = this.editingSubtaskId();
-		if (editingId) {
-			// Update existing subtask
-			this.subtasks.update(list =>
-				list.map(st => st.id === editingId ? { ...st, title } : st)
-			);
-			this.editingSubtaskId.set(null);
-		} else {
-			// Add new subtask
-			const newSubtask: Subtask = {
-				id: crypto.randomUUID(),
-				title,
-				completed: false
-			};
-			this.subtasks.update(list => [...list, newSubtask]);
-		}
-		this.subtaskInput.set('');
-	}
-
-	/**
-	 * Clears the subtask input
-	 */
-	clearSubtaskInput() {
-		this.subtaskInput.set('');
-		this.editingSubtaskId.set(null);
-	}
-
-	/**
-	 * Starts editing a subtask inline
-	 */
-	startEditingSubtask(subtask: Subtask) {
-		this.editingSubtaskId.set(subtask.id);
-		this.editingSubtaskText.set(subtask.title);
-	}
-
-	/**
-	 * Saves the edited subtask
-	 */
-	saveEditingSubtask() {
-		const editingId = this.editingSubtaskId();
-		const newTitle = this.editingSubtaskText().trim();
-
-		if (!editingId || !newTitle) {
-			this.editingSubtaskId.set(null);
-			this.editingSubtaskText.set('');
-			return;
-		}
-
-		this.subtasks.update(list =>
-			list.map(st => st.id === editingId ? { ...st, title: newTitle } : st)
-		);
-		this.editingSubtaskId.set(null);
-		this.editingSubtaskText.set('');
-	}
-
-	/**
-	 * Deletes a subtask
-	 */
-	deleteSubtask(id: string) {
-		this.subtasks.update(list => list.filter(st => st.id !== id));
-		if (this.editingSubtaskId() === id) {
-			this.editingSubtaskId.set(null);
-			this.editingSubtaskText.set('');
-		}
-	}
-
-	/**
-	 * Toggles subtask completion
-	 */
-	toggleSubtaskComplete(id: string) {
-		this.subtasks.update(list =>
-			list.map(st => st.id === id ? { ...st, completed: !st.completed } : st)
-		);
-	}
-
-	/**
-	 * Closes dropdowns when clicking outside
-	 */
-	@HostListener('document:click', ['$event'])
-	onDocumentClick(event: MouseEvent) {
-		const target = event.target as HTMLElement;
-		if (!target.closest('.contacts-dropdown') && !target.closest('.contacts-trigger')) {
-			this.isContactsOpen.set(false);
-		}
-		if (!target.closest('.category-dropdown') && !target.closest('.category-trigger')) {
-			this.isCategoryOpen.set(false);
-		}
-		if (!target.closest('.date-picker')) {
-			this.isDatePickerOpen.set(false);
-		}
-	}
-
-	/**
-	 * Handles form submission
-	 */
 	async onSubmit() {
 		if (this.taskForm.invalid || this.isSaving()) {
 			this.taskForm.markAllAsTouched();
@@ -452,9 +158,6 @@ export class AddTask {
 		}
 	}
 
-	/**
-	 * Creates the task in Firestore
-	 */
 	private async createTask() {
 		const formValue = this.taskForm.value;
 		const assignedToRefs = this.selectedContacts().map(contact =>
@@ -486,9 +189,6 @@ export class AddTask {
 		}
 	}
 
-	/**
-	 * Updates the task in Firestore
-	 */
 	private async updateTask() {
 		const formValue = this.taskForm.value;
 		const assignedToRefs = this.selectedContacts().map(contact =>
@@ -507,9 +207,6 @@ export class AddTask {
 		await this.firebaseService.updateItem(updatedTask, 'tasks');
 	}
 
-	/**
-	 * Shows success toast message
-	 */
 	private showSuccessMessage(isUpdate: boolean) {
 		this.messageService.add({
 			severity: 'success',
@@ -519,9 +216,6 @@ export class AddTask {
 		});
 	}
 
-	/**
-	 * Shows error toast message
-	 */
 	private showErrorMessage(isUpdate: boolean) {
 		this.messageService.add({
 			severity: 'error',
@@ -531,9 +225,6 @@ export class AddTask {
 		});
 	}
 
-	/**
-	 * Clears the form and resets selections
-	 */
 	clearForm() {
 		this.taskForm.reset({
 			title: '',
@@ -544,7 +235,5 @@ export class AddTask {
 		});
 		this.selectedContacts.set([]);
 		this.subtasks.set([]);
-		this.subtaskInput.set('');
-		this.editingSubtaskId.set(null);
 	}
 }

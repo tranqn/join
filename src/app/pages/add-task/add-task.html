@@ -46,49 +46,11 @@
 							<span class="required">*</span>
 						}
 					</label>
-					<div class="date-picker">
-						<button
-							type="button"
-							class="date-picker__trigger"
-							(click)="toggleDatePicker()"
-							[class.open]="isDatePickerOpen()"
-							[class.invalid]="taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched"
-						>
-							<span [class.placeholder]="!taskForm.get('dueDate')?.value">
-								{{ formatDate(taskForm.get('dueDate')?.value) }}
-							</span>
-							<img src="icons/calender.svg" alt="calendar" />
-						</button>
-
-						@if (isDatePickerOpen()) {
-							<div class="date-picker__dropdown">
-								<div class="date-picker__header">
-									<button type="button" (click)="prevMonth()">‹</button>
-									<span>{{ getMonthYear() }}</span>
-									<button type="button" (click)="nextMonth()">›</button>
-								</div>
-								<div class="date-picker__weekdays">
-									@for (day of ['Su','Mo','Tu','We','Th','Fr','Sa']; track day) {
-										<span>{{ day }}</span>
-									}
-								</div>
-								<div class="date-picker__days">
-									@for (day of getCalendarDays(); track $index) {
-										<button
-											type="button"
-											[class.other-month]="!day.current"
-											[class.selected]="day.selected"
-											[class.today]="day.today"
-											[disabled]="day.past"
-											(click)="selectDate(day.date)"
-										>
-											{{ day.num }}
-										</button>
-									}
-								</div>
-							</div>
-						}
-					</div>
+					<app-date-picker
+						[selectedDate]="taskForm.get('dueDate')?.value"
+						[isInvalid]="!!(taskForm.get('dueDate')?.invalid && taskForm.get('dueDate')?.touched)"
+						(dateSelected)="onDateSelected($event)"
+					></app-date-picker>
 					@if (getErrorMessage('dueDate')) {
 						<span class="error-message">{{ getErrorMessage('dueDate') }}</span>
 					}
@@ -103,76 +65,19 @@
 				<!-- Priority Field -->
 				<div class="form-group">
 					<label>Priority</label>
-					<div class="priority-buttons">
-						@for (prio of priorities; track prio.value) {
-							<button
-								type="button"
-								class="priority-btn"
-								[class.urgent]="prio.value === 'urgent' && taskForm.get('priority')?.value === 'urgent'"
-								[class.medium]="prio.value === 'medium' && taskForm.get('priority')?.value === 'medium'"
-								[class.low]="prio.value === 'low' && taskForm.get('priority')?.value === 'low'"
-								[class.active]="taskForm.get('priority')?.value === prio.value"
-								(click)="setPriority(prio.value)"
-							>
-								<span>{{ prio.label }}</span>
-								<app-icon [name]="prio.icon" [size]="18" [class]="prio.value"></app-icon>
-							</button>
-						}
-					</div>
+					<app-priority-buttons
+						[selectedPriority]="taskForm.get('priority')?.value"
+						(prioritySelected)="onPrioritySelected($event)"
+					></app-priority-buttons>
 				</div>
 
 				<!-- Assigned To Field -->
 				<div class="form-group">
 					<label>Assigned to</label>
-					<div class="contacts-wrapper">
-						<button
-							type="button"
-							class="contacts-trigger"
-							(click)="toggleContacts()"
-							[class.open]="isContactsOpen()"
-						>
-							<span>Select contacts to assign</span>
-							<img src="icons/arrow_drop_down.svg" alt="dropdown" [class.rotated]="isContactsOpen()" />
-						</button>
-
-						@if (isContactsOpen()) {
-							<div class="contacts-dropdown">
-								@for (contact of contacts; track contact.id) {
-									<label
-										class="contact-option"
-										[class.selected]="isContactSelected(contact)"
-									>
-										<span class="contact-avatar" [style.background-color]="contact.color">
-											{{ getInitials(contact.name) }}
-										</span>
-										<span class="contact-name">{{ contact.name }}</span>
-										<div class="contact-checkbox-wrapper">
-											<input
-												type="checkbox"
-												[checked]="isContactSelected(contact)"
-												(change)="toggleContact(contact)"
-												class="contact-checkbox"
-											/>
-											<span class="checkmark"></span>
-										</div>
-									</label>
-								} @empty {
-									<div class="no-contacts">No contacts available</div>
-								}
-							</div>
-						}
-					</div>
-
-					<!-- Selected Contacts -->
-					@if (selectedContacts().length > 0) {
-						<div class="selected-contacts">
-							@for (contact of selectedContacts(); track contact.id) {
-								<span class="selected-avatar" [style.background-color]="contact.color">
-									{{ getInitials(contact.name) }}
-								</span>
-							}
-						</div>
-					}
+					<app-contact-assignment
+						[selectedContacts]="selectedContacts()"
+						(contactsChanged)="onContactsChanged($event)"
+					></app-contact-assignment>
 				</div>
 
 				<!-- Category Field -->
@@ -182,32 +87,11 @@
 						<span class="required">*</span>
 						}
 					</label>
-					<div class="category-wrapper">
-						<button
-							type="button"
-							class="category-trigger"
-							(click)="toggleCategory()"
-							[class.open]="isCategoryOpen()"
-							[class.invalid]="taskForm.get('category')?.invalid && taskForm.get('category')?.touched"
-						>
-							<span>{{ getSelectedCategoryLabel() }}</span>
-							<img src="icons/arrow_drop_down.svg" alt="dropdown" [class.rotated]="isCategoryOpen()" />
-						</button>
-
-						@if (isCategoryOpen()) {
-							<div class="category-dropdown">
-								@for (cat of categories; track cat.value) {
-									<div
-										class="category-option"
-										(click)="selectCategory(cat.value)"
-										[class.selected]="taskForm.get('category')?.value === cat.value"
-									>
-										{{ cat.label }}
-									</div>
-								}
-							</div>
-						}
-					</div>
+					<app-category-select
+						[selectedCategory]="taskForm.get('category')?.value"
+						[isInvalid]="!!(taskForm.get('category')?.invalid && taskForm.get('category')?.touched)"
+						(categorySelected)="onCategorySelected($event)"
+					></app-category-select>
 					@if (getErrorMessage('category')) {
 						<span class="error-message">{{ getErrorMessage('category') }}</span>
 					}
@@ -216,98 +100,10 @@
 				<!-- Subtasks Field -->
 				<div class="form-group">
 					<label>Subtasks</label>
-					<div class="subtask-input-wrapper">
-						<input
-							type="text"
-							placeholder="Add new subtask"
-							[value]="subtaskInput()"
-							(input)="subtaskInput.set($any($event.target).value)"
-							(keydown.enter)="$event.preventDefault(); addSubtask()"
-							class="subtask-input"
-						/>
-						<div class="subtask-actions">
-							<button
-								type="button"
-								class="subtask-action-btn"
-								(click)="clearSubtaskInput()"
-								title="Clear"
-							>
-								<img src="icons/close_icon2.svg" alt="clear" />
-							</button>
-							<span class="divider"></span>
-							<button
-								type="button"
-								class="subtask-action-btn"
-								(click)="addSubtask()"
-								title="Add subtask"
-							>
-								<img src="icons/tick_icon.svg" alt="add" />
-							</button>
-						</div>
-					</div>
-
-					<!-- Subtask List -->
-					@if (subtasks().length > 0) {
-						<ul class="subtask-list">
-							@for (subtask of subtasks(); track subtask.id) {
-								<li class="subtask-item" [class.done]="subtask.completed" [class.editing]="editingSubtaskId() === subtask.id">
-									@if (editingSubtaskId() === subtask.id) {
-										<input
-											type="text"
-											class="subtask-edit-input"
-											[value]="editingSubtaskText()"
-											(input)="editingSubtaskText.set($any($event.target).value)"
-											(keydown.enter)="$event.preventDefault(); saveEditingSubtask()"
-											(blur)="saveEditingSubtask()"
-										/>
-									} @else {
-										<span class="subtask-title" [class.completed]="subtask.completed">
-											{{ subtask.title }}
-										</span>
-									}
-									<div class="subtask-item-actions">
-										@if (editingSubtaskId() === subtask.id) {
-											<button
-												type="button"
-												class="subtask-item-btn"
-												(click)="deleteSubtask(subtask.id)"
-												title="Delete"
-											>
-												<img src="icons/delete.svg" alt="delete" />
-											</button>
-											<span class="divider"></span>
-											<button
-												type="button"
-												class="subtask-item-btn"
-												(click)="saveEditingSubtask()"
-												title="Save"
-											>
-												<img src="icons/tick_icon.svg" alt="save" />
-											</button>
-										} @else {
-											<button
-												type="button"
-												class="subtask-item-btn"
-												(click)="startEditingSubtask(subtask)"
-												title="Edit"
-											>
-												<img src="icons/edit.svg" alt="edit" />
-											</button>
-											<span class="divider"></span>
-											<button
-												type="button"
-												class="subtask-item-btn"
-												(click)="deleteSubtask(subtask.id)"
-												title="Delete"
-											>
-												<img src="icons/delete.svg" alt="delete" />
-											</button>
-										}
-									</div>
-								</li>
-							}
-						</ul>
-					}
+					<app-subtask-management
+						[subtasks]="subtasks()"
+						(subtasksChanged)="onSubtasksChanged($event)"
+					></app-subtask-management>
 				</div>
 			</div>
 		</div>

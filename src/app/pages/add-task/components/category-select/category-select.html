@@ -1,0 +1,26 @@
+<div class="category-wrapper">
+	<button
+		type="button"
+		class="category-trigger"
+		(click)="toggle()"
+		[class.open]="isOpen()"
+		[class.invalid]="isInvalid()"
+	>
+		<span>{{ getSelectedLabel() }}</span>
+		<img src="icons/arrow_drop_down.svg" alt="dropdown" [class.rotated]="isOpen()" />
+	</button>
+
+	@if (isOpen()) {
+		<div class="category-dropdown">
+			@for (cat of categories; track cat.value) {
+				<div
+					class="category-option"
+					(click)="selectCategory(cat.value)"
+					[class.selected]="selectedCategory() === cat.value"
+				>
+					{{ cat.label }}
+				</div>
+			}
+		</div>
+	}
+</div>

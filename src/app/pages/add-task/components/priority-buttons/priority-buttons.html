@@ -1,0 +1,16 @@
+<div class="priority-buttons">
+	@for (prio of priorities; track prio.value) {
+		<button
+			type="button"
+			class="priority-btn"
+			[class.urgent]="prio.value === 'urgent' && selectedPriority() === 'urgent'"
+			[class.medium]="prio.value === 'medium' && selectedPriority() === 'medium'"
+			[class.low]="prio.value === 'low' && selectedPriority() === 'low'"
+			[class.active]="selectedPriority() === prio.value"
+			(click)="setPriority(prio.value)"
+		>
+			<span>{{ prio.label }}</span>
+			<app-icon [name]="prio.icon" [size]="18" [class]="prio.value"></app-icon>
+		</button>
+	}
+</div>

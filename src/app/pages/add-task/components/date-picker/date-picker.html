@@ -1,0 +1,43 @@
+<div class="date-picker">
+	<button
+		type="button"
+		class="date-picker__trigger"
+		(click)="toggle()"
+		[class.open]="isOpen()"
+		[class.invalid]="isInvalid()"
+	>
+		<span [class.placeholder]="!selectedDate()">
+			{{ formatDate(selectedDate()) }}
+		</span>
+		<img src="icons/calender.svg" alt="calendar" />
+	</button>
+
+	@if (isOpen()) {
+		<div class="date-picker__dropdown">
+			<div class="date-picker__header">
+				<button type="button" (click)="prevMonth()">‹</button>
+				<span>{{ getMonthYear() }}</span>
+				<button type="button" (click)="nextMonth()">›</button>
+			</div>
+			<div class="date-picker__weekdays">
+				@for (day of weekdays; track day) {
+					<span>{{ day }}</span>
+				}
+			</div>
+			<div class="date-picker__days">
+				@for (day of getCalendarDays(); track $index) {
+					<button
+						type="button"
+						[class.other-month]="!day.current"
+						[class.selected]="day.selected"
+						[class.today]="day.today"
+						[disabled]="day.past"
+						(click)="selectDate(day.date)"
+					>
+						{{ day.num }}
+					</button>
+				}
+			</div>
+		</div>
+	}
+</div>

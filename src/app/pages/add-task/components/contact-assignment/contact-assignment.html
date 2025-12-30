@@ -1,0 +1,48 @@
+<div class="contacts-wrapper">
+	<button
+		type="button"
+		class="contacts-trigger"
+		(click)="toggle()"
+		[class.open]="isOpen()"
+	>
+		<span>Select contacts to assign</span>
+		<img src="icons/arrow_drop_down.svg" alt="dropdown" [class.rotated]="isOpen()" />
+	</button>
+
+	@if (isOpen()) {
+		<div class="contacts-dropdown">
+			@for (contact of contacts; track contact.id) {
+				<label
+					class="contact-option"
+					[class.selected]="isContactSelected(contact)"
+				>
+					<span class="contact-avatar" [style.background-color]="contact.color">
+						{{ getInitials(contact.name) }}
+					</span>
+					<span class="contact-name">{{ contact.name }}</span>
+					<div class="contact-checkbox-wrapper">
+						<input
+							type="checkbox"
+							[checked]="isContactSelected(contact)"
+							(change)="toggleContact(contact)"
+							class="contact-checkbox"
+						/>
+						<span class="checkmark"></span>
+					</div>
+				</label>
+			} @empty {
+				<div class="no-contacts">No contacts available</div>
+			}
+		</div>
+	}
+</div>
+
+@if (selectedContacts().length > 0) {
+	<div class="selected-contacts">
+		@for (contact of selectedContacts(); track contact.id) {
+			<span class="selected-avatar" [style.background-color]="contact.color">
+				{{ getInitials(contact.name) }}
+			</span>
+		}
+	</div>
+}

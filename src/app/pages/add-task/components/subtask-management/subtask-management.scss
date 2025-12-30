@@ -1,0 +1,149 @@
+@use '../../../../styles/vars.scss' as *;
+@use '../../../../styles/mixin.scss' as *;
+
+.subtask-input-wrapper {
+	position: relative;
+
+	.subtask-input {
+		width: 100%;
+		padding: 12px 80px 12px 16px;
+		border: 1px solid $board-border;
+		border-radius: radius(medium);
+		font-size: 1rem;
+		font-family: inherit;
+
+		&:focus {
+			outline: none;
+			border-color: $light-blue;
+		}
+	}
+
+	.subtask-actions {
+		position: absolute;
+		right: 8px;
+		top: 50%;
+		transform: translateY(-50%);
+		display: flex;
+		align-items: center;
+		gap: 6px;
+
+		.divider {
+			width: 1px;
+			height: 32px;
+			background-color: $board-border;
+		}
+	}
+}
+
+.subtask-action-btn,
+.subtask-item .subtask-item-btn {
+	background: transparent;
+	border: none;
+	padding: 6px;
+	cursor: pointer;
+	transition: background-color 100ms ease;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	border-radius: 50%;
+
+	img {
+		width: 20px;
+		height: 20px;
+	}
+
+	&:hover {
+		background-color: rgba(0, 0, 0, 0.1);
+	}
+}
+
+.subtask-list {
+	margin-top: $spacing-sm;
+	list-style-position: inside;
+	padding-left: 0;
+	max-height: 130px;
+	overflow: auto;
+
+	li {
+		margin-bottom: $spacing-xs;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+.subtask-item {
+	display: list-item;
+	padding: $spacing-sm $spacing-md;
+	border-radius: radius(medium);
+	transition: all 100ms ease;
+	position: relative;
+
+	&:hover {
+		background-color: #f5f5f5;
+
+		.subtask-item-actions {
+			opacity: 1;
+		}
+	}
+
+	&.done {
+		background-color: #f0f9ff;
+	}
+
+	&.editing {
+		list-style: none;
+		background-color: transparent;
+		border-radius: 0;
+		padding: $spacing-sm 0;
+		border-bottom: 1px solid $light-blue;
+
+		&:hover {
+			background-color: transparent;
+		}
+
+		.subtask-item-actions {
+			opacity: 1;
+		}
+	}
+
+	.subtask-title {
+		display: inline-block;
+		font-size: 1rem;
+		padding-right: 80px;
+
+		&.completed {
+			text-decoration: line-through;
+			color: $board-border;
+		}
+	}
+
+	.subtask-edit-input {
+		width: calc(100% - 80px);
+		border: none;
+		background: transparent;
+		font-size: 1rem;
+		padding: 0 8px;
+		outline: none;
+		font-family: inherit;
+	}
+
+	.subtask-item-actions {
+		position: absolute;
+		right: $spacing-sm;
+		top: 50%;
+		transform: translateY(-50%);
+		display: flex;
+		align-items: center;
+		gap: 6px;
+		opacity: 0;
+		transition: opacity 100ms ease;
+
+		.divider {
+			width: 1px;
+			height: 32px;
+			background-color: $board-border;
+		}
+	}
+}
