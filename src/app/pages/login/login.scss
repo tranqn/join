@@ -45,12 +45,8 @@
 			border-radius: radius(small);
 			text-decoration: none;
 			font-weight: 600;
-			transition: background-color 0.2s;
+			transition: all 0.2s;
 			@include button-primary();
-	
-			&:hover {
-				background-color: $nav-hover;
-			}
 		}
 	}
 
