@@ -59,6 +59,7 @@
 		width: 20px;
 		height: 20px;
 		transition: all 0.1s ease;
+		cursor: pointer;
 		&:hover {
 			transform: scale(1.2);
 		}
@@ -67,18 +68,89 @@
 		}
 	}
 
-	& .user-icon {
-		width: 45px;
-		height: 45px;
-		border-radius: 50%;
-		border: 3px solid #2a3647;
-		@include dFlex-responsive(row, row, $justify: center, $align: center);
-		&:hover {
-			background-color: rgba($user-hover, .12);
+	.user-menu {
+		position: relative;
+
+		.user-icon {
+			width: 45px;
+			height: 45px;
+			border-radius: 50%;
+			border: 3px solid #2a3647;
+			@include dFlex-responsive(row, row, $justify: center, $align: center);
+			cursor: pointer;
+			transition: background-color 0.2s;
+			
+			&:hover {
+				background-color: rgba($user-hover, .12);
+			}
+			
+			& span {
+				font-weight: 600;
+				color: $light-blue;
+			}
 		}
-		& span {
-			font-weight: 600;
-			color: $light-blue;
+
+		.dropdown {
+			position: absolute;
+			top: 100%;
+			right: 0;
+			opacity: 0;
+			visibility: hidden;
+			transform: translateY(-10px);
+			transition: all 0.3s ease;
+			pointer-events: none;
+			padding-top: 10px;
+
+			.dropdown-content {
+				background: white;
+				border-radius: radius(medium);
+				box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+				padding: $spacing-md;
+				min-width: 200px;
+
+				.user-info {
+					border-bottom: 1px solid #e0e0e0;
+					padding-bottom: $spacing-sm;
+					margin-bottom: $spacing-sm;
+
+					.user-name {
+						font-weight: 600;
+						color: $darkblue;
+						margin: 0 0 5px 0;
+					}
+
+					.user-email {
+						font-size: 0.85rem;
+						color: $board-border;
+						margin: 0;
+						word-break: break-word;
+					}
+				}
+
+				.logout-btn {
+					width: 100%;
+					padding: $spacing-xs $spacing-sm;
+					background: none;
+					border: 1px solid $darkblue;
+					border-radius: radius(small);
+					color: $darkblue;
+					font-weight: 600;
+					cursor: pointer;
+					transition: all 0.2s;
+
+					&:hover {
+						background-color: $darkblue;
+						color: white;
+					}
+				}
+			}
+		}
+
+		&:hover .dropdown {
+			opacity: 1;
+			visibility: visible;
+			transform: translateY(0);
+			pointer-events: all;
 		}
 	}
 }

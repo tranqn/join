@@ -221,7 +221,7 @@
 		}
 
 		&.invalid {
-			border-color: $urgent-color;
+			border-color: $error;
 		}
 
 		span.placeholder {
@@ -363,7 +363,7 @@
 	}
 
 	&.invalid {
-		border-color: $urgent-color;
+		border-color: $error;
 	}
 
 	img {

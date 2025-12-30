@@ -1,0 +1,249 @@
+@use '../../../app/styles/vars.scss' as *;
+@use '../../../app/styles/mixin.scss' as *;
+
+.register {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #f6f7f8;
+
+	&__header {
+		padding: $spacing-mdg $spacing-lg;
+
+		@include respond-max($break-md) {
+			padding: $spacing-md;
+		}
+	}
+
+	&__logo {
+		width: 100px;
+		height: auto;
+
+		@include respond-max($break-md) {
+			width: 80px;
+		}
+	}
+
+	&__content {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: $spacing-md;
+	}
+
+	&__card {
+		background: white;
+		border-radius: radius(large);
+		padding: $spacing-lg;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		width: 100%;
+		max-width: 480px;
+		position: relative;
+
+		@include respond-max($break-md) {
+			padding: $spacing-mdg;
+		}
+	}
+
+	&__back {
+		position: absolute;
+		top: $spacing-md;
+		left: $spacing-md;
+		background: none;
+		border: none;
+		cursor: pointer;
+		padding: $spacing-xs;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		transition: transform 0.2s;
+
+		&:hover {
+			transform: translateX(-3px);
+		}
+
+		img {
+			width: 24px;
+			height: 24px;
+		}
+	}
+
+	&__title {
+		text-align: center;
+		color: $darkblue;
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin: $spacing-md 0 $spacing-sm 0;
+		position: relative;
+		padding-bottom: $spacing-sm;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 80px;
+			height: 3px;
+			background-color: $light-blue;
+		}
+	}
+
+	&__error {
+		background-color: #ffe6e6;
+		color: $error;
+		padding: $spacing-sm;
+		border-radius: radius(small);
+		margin: $spacing-md 0;
+		font-size: 0.9rem;
+		text-align: center;
+	}
+
+	&__form {
+		margin-top: $spacing-mdg;
+	}
+
+	&__input-group {
+		position: relative;
+		margin-bottom: $spacing-md;
+	}
+
+	&__input {
+		width: 100%;
+		padding: $spacing-sm 50px $spacing-sm $spacing-sm;
+		border: 1px solid #d1d1d1;
+		border-radius: radius(small);
+		font-size: 1rem;
+		transition: border-color 0.2s;
+
+		&:focus {
+			outline: none;
+			border-color: $light-blue;
+		}
+
+		&--invalid {
+			border-color: $error;
+		}
+
+		&::placeholder {
+			color: #d1d1d1;
+		}
+	}
+
+	&__input-icon {
+		position: absolute;
+		right: $spacing-sm;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 20px;
+		height: 20px;
+		pointer-events: none;
+
+		&--clickable {
+			pointer-events: all;
+			cursor: pointer;
+			background: none;
+			border: none;
+			padding: $spacing-xs;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: opacity 0.2s;
+
+			&:hover {
+				opacity: 0.7;
+			}
+
+			img {
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+
+	&__error-text {
+		display: block;
+		color: $error;
+		font-size: 0.85rem;
+		margin-top: $spacing-xs;
+	}
+
+	&__checkbox {
+		display: flex;
+		align-items: center;
+		gap: $spacing-xs;
+		margin: $spacing-md 0;
+		justify-content: center;
+	}
+
+	&__checkbox-input {
+		width: 18px;
+		height: 18px;
+		cursor: pointer;
+		accent-color: $light-blue;
+	}
+
+	&__checkbox-label {
+		font-size: 0.9rem;
+		color: #6b6b6b;
+		cursor: pointer;
+	}
+
+	&__link {
+		color: $light-blue;
+		text-decoration: none;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+
+	&__btn {
+		width: 100%;
+		padding: $spacing-sm $spacing-md;
+		border-radius: radius(small);
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+		background-color: $darkblue;
+		color: white;
+		border: 2px solid $darkblue;
+		margin-top: $spacing-sm;
+
+		&:hover:not(:disabled) {
+			background-color: $nav-hover;
+			border-color: $nav-hover;
+		}
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: $spacing-mdg;
+		padding: $spacing-md;
+
+		@include respond-max($break-sm) {
+			gap: $spacing-md;
+			flex-wrap: wrap;
+		}
+	}
+
+	&__footer-link {
+		color: #a8a8a8;
+		text-decoration: none;
+		font-size: 0.95rem;
+		transition: color 0.2s;
+
+		&:hover {
+			color: $light-blue;
+		}
+	}
+}

@@ -1,0 +1,251 @@
+@use '../../../app/styles/vars.scss' as *;
+@use '../../../app/styles/mixin.scss' as *;
+
+.login {
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+	background-color: #f6f7f8;
+
+	&__header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: $spacing-mdg $spacing-lg;
+
+		@include respond-max($break-md) {
+			padding: $spacing-md;
+		}
+	}
+
+	&__logo {
+		width: 100px;
+		height: auto;
+
+		@include respond-max($break-md) {
+			width: 80px;
+		}
+	}
+
+	&__signup {
+		display: flex;
+		align-items: center;
+		gap: $spacing-md;
+	}
+
+	&__signup-text {
+		color: $darkblue;
+		font-size: 1rem;
+
+		@include respond-max($break-sm) {
+			display: none;
+		}
+	}
+
+	&__signup-btn {
+		background-color: $darkblue;
+		color: white;
+		padding: $spacing-sm $spacing-md;
+		border-radius: radius(small);
+		text-decoration: none;
+		font-weight: 600;
+		transition: background-color 0.2s;
+
+		&:hover {
+			background-color: $nav-hover;
+		}
+	}
+
+	&__content {
+		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: $spacing-md;
+	}
+
+	&__card {
+		background: white;
+		border-radius: radius(large);
+		padding: $spacing-lg;
+		box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+		width: 100%;
+		max-width: 480px;
+
+		@include respond-max($break-md) {
+			padding: $spacing-mdg;
+		}
+	}
+
+	&__title {
+		text-align: center;
+		color: $darkblue;
+		font-size: 2.5rem;
+		font-weight: 700;
+		margin: 0 0 $spacing-sm 0;
+		position: relative;
+		padding-bottom: $spacing-sm;
+
+		&::after {
+			content: '';
+			position: absolute;
+			bottom: 0;
+			left: 50%;
+			transform: translateX(-50%);
+			width: 80px;
+			height: 3px;
+			background-color: $light-blue;
+		}
+	}
+
+	&__error {
+		background-color: #ffe6e6;
+		color: $error;
+		padding: $spacing-sm;
+		border-radius: radius(small);
+		margin: $spacing-md 0;
+		font-size: 0.9rem;
+		text-align: center;
+	}
+
+	&__form {
+		margin-top: $spacing-mdg;
+	}
+
+	&__input-group {
+		position: relative;
+		margin-bottom: $spacing-md;
+	}
+
+	&__input {
+		width: 100%;
+		padding: $spacing-sm 50px $spacing-sm $spacing-sm;
+		border: 1px solid #d1d1d1;
+		border-radius: radius(small);
+		font-size: 1rem;
+		transition: border-color 0.2s;
+
+		&:focus {
+			outline: none;
+			border-color: $light-blue;
+		}
+
+		&--invalid {
+			border-color: $error;
+		}
+
+		&::placeholder {
+			color: #d1d1d1;
+		}
+	}
+
+	&__input-icon {
+		position: absolute;
+		right: $spacing-sm;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 20px;
+		height: 20px;
+		pointer-events: none;
+
+		&--clickable {
+			pointer-events: all;
+			cursor: pointer;
+			background: none;
+			border: none;
+			padding: $spacing-xs;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			transition: opacity 0.2s;
+
+			&:hover {
+				opacity: 0.7;
+			}
+
+			img {
+				width: 20px;
+				height: 20px;
+			}
+		}
+	}
+
+	&__error-text {
+		display: block;
+		color: $error;
+		font-size: 0.85rem;
+		margin-top: $spacing-xs;
+	}
+
+	&__buttons {
+		display: flex;
+		gap: $spacing-md;
+		margin-top: $spacing-mdg;
+
+		@include respond-max($break-sm) {
+			flex-direction: column;
+		}
+	}
+
+	&__btn {
+		flex: 1;
+		padding: $spacing-sm $spacing-md;
+		border-radius: radius(small);
+		font-size: 1rem;
+		font-weight: 600;
+		cursor: pointer;
+		transition: all 0.2s;
+		border: 2px solid transparent;
+
+		&:disabled {
+			opacity: 0.6;
+			cursor: not-allowed;
+		}
+
+		&--primary {
+			background-color: $darkblue;
+			color: white;
+			border-color: $darkblue;
+
+			&:hover:not(:disabled) {
+				background-color: $nav-hover;
+				border-color: $nav-hover;
+			}
+		}
+
+		&--secondary {
+			background-color: white;
+			color: $darkblue;
+			border-color: $darkblue;
+
+			&:hover:not(:disabled) {
+				background-color: $darkblue;
+				color: white;
+			}
+		}
+	}
+
+	&__footer {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: $spacing-mdg;
+		padding: $spacing-md;
+
+		@include respond-max($break-sm) {
+			gap: $spacing-md;
+			flex-wrap: wrap;
+		}
+	}
+
+	&__footer-link {
+		color: #a8a8a8;
+		text-decoration: none;
+		font-size: 0.95rem;
+		transition: color 0.2s;
+
+		&:hover {
+			color: $light-blue;
+		}
+	}
+}

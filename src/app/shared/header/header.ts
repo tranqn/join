@@ -1,5 +1,6 @@
 import { Component, inject } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
+import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-header',
@@ -9,6 +10,7 @@ import { Router, RouterLink } from "@angular/router";
 })
 export class Header {
 	router = inject(Router);
+	authService = inject(AuthService);
 
 	/**
 	 * Checks if the current route is the help page.
@@ -16,5 +18,25 @@ export class Header {
 	 */
 	isHelpRoute(): boolean {
 		return this.router.url === '/help';
+	}
+
+	async logout() {
+		await this.authService.logout();
+	}
+
+	getUserName(): string {
+		const user = this.authService.currentUser();
+		if (!user) return 'Guest';
+		return user.isAnonymous ? 'Guest' : (user.displayName || 'User');
+	}
+
+	getInitials(): string {
+		const name = this.getUserName();
+		if (name === 'Guest') return 'G';
+		const parts = name.split(' ');
+		if (parts.length >= 2) {
+			return (parts[0][0] + parts[1][0]).toUpperCase();
+		}
+		return name.substring(0, 2).toUpperCase();
 	}
 }

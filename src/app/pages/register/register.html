@@ -1,0 +1,149 @@
+<div class="register">
+	<header class="register__header">
+		<img src="assets/img/logo-dark.svg" alt="Join Logo" class="register__logo" />
+	</header>
+
+	<div class="register__content">
+		<div class="register__card">
+			<button type="button" class="register__back" routerLink="/login" aria-label="Go back">
+				<img src="icons/arrow-left-line.svg" alt="Back" />
+			</button>
+
+			<h1 class="register__title">Sign up</h1>
+
+			@if (errorMessage()) {
+				<div class="register__error">
+					{{ errorMessage() }}
+				</div>
+			}
+
+			<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__form">
+				<div class="register__input-group">
+					<input
+						id="name"
+						type="text"
+						formControlName="name"
+						placeholder="Name"
+						class="register__input"
+						[class.register__input--invalid]="nameControl?.invalid && nameControl?.touched"
+					/>
+					<img src="icons/person.svg" alt="Name" class="register__input-icon" />
+					@if (nameControl?.invalid && nameControl?.touched) {
+						<span class="register__error-text">
+							@if (nameControl?.errors?.['required']) {
+								Name is required
+							} @else if (nameControl?.errors?.['minlength']) {
+								Name must be at least 2 characters
+							}
+						</span>
+					}
+				</div>
+
+				<div class="register__input-group">
+					<input
+						id="email"
+						type="email"
+						formControlName="email"
+						placeholder="Email"
+						class="register__input"
+						[class.register__input--invalid]="emailControl?.invalid && emailControl?.touched"
+					/>
+					<img src="icons/mail.svg" alt="Email" class="register__input-icon" />
+					@if (emailControl?.invalid && emailControl?.touched) {
+						<span class="register__error-text">
+							@if (emailControl?.errors?.['required']) {
+								Email is required
+							} @else if (emailControl?.errors?.['email']) {
+								Please enter a valid email
+							}
+						</span>
+					}
+				</div>
+
+				<div class="register__input-group">
+					<input
+						id="password"
+						[type]="showPassword() ? 'text' : 'password'"
+						formControlName="password"
+						placeholder="Password"
+						class="register__input"
+						[class.register__input--invalid]="passwordControl?.invalid && passwordControl?.touched"
+					/>
+					<button
+						type="button"
+						class="register__input-icon register__input-icon--clickable"
+						(click)="togglePasswordVisibility()"
+						aria-label="Toggle password visibility"
+					>
+						<img src="icons/lock.svg" alt="Password" />
+					</button>
+					@if (passwordControl?.invalid && passwordControl?.touched) {
+						<span class="register__error-text">
+							@if (passwordControl?.errors?.['required']) {
+								Password is required
+							} @else if (passwordControl?.errors?.['minlength']) {
+								Password must be at least 6 characters
+							}
+						</span>
+					}
+				</div>
+
+				<div class="register__input-group">
+					<input
+						id="confirmPassword"
+						[type]="showConfirmPassword() ? 'text' : 'password'"
+						formControlName="confirmPassword"
+						placeholder="Confirm Password"
+						class="register__input"
+						[class.register__input--invalid]="(confirmPasswordControl?.invalid || registerForm.errors?.['passwordMismatch']) && confirmPasswordControl?.touched"
+					/>
+					<button
+						type="button"
+						class="register__input-icon register__input-icon--clickable"
+						(click)="toggleConfirmPasswordVisibility()"
+						aria-label="Toggle confirm password visibility"
+					>
+						<img src="icons/lock.svg" alt="Confirm Password" />
+					</button>
+					@if (confirmPasswordControl?.touched) {
+						<span class="register__error-text">
+							@if (confirmPasswordControl?.errors?.['required']) {
+								Please confirm your password
+							} @else if (registerForm.errors?.['passwordMismatch']) {
+								Passwords do not match
+							}
+						</span>
+					}
+				</div>
+
+				<div class="register__checkbox">
+					<input
+						id="acceptPolicy"
+						type="checkbox"
+						formControlName="acceptPolicy"
+						class="register__checkbox-input"
+					/>
+					<label for="acceptPolicy" class="register__checkbox-label">
+						I accept the
+						<a routerLink="/privacy-policy" target="_blank" class="register__link">
+							Privacy policy
+						</a>
+					</label>
+				</div>
+
+				<button type="submit" class="register__btn" [disabled]="isLoading() || !acceptPolicyControl?.value">
+					@if (isLoading()) {
+						Creating account...
+					} @else {
+						Sign up
+					}
+				</button>
+			</form>
+		</div>
+	</div>
+
+	<footer class="register__footer">
+		<a routerLink="/privacy-policy" class="register__footer-link">Privacy Policy</a>
+		<a routerLink="/legal-notice" class="register__footer-link">Legal notice</a>
+	</footer>
+</div>

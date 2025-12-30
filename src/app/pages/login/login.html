@@ -1,0 +1,96 @@
+<div class="login">
+	<header class="login__header">
+		<img src="assets/img/logo-dark.svg" alt="Join Logo" class="login__logo" />
+		<div class="login__signup">
+			<span class="login__signup-text">Not a Join user?</span>
+			<a routerLink="/register" class="login__signup-btn">Sign up</a>
+		</div>
+	</header>
+
+	<div class="login__content">
+		<div class="login__card">
+			<h1 class="login__title">Log in</h1>
+
+			@if (errorMessage()) {
+				<div class="login__error">
+					{{ errorMessage() }}
+				</div>
+			}
+
+			<form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login__form">
+				<div class="login__input-group">
+					<input
+						id="email"
+						type="email"
+						formControlName="email"
+						placeholder="Email"
+						class="login__input"
+						[class.login__input--invalid]="emailControl?.invalid && emailControl?.touched"
+					/>
+					<img src="icons/mail.svg" alt="Email" class="login__input-icon" />
+					@if (emailControl?.invalid && emailControl?.touched) {
+						<span class="login__error-text">
+							@if (emailControl?.errors?.['required']) {
+								Email is required
+							} @else if (emailControl?.errors?.['email']) {
+								Please enter a valid email
+							}
+						</span>
+					}
+				</div>
+
+				<div class="login__input-group">
+					<input
+						id="password"
+						[type]="showPassword() ? 'text' : 'password'"
+						formControlName="password"
+						placeholder="Password"
+						class="login__input"
+						[class.login__input--invalid]="passwordControl?.invalid && passwordControl?.touched"
+					/>
+					<button
+						type="button"
+						class="login__input-icon login__input-icon--clickable"
+						(click)="togglePasswordVisibility()"
+						aria-label="Toggle password visibility"
+					>
+						<img src="icons/lock.svg" alt="Password" />
+					</button>
+					@if (passwordControl?.invalid && passwordControl?.touched) {
+						<span class="login__error-text">
+							@if (passwordControl?.errors?.['required']) {
+								Password is required
+							} @else if (passwordControl?.errors?.['minlength']) {
+								Password must be at least 6 characters
+							}
+						</span>
+					}
+				</div>
+
+				<div class="login__buttons">
+					<button type="submit" class="login__btn login__btn--primary" [disabled]="isLoading()">
+						@if (isLoading()) {
+							Logging in...
+						} @else {
+							Log in
+						}
+					</button>
+
+					<button
+						type="button"
+						class="login__btn login__btn--secondary"
+						(click)="onGuestLogin()"
+						[disabled]="isLoading()"
+					>
+						Guest Log in
+					</button>
+				</div>
+			</form>
+		</div>
+	</div>
+
+	<footer class="login__footer">
+		<a routerLink="/privacy-policy" class="login__footer-link">Privacy Policy</a>
+		<a routerLink="/legal-notice" class="login__footer-link">Legal notice</a>
+	</footer>
+</div>

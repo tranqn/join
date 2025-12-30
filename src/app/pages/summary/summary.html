@@ -1,78 +1,82 @@
 <section class="summary">
-  <div class="summary-header">
-    <h1>
-      Join 360
-      <span class="divider"></span>
-      <small>Key Metrics at a Glance</small>
-    </h1>
-  </div>
+	<div class="summary-header">
+		<h1>
+			Join 360
+			<span class="divider"></span>
+			<small>Key Metrics at a Glance</small>
+		</h1>
+	</div>
 
-  <div class="summary-content">
-    <div class="left">
-      <div class="top-cards">
-        <div class="card horizontal">
-          <div class="icon edit">
-			<app-icon [size]="28" name="edit"/>
+	<div class="summary-content">
+		<div class="left">
+			<div class="top-cards">
+				<div class="card horizontal">
+					<div class="icon edit">
+						<app-icon [size]="28" name="edit" />
+					</div>
+					<div class="wrapper">
+						<div class="value h1">{{ todoCount() }}</div>
+						<div class="label">To-do</div>
+					</div>
+				</div>
+
+				<div class="card horizontal">
+					<div class="icon check">
+						<app-icon [size]="28" name="tick_icon" />
+					</div>
+					<div class="wrapper">
+						<div class="value h1">{{ doneCount() }}</div>
+						<div class="label">Done</div>
+					</div>
+				</div>
+			</div>
+
+			<div
+				class="urgent-card"
+				(click)="navigateToTask()"
+				[style.cursor]="nextUrgentTask() ? 'pointer' : 'default'"
+			>
+				<div class="urgent-left">
+					<div class="icon urgent-icon">
+						<app-icon [size]="28" name="high" />
+					</div>
+					<div class="wrapper">
+						<div class="value h1">{{ urgentCount() }}</div>
+						<div class="label">Urgent</div>
+					</div>
+				</div>
+				<span class="divider"></span>
+				<div class="urgent-right">
+					<div class="date">{{ upcomingDeadline() }}</div>
+					<div class="sub">Upcoming Deadline</div>
+				</div>
+			</div>
+
+			<div class="bottom-cards">
+				<div class="card small">
+					<div class="value h1">{{ totalCount() }}</div>
+					<div class="label">Tasks in Board</div>
+				</div>
+
+				<div class="card small">
+					<div class="value h1">{{ progressCount() }}</div>
+					<div class="label">Tasks in Progress</div>
+				</div>
+
+				<div class="card small">
+					<div class="value h1">{{ feedbackCount() }}</div>
+					<div class="label">Awaiting Feedback</div>
+				</div>
+			</div>
 		</div>
-		<div class="wrapper">
-			<div class="value h1">{{ todoCount() }}</div>
-            <div class="label">To-do</div>
+
+		<div class="right">
+			<h2 class="h3">
+				{{ greeting() }}{{ userName() === 'Guest' ? '!' : ',' }}
+			</h2>
+			@if (userName() !== 'Guest') {
+			<h3 class="h1">{{ userName() }}!</h3>
+			}
 		</div>
 	</div>
-	
-	<div class="card horizontal">
-		<div class="icon check">
-			  <app-icon [size]="28" name="tick_icon"/>
-          </div>
-          <div class="wrapper">
-            <div class="value h1">{{ doneCount() }}</div>
-            <div class="label">Done</div>
-          </div>
-        </div>
-      </div>
-
-      <div
-        class="urgent-card"
-        (click)="navigateToTask()"
-        [style.cursor]="nextUrgentTask() ? 'pointer' : 'default'"
-      >
-        <div class="urgent-left">
-          <div class="icon urgent-icon">
-            <app-icon [size]="28" name="high" />
-          </div>
-          <div class="wrapper">
-            <div class="value h1">{{ urgentCount() }}</div>
-            <div class="label">Urgent</div>
-          </div>
-        </div>
-        <span class="divider"></span>
-        <div class="urgent-right">
-          <div class="date">{{ upcomingDeadline() }}</div>
-          <div class="sub">Upcoming Deadline</div>
-        </div>
-      </div>
-
-      <div class="bottom-cards">
-        <div class="card small">
-          <div class="value h1">{{ totalCount() }}</div>
-          <div class="label">Tasks in Board</div>
-        </div>
-
-        <div class="card small">
-          <div class="value h1">{{ progressCount() }}</div>
-          <div class="label">Tasks in Progress</div>
-        </div>
-
-        <div class="card small">
-          <div class="value h1">{{ feedbackCount() }}</div>
-          <div class="label">Awaiting Feedback</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="right">
-      <h2 class="h3">Good morning,</h2>
-      <h3 class="h1">Sofia Müller</h3>
-    </div>
-  </div>
 </section>

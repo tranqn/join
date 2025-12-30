@@ -12,8 +12,21 @@
 				routerLink="/help"
 			/>
 			}
-			<div class="user-icon">
-				<span>TU</span>
+			<div class="user-menu">
+				<div class="user-icon">
+					<span>{{ getInitials() }}</span>
+				</div>
+				<div class="dropdown">
+					<div class="dropdown-content">
+						<div class="user-info">
+							<p class="user-name">{{ getUserName() }}</p>
+							<p class="user-email">{{ authService.currentUser()?.email || 'Guest User' }}</p>
+						</div>
+						<button class="logout-btn" (click)="logout()">
+							Log out
+						</button>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
