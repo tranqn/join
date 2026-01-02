@@ -1,39 +1,65 @@
 <nav class="sidebar">
-  <div class="logo-section">
-    <img src="assets/img/LogoJoin.png" alt="Join Logo" class="logo" />
-  </div>
+	<div class="logo-section">
+		<img src="assets/img/LogoJoin.png" alt="Join Logo" class="logo" />
+	</div>
 
-   <div class="nav-section"> 
+	<div class="nav-section">
+		<ul class="nav-links">
+			@if (authService.currentUser()) {
+				<li
+					routerLink="/"
+					routerLinkActive="active"
+					[routerLinkActiveOptions]="{ exact: true }"
+				>
+					<img
+						src="icons/Summary.svg"
+						alt="Summary Icon"
+						class="nav-icon"
+					/>
+					<span>Summary</span>
+				</li>
+	
+				<li routerLink="/add-task" routerLinkActive="active">
+					<img
+						src="icons/add-task.svg"
+						alt="Add task Icon"
+						class="nav-icon"
+					/>
+					<span>Add Task</span>
+				</li>
+	
+				<li routerLink="/board" routerLinkActive="active">
+					<img src="icons/Board.svg" alt="Board Icon" class="nav-icon" />
+					<span>Board</span>
+				</li>
+	
+				<li routerLink="/contacts" routerLinkActive="active">
+					<img
+						src="icons/Contacts.svg"
+						alt="Contacts Icon"
+						class="nav-icon"
+					/>
+					<span>Contacts</span>
+				</li>
+			} @else {
+				<li routerLink="/login" routerLinkActive="active">
+					<img
+						src="icons/log-in.svg"
+						alt="Contacts Icon"
+						class="nav-icon"
+					/>
+					<span>Log In</span>
+				</li>
+			}
+		</ul>
 
-  <ul class="nav-links">
-    <li 
-  routerLink="/" 
-  routerLinkActive="active" 
-  [routerLinkActiveOptions]="{ exact: true }"
->
-  <img src="icons/Summary.svg" alt="Summary Icon" class="nav-icon" />
-  <span>Summary</span>
-</li>
-
-    <li routerLink="/add-task" routerLinkActive="active" >
-      <img src="icons/add-task.svg" alt="Add task Icon" class="nav-icon" />
-      <span>Add Task</span>
-    </li>
-
-    <li routerLink="/board" routerLinkActive="active" >
-      <img src="icons/Board.svg" alt="Board Icon" class="nav-icon" />
-      <span>Board</span>
-    </li>
-
-    <li routerLink="/contacts" routerLinkActive="active" >
-      <img src="icons/Contacts.svg" alt="Contacts Icon" class="nav-icon" />
-      <span>Contacts</span>
-    </li>
-  </ul>
-
-  <div class="bottom-links">
-    <a routerLink="/privacy-policy" routerLinkActive="active">Privacy Policy</a>
-    <a routerLink="/legal-notice" routerLinkActive="active">Legal Notice</a>
-  </div>
-  </div>
+		<div class="bottom-links">
+			<a routerLink="/privacy-policy" routerLinkActive="active"
+				>Privacy Policy</a
+			>
+			<a routerLink="/legal-notice" routerLinkActive="active"
+				>Legal Notice</a
+			>
+		</div>
+	</div>
 </nav>
