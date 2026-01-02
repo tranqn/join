@@ -59,7 +59,11 @@
 						(click)="togglePasswordVisibility()"
 						aria-label="Toggle password visibility"
 					>
-						<img src="icons/password_icon.svg" alt="Password" />
+						@if (showPassword()) {
+							<app-icon name="visibility"></app-icon>
+						} @else {
+							<app-icon name="visibility_off"></app-icon>
+						}
 					</button>
 					@if (passwordControl?.invalid && passwordControl?.touched) {
 						<span class="login__error-text">

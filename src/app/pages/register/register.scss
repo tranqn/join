@@ -152,6 +152,10 @@
 			justify-content: center;
 			transition: opacity 0.2s;
 
+			app-icon {
+				color: $board-border;
+			}
+
 			&:hover {
 				opacity: 0.7;
 			}

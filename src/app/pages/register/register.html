@@ -1,23 +1,36 @@
 <div class="register">
 	<header class="register__header">
-		<img src="assets/img/logo-dark.svg" alt="Join Logo" class="register__logo" />
+		<img
+			src="assets/img/logo-dark.svg"
+			alt="Join Logo"
+			class="register__logo"
+		/>
 	</header>
 
 	<div class="register__content">
 		<div class="register__card">
-			<button type="button" class="register__back" routerLink="/login" aria-label="Go back">
+			<button
+				type="button"
+				class="register__back"
+				routerLink="/login"
+				aria-label="Go back"
+			>
 				<img src="icons/arrow-left-line.svg" alt="Back" />
 			</button>
 
 			<h1 class="register__title">Sign up</h1>
 
 			@if (errorMessage()) {
-				<div class="register__error">
-					{{ errorMessage() }}
-				</div>
+			<div class="register__error">
+				{{ errorMessage() }}
+			</div>
 			}
 
-			<form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register__form">
+			<form
+				[formGroup]="registerForm"
+				(ngSubmit)="onSubmit()"
+				class="register__form"
+			>
 				<div class="register__input-group">
 					<input
 						id="name"
@@ -25,17 +38,21 @@
 						formControlName="name"
 						placeholder="Name"
 						class="register__input"
-						[class.register__input--invalid]="nameControl?.invalid && nameControl?.touched"
+						[class.register__input--invalid]="
+							nameControl?.invalid && nameControl?.touched
+						"
 					/>
-					<img src="icons/name_icon.svg" alt="Name" class="register__input-icon" />
+					<img
+						src="icons/name_icon.svg"
+						alt="Name"
+						class="register__input-icon"
+					/>
 					@if (nameControl?.invalid && nameControl?.touched) {
-						<span class="register__error-text">
-							@if (nameControl?.errors?.['required']) {
-								Name is required
-							} @else if (nameControl?.errors?.['minlength']) {
-								Name must be at least 2 characters
-							}
-						</span>
+					<span class="register__error-text">
+						@if (nameControl?.errors?.['required']) { Name is
+						required } @else if (nameControl?.errors?.['minlength'])
+						{ Name must be at least 2 characters }
+					</span>
 					}
 				</div>
 
@@ -46,17 +63,21 @@
 						formControlName="email"
 						placeholder="Email"
 						class="register__input"
-						[class.register__input--invalid]="emailControl?.invalid && emailControl?.touched"
+						[class.register__input--invalid]="
+							emailControl?.invalid && emailControl?.touched
+						"
 					/>
-					<img src="icons/email_icon.svg" alt="Email" class="register__input-icon" />
+					<img
+						src="icons/email_icon.svg"
+						alt="Email"
+						class="register__input-icon"
+					/>
 					@if (emailControl?.invalid && emailControl?.touched) {
-						<span class="register__error-text">
-							@if (emailControl?.errors?.['required']) {
-								Email is required
-							} @else if (emailControl?.errors?.['email']) {
-								Please enter a valid email
-							}
-						</span>
+					<span class="register__error-text">
+						@if (emailControl?.errors?.['required']) { Email is
+						required } @else if (emailControl?.errors?.['email']) {
+						Please enter a valid email }
+					</span>
 					}
 				</div>
 
@@ -67,7 +88,9 @@
 						formControlName="password"
 						placeholder="Password"
 						class="register__input"
-						[class.register__input--invalid]="passwordControl?.invalid && passwordControl?.touched"
+						[class.register__input--invalid]="
+							passwordControl?.invalid && passwordControl?.touched
+						"
 					/>
 					<button
 						type="button"
@@ -75,24 +98,27 @@
 						(click)="togglePasswordVisibility()"
 						aria-label="Toggle password visibility"
 					>
-						<img src="icons/password_icon.svg" alt="Password" />
+						@if (showPassword()) {
+						<app-icon name="visibility"></app-icon>
+						} @else {
+						<app-icon name="visibility_off"></app-icon>
+						}
 					</button>
 					@if (passwordControl?.invalid && passwordControl?.touched) {
-						<span class="register__error-text">
-							@if (passwordControl?.errors?.['required']) {
-								Password is required
-							} @else if (passwordControl?.errors?.['minlength']) {
-								Password must be at least 6 characters
-						} @else if (passwordControl?.errors?.['passwordStrength']) {
-						Must contain uppercase, number, and special character
-						}
+					<span class="register__error-text">
+						@if (passwordControl?.errors?.['required']) { Password
+						is required } @else if
+						(passwordControl?.errors?.['minlength']) { Password must
+						be at least 6 characters } @else if
+						(passwordControl?.errors?.['passwordStrength']) { Must
+						contain uppercase, number, and special character }
 					</span>
-				}
-			</div>
+					}
+				</div>
 
-			<div class="register__input-group">
-				<input
-					id="confirmPassword"
+				<div class="register__input-group">
+					<input
+						id="confirmPassword"
 						[type]="showConfirmPassword() ? 'text' : 'password'"
 						formControlName="confirmPassword"
 						placeholder="Confirm Password"
@@ -105,16 +131,19 @@
 						(click)="toggleConfirmPasswordVisibility()"
 						aria-label="Toggle confirm password visibility"
 					>
-						<img src="icons/password_icon.svg" alt="Confirm Password" />
+						@if (showConfirmPassword()) {
+						<app-icon name="visibility"></app-icon>
+						} @else {
+						<app-icon name="visibility_off"></app-icon>
+						}
 					</button>
 					@if (confirmPasswordControl?.touched) {
-						<span class="register__error-text">
-							@if (confirmPasswordControl?.errors?.['required']) {
-								Please confirm your password
-							} @else if (registerForm.errors?.['passwordMismatch']) {
-								Passwords do not match
-							}
-						</span>
+					<span class="register__error-text">
+						@if (confirmPasswordControl?.errors?.['required']) {
+						Please confirm your password } @else if
+						(registerForm.errors?.['passwordMismatch']) { Passwords
+						do not match }
+					</span>
 					}
 				</div>
 
@@ -127,25 +156,33 @@
 					/>
 					<label for="acceptPolicy" class="register__checkbox-label">
 						I accept the
-						<a routerLink="/privacy-policy" target="_blank" class="register__link">
+						<a
+							routerLink="/privacy-policy"
+							target="_blank"
+							class="register__link"
+						>
 							Privacy policy
 						</a>
 					</label>
 				</div>
 
-				<button type="submit" class="register__btn" [disabled]="isLoading() || !acceptPolicyControl?.value">
-					@if (isLoading()) {
-						Creating account...
-					} @else {
-						Sign up
-					}
+				<button
+					type="submit"
+					class="register__btn"
+					[disabled]="isLoading() || !acceptPolicyControl?.value"
+				>
+					@if (isLoading()) { Creating account... } @else { Sign up }
 				</button>
 			</form>
 		</div>
 	</div>
 
 	<footer class="register__footer">
-		<a routerLink="/privacy-policy" class="register__footer-link">Privacy Policy</a>
-		<a routerLink="/legal-notice" class="register__footer-link">Legal notice</a>
+		<a routerLink="/privacy-policy" class="register__footer-link"
+			>Privacy Policy</a
+		>
+		<a routerLink="/legal-notice" class="register__footer-link"
+			>Legal notice</a
+		>
 	</footer>
 </div>

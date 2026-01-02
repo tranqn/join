@@ -72,11 +72,9 @@
 
 		<div class="right">
 			<h2 class="h3">
-				{{ greeting() }}{{ userName() === 'Guest' ? '!' : ',' }}
+				{{ greeting() }},
 			</h2>
-			@if (userName() !== 'Guest') {
 			<h3 class="h1">{{ userName() }}!</h3>
-			}
 		</div>
 	</div>
 </section>
