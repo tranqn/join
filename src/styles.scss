@@ -137,6 +137,7 @@ button {
 .mb-8 { margin-bottom: 8px; }
 .mb-16 { margin-bottom: 16px; }
 .mb-24 { margin-bottom: 24px; }
+.mb-25 { margin-bottom: 25px; }	
 .mb-32 { margin-bottom: 32px; }
 
 // PrimeNG Toast custom styles
@@ -195,9 +196,7 @@ app-icon {
 	}
 }
 
-.mb-25 {
-	margin-bottom: 25px;
-}
+
 
 .text-style-task-modal {
 	@include text-style-responsive(16px, 18px, 20px, 'Inter', 400);

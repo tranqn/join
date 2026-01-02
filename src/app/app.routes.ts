@@ -16,12 +16,24 @@ export const routes: Routes = [
 	{
 		path: 'login',
 		component: Login,
-		canActivate: [guestGuard]
+		canActivate: [guestGuard],
+		
 	},
 	{
 		path: 'register',
 		component: Register,
-		canActivate: [guestGuard]
+		canActivate: [guestGuard],
+		
+	},
+	{
+		path: 'privacy-policy',
+		component: PrivacyPolicy,
+		canActivate: [guestGuard],
+	},
+	{
+		path: 'legal-notice',
+		component: LegalNotice,
+		canActivate: [guestGuard],
 	},
 	{
 		path: '',
