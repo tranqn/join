@@ -26,39 +26,33 @@ export const routes: Routes = [
 		
 	},
 	{
-		path: 'privacy-policy',
-		component: PrivacyPolicy,
-		canActivate: [guestGuard],
-	},
-	{
-		path: 'legal-notice',
-		component: LegalNotice,
-		canActivate: [guestGuard],
-	},
-	{
 		path: '',
 		component: Layout,
-		canActivate: [authGuard],
 		children: [
 			{
 				path: '',
-				component: Summary
+				component: Summary,
+				canActivate: [authGuard]
 			},
 			{
 				path: 'contacts',
-				component: Contact
+				component: Contact,
+				canActivate: [authGuard]
 			},
 			{
 				path: 'board',
-				component: Board
+				component: Board,
+				canActivate: [authGuard]
 			},
 			{
 				path: 'add-task',
-				component: AddTask
+				component: AddTask,
+				canActivate: [authGuard]
 			},
 			{
 				path: 'help',
-				component: Help
+				component: Help,
+				canActivate: [authGuard]
 			},
 			{
 				path: 'privacy-policy',

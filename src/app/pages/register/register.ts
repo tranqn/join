@@ -72,8 +72,9 @@ export class Register {
 		this.isLoading.set(false);
 
 		if (result.success) {
+			await this.authService.logout();
 			sessionStorage.setItem('showGreeting', 'true');
-			this.router.navigate(['/']);
+			this.router.navigate(['/login']);
 		} else {
 			this.errorMessage.set(result.error || 'Registration failed');
 		}
