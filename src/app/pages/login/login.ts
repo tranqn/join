@@ -4,10 +4,11 @@ import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { SplashService } from '../../services/splash.service';
 import { Icon } from '../../shared/icon/icon';
+import { SplashScreen } from '../../shared/splash-screen/splash-screen';
 
 @Component({
 	selector: 'app-login',
-	imports: [ReactiveFormsModule, RouterLink, Icon],
+	imports: [ReactiveFormsModule, RouterLink, Icon, SplashScreen],
 	templateUrl: './login.html',
 	styleUrl: './login.scss'
 })
