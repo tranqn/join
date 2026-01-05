@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormBuilder, ReactiveFormsModule, Validators, AbstractControl } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Icon } from '../../shared/icon/icon';
+import { MessageService } from 'primeng/api';
 
 @Component({
 	selector: 'app-register',
@@ -14,6 +15,7 @@ export class Register {
 	private authService = inject(AuthService);
 	private router = inject(Router);
 	private fb = inject(FormBuilder);
+	private messageService = inject(MessageService)
 
 	isLoading = signal(false);
 	errorMessage = signal('');
@@ -72,6 +74,12 @@ export class Register {
 		this.isLoading.set(false);
 
 		if (result.success) {
+			this.messageService.add({
+				severity: 'success',
+				summary: 'Success',
+				detail: 'Registration successful',
+				life: 3000
+			});
 			await this.authService.logout();
 			sessionStorage.setItem('showGreeting', 'true');
 			this.router.navigate(['/login']);
