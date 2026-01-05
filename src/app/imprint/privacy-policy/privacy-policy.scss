@@ -1,9 +1,18 @@
+@use '../../../app/styles/vars.scss' as *;
+
 .privacy-container {
   max-width: 800px;
   margin: 80px auto;
   padding: 0 16px;
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: 'Inter', sans-serif;
   color: #111;
+
+  .highlight {
+    background-color: #f8f9fa;
+    padding: 15px;
+    border-left: 4px solid $light-blue;
+    margin: 20px 0;
+  }
 }
 
 h1 {
@@ -22,14 +31,44 @@ h2 {
   margin-bottom: 12px;
 }
 
-p {
+h3 {
+  font-size: 18px;
+  font-weight: 600;
+  margin-bottom: 10px;
+  margin-top: 20px;
+}
+
+h4 {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  margin-top: 15px;
+}
+
+p,
+li {
   font-size: 16px;
   line-height: 1.6;
   color: #111;
+  margin-bottom: 16px; /* Added for paragraph spacing */
+}
+
+ul {
+  padding-left: 16px;
+  margin: 8px 0 16px 0;
+}
+
+a {
+  color: #29abe2;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 @media screen and (min-width: 1531px) {
   .privacy-container {
-	margin: 80px 250px ;
+    margin: 80px 250px;
   }
 }
