@@ -11,6 +11,9 @@ import {
 } from '@angular/fire/auth';
 import { Router } from '@angular/router';
 import { ReplaySubject } from 'rxjs';
+import { FirebaseService } from './firebase-service';
+import { ColorService } from './color-service';
+import { ContactModel } from '../interfaces/contact';
 
 @Injectable({
 	providedIn: 'root'
@@ -18,6 +21,8 @@ import { ReplaySubject } from 'rxjs';
 export class AuthService {
 	private auth = inject(Auth);
 	private router = inject(Router);
+	private firebaseService = inject(FirebaseService);
+	private colorService = inject(ColorService);
 
 	currentUser = signal<User | null>(null);
 	isLoading = signal(true);
@@ -44,11 +49,22 @@ export class AuthService {
 			);
 			if (userCredential.user) {
 				await updateProfile(userCredential.user, { displayName });
+				await this.createContactForUser(displayName, email);
 			}
 			return { success: true, user: userCredential.user };
 		} catch (error: any) {
 			return { success: false, error: this.getErrorMessage(error.code) };
 		}
+	}
+
+	private async createContactForUser(name: string, email: string) {
+		const contact: Omit<ContactModel, 'id'> = {
+			name,
+			email,
+			phone: '',
+			color: this.colorService.getRandomColor()
+		};
+		await this.firebaseService.addItemToCollection(contact, 'contacts');
 	}
 
 	async login(email: string, password: string) {

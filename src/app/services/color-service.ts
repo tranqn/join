@@ -21,4 +21,8 @@ export class ColorService {
 		'#84CC16',
 		'#F43F5E'
 	];
+
+	getRandomColor(): string {
+		return this.profilColors[Math.floor(Math.random() * this.profilColors.length)];
+	}
 }

@@ -118,7 +118,7 @@ export class ContactModal {
       name: formValue.name,
       email: formValue.email,
       phone: formValue.phone,
-      color: this.getRandomColor()
+      color: this.colorService.getRandomColor()
     };
     await this.firebaseService.addItemToCollection(newContact, 'contacts');
     this.messageService.add({
@@ -149,16 +149,6 @@ export class ContactModal {
       detail: 'Contact successfully updated',
       life: 3000
     });
-  }
-
-
-  /**
-   * Selects a random color from the available profile colors.
-   * @returns A random color string in hex format
-   */
-  getRandomColor(): string {
-    const colors = this.colorService.profilColors;
-    return colors[Math.floor(Math.random() * colors.length)];
   }
 
 
