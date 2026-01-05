@@ -4,7 +4,7 @@
 .mobile-greeting-overlay {
 	display: none;
 
-	@include respond-max($break-md) {
+	@include respond-max($break-xl) {
 		display: flex;
 		position: fixed;
 		top: 0;

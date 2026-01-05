@@ -10,24 +10,33 @@
 	}
 
 	@include respond-max($break-md) {
-		padding: $spacing-lg $spacing-sm $spacing-xl;
+		padding: $spacing-lg $spacing-md $spacing-xl;
+	}
+
+	@include respond-max($break-sm) {
+		padding: $spacing-sm;
 	}
 	&-header {
 		margin-bottom: $spacing-mdg;
-
 		h1 {
-			@include text-style-responsive(32px, 48px, 61px, 'Inter', 700);
+			@include text-style-responsive(47px, 54px, 61px, 'Inter', 700);
 			display: flex;
+			@include respond-max($break-xs) {
+				flex-direction: column;
+				align-items: flex-start;
+				gap: 7px;
+			}
+
 			align-items: center;
 			gap: $spacing-md;
-
+			
 			small {
-				font-size: 1.5rem;
-				font-weight: 400;
+				@include text-style-responsive(20px, 24px, 27px, 'Inter', 400);
 				color: #6b7280;
+				
 
-				@include respond-max($break-md) {
-					font-size: 1rem;
+				@include respond-max($break-xs) {
+					order: 2;
 				}
 			}
 		}
@@ -37,8 +46,11 @@
 			height: 59px;
 			background: $light-blue;
 
-			@include respond-max($break-md) {
-				display: none;
+			@include respond-max($break-xs) {
+				width: 90px;
+				height: 3px;
+				order: 3;
+				margin-top: $spacing-sm; 
 			}
 		}
 	}
@@ -48,9 +60,13 @@
 		> * {
 			flex: 0 0 calc(50% - 40px);
 			max-width: calc(50% - 40px);
+
+			@include respond-max($break-xl) {
+				flex: 0 0 100%;
+				max-width: 100%;
+			}
 		}
 		@include respond-max($break-xl) {
-			grid-template-columns: 1fr;
 			gap: $spacing-lg;
 		}
 	}
@@ -59,6 +75,10 @@
 	.right {
 		@include respond-max($break-xl) {
 			order: -1;
+		}
+
+		@include respond-max($break-xl) {
+			display: none;
 		}
 
 		h2 {
@@ -81,7 +101,7 @@
 	margin-bottom: $spacing-md;
 
 	@include respond-max($break-sm) {
-		grid-template-columns: 1fr;
+		gap: $spacing-sm; 
 	}
 }
 
@@ -97,6 +117,14 @@
 	margin-bottom: $spacing-md;
 	transition: all 0.2s ease;
 	cursor: pointer;
+
+	@include respond-max($break-sm) {
+		padding: 8px;
+		
+		& .divider {
+			height: 60px; /* Reduce divider height on mobile */
+		}
+	}
 
 	&:hover {
 		background: $darkblue;
@@ -123,6 +151,10 @@
 	display: flex;
 	align-items: center;
 	gap: $spacing-md;
+
+	@include respond-max($break-sm) {
+		gap: $spacing-sm;
+	}
 }
 
 .urgent-right {
@@ -132,11 +164,19 @@
 		font-weight: 700;
 		font-size: 1.25rem;
 		margin-bottom: $spacing-sm;
+		
+		@include respond-max($break-sm) {
+			font-size: 1rem;
+		}
 	}
 
 	.sub {
 		font-size: 1rem;
 		color: #6b7280;
+
+		@include respond-max($break-sm) {
+			font-size: 0.8rem;
+		}
 	}
 }
 
@@ -147,11 +187,11 @@
 	gap: $spacing-md;
 
 	@include respond-max($break-sm) {
-		grid-template-columns: 1fr;
+		gap: $spacing-sm;
 	}
 }
 
-/* CARD BASE */
+	/* CARD BASE */
 .card {
 	background: #fff;
 	border-radius: radius(large);
@@ -165,6 +205,15 @@
 	align-items: center;
 	gap: 8px;
 	text-align: center;
+
+	@include respond-max($break-sm) {
+		padding: $spacing-md;
+	}
+
+	@media (max-width: 400px) {
+		padding: 8px;
+		gap: 4px;
+	}
 
 	&:hover {
 		background: $darkblue;
@@ -187,6 +236,20 @@
 		font-size: 1.25rem;
 		color: #6b7280;
 		font-weight: 400;
+
+		@include respond-max($break-sm) {
+			font-size: 0.9rem;
+		}
+
+		@media (max-width: 400px) {
+			font-size: 0.75rem;
+		}
+	}
+
+	.value {
+		@media (max-width: 400px) {
+			font-size: 3.1rem;
+		}
 	}
 
 	&.horizontal {
@@ -195,6 +258,12 @@
 		@include dFlex-responsive(row, row, center, center);
 		& .wrapper {
 			@include dFlex-responsive(column, column, center, center);
+		}
+
+		@include respond-max($break-sm) {
+			flex-direction: row;
+			gap: $spacing-sm;
+			text-align: center;
 		}
 	}
 }
@@ -214,6 +283,13 @@
 	app-icon {
 		width: 28px;
 		color: #fff;
+	}
+	@include respond-max($break-xs) {
+		width: 40px;
+		height: 40px;
+		app-icon {
+			width: 18px;
+		}
 	}
 }
 
