@@ -1,11 +1,16 @@
 @use '../../../app/styles/vars.scss' as *;
+@use '../../../app/styles/mixin.scss' as *;
 
 .privacy-container {
   max-width: 800px;
   margin: 80px auto;
-  padding: 0 16px;
+  padding: 0 20px;
   font-family: 'Inter', sans-serif;
   color: #111;
+
+  @include respond-max($break-md) {
+    margin: 40px auto;
+  }
 
   .highlight {
     background-color: #f8f9fa;
@@ -19,6 +24,16 @@ h1 {
   font-size: 48px;
   font-weight: 700;
   margin-bottom: 40px;
+
+  @include respond-max($break-md) {
+    font-size: 32px;
+    margin-bottom: 24px;
+  }
+
+  @include respond-max($break-xs) {
+    font-size: 24px;
+    word-break: break-word;
+  }
 }
 
 section {
@@ -50,7 +65,8 @@ li {
   font-size: 16px;
   line-height: 1.6;
   color: #111;
-  margin-bottom: 16px; /* Added for paragraph spacing */
+  margin-bottom: 16px; 
+  hyphens: auto;
 }
 
 ul {
@@ -61,6 +77,8 @@ ul {
 a {
   color: #29abe2;
   text-decoration: none;
+  word-break: break-word;
+  overflow-wrap: break-word;
 
   &:hover {
     text-decoration: underline;
