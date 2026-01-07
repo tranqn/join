@@ -7,10 +7,19 @@ import { FirebaseService } from '../../services/firebase-service';
 /**
  * Generates a short name (initials) from a full name.
  * @param fullName - The full name to convert
- * @returns The initials of the name (e.g., "John Doe" becomes "JD")
+ * @returns The initials of the name (e.g., "John Doe" becomes "JD", "Christian" becomes "CH", "John Paul Smith" becomes "JS")
  */
 export function getShortName(fullName: string): string {
-	return fullName.split(' ').map(n => n[0].toUpperCase()).join('');
+	const parts = fullName.trim().split(' ').filter(n => n.length > 0);
+	
+	if (parts.length === 0) return '';
+	if (parts.length === 1) {
+		// For single names, return first two letters
+		return parts[0].substring(0, 2).toUpperCase();
+	}
+	
+	// For multiple names, return first letter of first name + first letter of last name
+	return (parts[0][0] + parts[parts.length - 1][0]).toUpperCase();
 }
 
 @Component({

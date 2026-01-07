@@ -112,6 +112,7 @@
 	}
 
 	&__info {
+		width: calc(100% - 60px);
 		gap: $spacing-xs;
 		@include dFlex-responsive(
 			column,
