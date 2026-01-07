@@ -117,7 +117,7 @@
 
 	&__input-group {
 		position: relative;
-		margin-bottom: $spacing-md;
+		margin-bottom: 24px;
 	}
 
 	&__input {
@@ -175,10 +175,10 @@
 
 	&__error-text {
 		color: $error;
-		font-size: 0.85rem;
+		font-size: 0.75rem;
 		position: absolute;
-		bottom: -15px;
-		left: 10px;
+		bottom: -18px;
+		left: 0;
 	}
 
 	&__buttons {
