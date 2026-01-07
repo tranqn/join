@@ -56,7 +56,7 @@
 	}
 	&-content {
 		gap: 5rem;
-		@include dFlex-responsive(row, row, center, center);
+		@include dFlex-responsive(row, row, flex-start, center);
 		> * {
 			flex: 0 0 calc(50% - 40px);
 			max-width: calc(50% - 40px);
@@ -66,6 +66,11 @@
 				max-width: 100%;
 			}
 		}
+		& .left {
+			@include respond($break-xl) {
+				min-width: 525px;
+			}
+		}
 		@include respond-max($break-xl) {
 			gap: $spacing-lg;
 		}
@@ -73,6 +78,9 @@
 
 	/* RIGHT SIDE */
 	.right {
+		@include respond($break-xl) {
+			flex: unset;
+		}
 		@include respond-max($break-xl) {
 			order: -1;
 		}
