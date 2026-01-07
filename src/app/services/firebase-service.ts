@@ -22,7 +22,6 @@ import { TaskModal } from '../pages/board/task-overview/task/task-modal/task-mod
 })
 export class FirebaseService {
 	firestore: Firestore = inject(Firestore);
-
 	contacts = signal<ContactModel[]>([]);
 
 	unsubContacts: () => void;

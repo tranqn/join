@@ -7,6 +7,7 @@ import { minLengthValidator, emailValidator, phoneValidator, getErrorMessage } f
 import { MessageService } from 'primeng/api';
 import { ConfirmationService } from '../../../shared/confirmation-modal/confirmation.service';
 import { getShortName } from '../contact';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-contact-modal',
@@ -25,6 +26,7 @@ export class ContactModal {
   private colorService = inject(ColorService);
   private messageService = inject(MessageService);
   private confirmationService = inject(ConfirmationService);
+  private authService = inject(AuthService);
 
   contactForm: FormGroup;
   isSaving = signal(false);
@@ -201,15 +203,27 @@ export class ContactModal {
       async () => {
         this.isSaving.set(true);
         try {
-          await this.firebaseService.deleteItemFromCollection(currentContact.id, 'contacts');
-          this.messageService.add({
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Contact successfully deleted',
-            life: 3000
-          });
-          this.close.emit();
-        } catch (error) {
+			// PRÜFUNG: Ist das der eigene Kontakt?
+			const currentUser = this.authService.currentUser();
+			if (currentUser && currentUser.email === currentContact.email) {
+				// PRÜFUNG: Ist der aktuelle Benutzer angemeldet?
+				await this.authService.deleteAccount();
+				// Danach ausloggen und zur Login-Seite
+				await this.authService.logout();
+			}
+			// Datenbank-Eintrag löschen (passiert immer)
+			await this.firebaseService.deleteItemFromCollection(
+				currentContact.id,
+				'contacts'
+			);
+			this.messageService.add({
+				severity: 'success',
+				summary: 'Success',
+				detail: 'Contact successfully deleted',
+				life: 3000
+			});
+			this.close.emit();
+		} catch (error) {
           console.error('Error deleting contact:', error);
           this.messageService.add({
             severity: 'error',

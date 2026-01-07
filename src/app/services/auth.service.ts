@@ -14,6 +14,7 @@ import { ReplaySubject } from 'rxjs';
 import { FirebaseService } from './firebase-service';
 import { ColorService } from './color-service';
 import { ContactModel } from '../interfaces/contact';
+import { deleteUser } from '@angular/fire/auth';
 
 @Injectable({
 	providedIn: 'root'
@@ -97,6 +98,19 @@ export class AuthService {
 		} catch (error: any) {
 			return { success: false, error: this.getErrorMessage(error.code) };
 		}
+	}
+
+	async deleteAccount() {
+		const user = this.auth.currentUser;
+		if (user) {
+			try {
+				await deleteUser(user);
+				return { succes: true };
+			} catch (error: any) {
+				return { succes: false, error: this.getErrorMessage(error.code) };
+			}
+		}
+		return { succes: false, error: 'No user logged in' };
 	}
 
 	private getErrorMessage(code: string): string {
