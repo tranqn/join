@@ -47,25 +47,27 @@
 				</div>
 				<span class="divider"></span>
 				<div class="urgent-right">
-					<div class="date">{{ upcomingDeadline() }}</div>
-					<div class="sub">Upcoming Deadline</div>
+					<div class="urgent-right-content">
+						<div class="date">{{ upcomingDeadline() }}</div>
+						<div class="sub">Upcoming Deadline</div>
+					</div>
 				</div>
 			</div>
 
 			<div class="bottom-cards">
 				<div class="card small">
 					<div class="value h1">{{ totalCount() }}</div>
-					<div class="label">Tasks in Board</div>
+					<div class="label"><span>Tasks in</span> <span>Board</span></div>
 				</div>
 
 				<div class="card small">
 					<div class="value h1">{{ progressCount() }}</div>
-					<div class="label">Tasks in Progress</div>
+					<div class="label"><span>Tasks in</span> <span>Progress</span></div>
 				</div>
 
 				<div class="card small">
 					<div class="value h1">{{ feedbackCount() }}</div>
-					<div class="label">Awaiting Feedback</div>
+					<div class="label"><span>Awaiting</span> <span>Feedback</span></div>
 				</div>
 			</div>
 		</div>
