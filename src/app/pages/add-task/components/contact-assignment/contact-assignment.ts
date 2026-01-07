@@ -1,6 +1,7 @@
 import { Component, inject, input, output, signal, HostListener } from '@angular/core';
 import { FirebaseService } from '../../../../services/firebase-service';
 import { ContactModel } from '../../../../interfaces/contact';
+import { getShortName } from '../../../contact/contact';
 
 @Component({
 	selector: 'app-contact-assignment',
@@ -38,7 +39,7 @@ export class ContactAssignment {
 	}
 
 	getInitials(fullName: string): string {
-		return fullName.split(' ').map(n => n[0]?.toUpperCase() || '').join('');
+		return getShortName(fullName);
 	}
 
 	@HostListener('document:click', ['$event'])

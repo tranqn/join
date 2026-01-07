@@ -1,6 +1,7 @@
 import { Component, inject, signal } from '@angular/core';
 import { Router, RouterLink } from "@angular/router";
 import { AuthService } from '../../services/auth.service';
+import { getShortName } from '../../pages/contact/contact';
 
 @Component({
   selector: 'app-header',
@@ -37,11 +38,7 @@ export class Header {
 	getInitials(): string {
 		const name = this.getUserName();
 		if (name === 'Guest') return 'G';
-		const parts = name.split(' ');
-		if (parts.length >= 2) {
-			return (parts[0][0] + parts[1][0]).toUpperCase();
-		}
-		return name.substring(0, 2).toUpperCase();
+		return getShortName(name);
 	}
 
 	toggleDropdown(event: Event) {
