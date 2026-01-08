@@ -24,6 +24,7 @@ export class FirebaseService {
 	firestore: Firestore = inject(Firestore);
 	contacts = signal<ContactModel[]>([]);
 
+
 	unsubContacts: () => void;
 
 	constructor() {

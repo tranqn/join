@@ -3,6 +3,7 @@ import { FirebaseService } from '../../../services/firebase-service';
 import { getShortName } from '../contact';
 import { ContactModel } from '../../../interfaces/contact';
 import { ContactModal } from '../contact-modal/contact-modal';
+import { AuthService } from '../../../services/auth.service';
 
 @Component({
   selector: 'app-contactlist',
@@ -12,6 +13,7 @@ import { ContactModal } from '../contact-modal/contact-modal';
 })
 export class Contactlist {
 	firebaseService = inject(FirebaseService);
+	authService = inject(AuthService);
 
 	contacts = this.firebaseService.contacts();
 	isModalOpen = signal(false);
@@ -50,6 +52,16 @@ export class Contactlist {
 	 */
 	getInitials(fullName: string) {
 		return getShortName(fullName);
+	}
+
+	/**
+	 * Checks if the given contact is the current user.
+	 * @param contact - The contact to check
+	 * @returns True if the contact is the current user, false otherwise
+	 */
+	isCurrentUser(contact: ContactModel): boolean {
+		const currentEmail = this.authService.currentUser()?.email?.toLowerCase();
+		return currentEmail === contact.email?.toLowerCase();
 	}
 
 	/**

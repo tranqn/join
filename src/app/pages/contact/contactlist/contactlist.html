@@ -27,7 +27,9 @@
 				>{{ getInitials(contact.name) }}</span
 			>
 			<div class="contacts__info">
-				<span>{{ contact.name }}</span>
+				<span>{{ contact.name }}
+				@if (isCurrentUser(contact)) {(You)}
+				</span>
 				<p>{{ contact.email }}</p>
 			</div>
 		</div>

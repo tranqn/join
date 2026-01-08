@@ -23,7 +23,7 @@
 		height: auto;
 		opacity: 0;
 		visibility: hidden;
-		transition: opacity .2s ease;
+		transition: opacity 0.2s ease;
 
 		&--visible {
 			opacity: 1;
@@ -33,21 +33,37 @@
 		@include respond-max($break-md) {
 			width: 80px;
 		}
+		@include respond-max($break-sm) {
+			width: 64px;
+		}
 	}
 
 	&__signup {
 		display: flex;
 		align-items: center;
 		gap: $spacing-md;
+		@include respond-max($break-xs) {
+			position: absolute;
+			top: 70%;
+			left: 50%;
+			transform: translateX(-50%);
+			width: max-content;
+		}
+		@media (max-height: 792px) {
+			top: 75%;
+		}
+		@media (max-height: 740px) {
+			top: 80%;
+		}
+		@media (max-height: 667px) {
+			top: 85%;
+		}
+
 		&-text {
 			color: $darkblue;
 			font-size: 1rem;
-	
-			@include respond-max($break-sm) {
-				display: none;
-			}
 		}
-	
+
 		&-btn {
 			padding: $spacing-sm $spacing-md;
 			border-radius: radius(small);
@@ -58,13 +74,15 @@
 		}
 	}
 
-
 	&__content {
 		flex: 1;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: $spacing-md;
+		@include respond-max($break-xs) {
+			display: block;
+		}
 	}
 
 	&__card {
@@ -95,7 +113,7 @@
 			bottom: 0;
 			left: 50%;
 			transform: translateX(-50%);
-			width: 80px;
+			width: 100px;
 			height: 3px;
 			background-color: $light-blue;
 		}
@@ -113,6 +131,11 @@
 
 	&__form {
 		margin-top: $spacing-mdg;
+		@include respond-max($break-sm) {
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
 	}
 
 	&__input-group {
@@ -183,6 +206,7 @@
 
 	&__buttons {
 		display: flex;
+		justify-content: center;
 		gap: $spacing-md;
 		margin-top: $spacing-mdg;
 
@@ -192,7 +216,9 @@
 	}
 
 	&__btn {
-		flex: 1;
+		display: flex;
+		align-items: center;
+		justify-content: center;
 		padding: $spacing-sm $spacing-md;
 		border-radius: radius(small);
 		font-size: 1rem;
@@ -204,14 +230,14 @@
 			opacity: 0.6;
 			cursor: not-allowed;
 		}
-		
+
 		&--primary {
 			background-color: $darkblue;
 			color: white;
 			border-color: $darkblue;
 			@include button-primary();
 		}
-		
+
 		&--secondary {
 			background-color: white;
 			color: $darkblue;
@@ -230,6 +256,7 @@
 		@include respond-max($break-sm) {
 			gap: $spacing-md;
 			flex-wrap: wrap;
+			flex: 2;
 		}
 	}
 
