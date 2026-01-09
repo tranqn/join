@@ -2,19 +2,22 @@
 @use '../../../app/styles/mixin.scss' as *;
 
 .login {
+	position: relative;
 	min-height: 100vh;
 	display: flex;
 	flex-direction: column;
 	background-color: #f6f7f8;
+	max-width: 1440px;
+	margin: 0 auto;
 
 	&__header {
 		display: flex;
-		justify-content: space-between;
+		// justify-content: space-between;
 		align-items: center;
 		padding: $spacing-mdg $spacing-lg;
 
 		@include respond-max($break-md) {
-			padding: $spacing-md;
+			padding: 12px $spacing-md;
 		}
 	}
 
@@ -42,21 +45,19 @@
 		display: flex;
 		align-items: center;
 		gap: $spacing-md;
+		position: absolute;
+		top: $spacing-mdg;
+		right: $spacing-lg;
+
+		@include respond-max($break-md) {
+			right: $spacing-md;
+		}
+
 		@include respond-max($break-xs) {
-			position: absolute;
-			top: 70%;
-			left: 50%;
-			transform: translateX(-50%);
-			width: max-content;
-		}
-		@media (max-height: 792px) {
-			top: 75%;
-		}
-		@media (max-height: 740px) {
-			top: 80%;
-		}
-		@media (max-height: 667px) {
-			top: 85%;
+			position: static;
+			order: 2;
+			justify-content: center;
+			padding: 12px 0;
 		}
 
 		&-text {
@@ -75,13 +76,15 @@
 	}
 
 	&__content {
-		flex: 1;
 		display: flex;
 		align-items: center;
 		justify-content: center;
 		padding: $spacing-md;
+
 		@include respond-max($break-xs) {
 			display: block;
+			order: 1;
+			padding: 12px $spacing-md;
 		}
 	}
 
@@ -208,7 +211,7 @@
 		display: flex;
 		justify-content: center;
 		gap: $spacing-md;
-		margin-top: $spacing-mdg;
+		margin-top: $spacing-md;
 
 		@include respond-max($break-sm) {
 			flex-direction: column;
@@ -247,6 +250,7 @@
 	}
 
 	&__footer {
+		margin-top: auto;
 		display: flex;
 		justify-content: center;
 		align-items: center;
@@ -256,7 +260,10 @@
 		@include respond-max($break-sm) {
 			gap: $spacing-md;
 			flex-wrap: wrap;
-			flex: 2;
+		}
+
+		@include respond-max($break-xs) {
+			order: 3;
 		}
 	}
 

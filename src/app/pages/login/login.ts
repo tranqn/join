@@ -22,6 +22,7 @@ export class Login {
 	errorMessage = signal('');
 	showPassword = signal(false);
 	showLogo = this.splashService.splashComplete;
+	inputIsClicked = signal(false);
 
 	loginForm = this.fb.group({
 		email: ['', [Validators.required, Validators.email]],
@@ -76,5 +77,9 @@ export class Login {
 
 	get passwordControl() {
 		return this.loginForm.get('password');
+	}
+
+	SetInputisClickedTrue() {
+		this.inputIsClicked.set(true);
 	}
 }

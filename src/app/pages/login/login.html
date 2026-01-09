@@ -1,17 +1,18 @@
 <app-splash-screen></app-splash-screen>
 <div class="login">
 	<header class="login__header">
-		<img 
-			src="assets/img/logo-dark.svg" 
-			alt="Join Logo" 
-			class="login__logo" 
+		<img
+			src="assets/img/logo-dark.svg"
+			alt="Join Logo"
+			class="login__logo"
 			[class.login__logo--visible]="showLogo()"
 		/>
-		<div class="login__signup">
-			<span class="login__signup-text">Not a Join user?</span>
-			<a routerLink="/register" class="login__signup-btn">Sign up</a>
-		</div>
 	</header>
+
+	<div class="login__signup">
+		<span class="login__signup-text">Not a Join user?</span>
+		<a routerLink="/register" class="login__signup-btn">Sign up</a>
+	</div>
 
 	<div class="login__content">
 		<div class="login__card">
@@ -53,6 +54,7 @@
 						placeholder="Password"
 						class="login__input"
 						[class.login__input--invalid]="passwordControl?.invalid && passwordControl?.touched"
+						(click)="SetInputisClickedTrue()"
 					/>
 					<button
 						type="button"
@@ -60,10 +62,15 @@
 						(click)="togglePasswordVisibility()"
 						aria-label="Toggle password visibility"
 					>
-						@if (showPassword()) {
-							<app-icon name="visibility"></app-icon>
-						} @else {
-							<app-icon name="visibility_off"></app-icon>
+						@if(!inputIsClicked()){
+							<app-icon name="password_icon"></app-icon>
+						}
+						@else {
+							@if (showPassword()) {
+								<app-icon name="visibility"></app-icon>
+							} @else {
+								<app-icon name="visibility_off"></app-icon>
+							}
 						}
 					</button>
 					@if (passwordControl?.invalid && passwordControl?.touched) {
