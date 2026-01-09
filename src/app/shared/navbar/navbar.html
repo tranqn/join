@@ -53,11 +53,11 @@
 			}
 		</ul>
 
-		<div class="bottom-links">
-			<a routerLink="/privacy-policy" routerLinkActive="active"
+		<div class="bottom-links" [class.bottom-links--hide-mobile]="authService.currentUser()">
+			<a class="bottom-link" routerLink="/privacy-policy" routerLinkActive="active"
 				>Privacy Policy</a
 			>
-			<a routerLink="/legal-notice" routerLinkActive="active"
+			<a class="bottom-link" routerLink="/legal-notice" routerLinkActive="active"
 				>Legal Notice</a
 			>
 		</div>
