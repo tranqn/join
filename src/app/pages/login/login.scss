@@ -256,6 +256,7 @@
 		align-items: center;
 		gap: $spacing-mdg;
 		padding: $spacing-md;
+		
 
 		@include respond-max($break-sm) {
 			gap: $spacing-md;
@@ -272,9 +273,11 @@
 		text-decoration: none;
 		font-size: 0.95rem;
 		transition: color 0.2s;
-
+		width: 105px;
+		
 		&:hover {
 			color: $light-blue;
+			font-weight: 700;
 		}
 	}
 }

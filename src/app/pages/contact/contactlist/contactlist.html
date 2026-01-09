@@ -28,7 +28,7 @@
 			>
 			<div class="contacts__info">
 				<span>{{ contact.name }}
-				@if (isCurrentUser(contact)) {(You)}
+				@if (isCurrentUser(contact)) {<strong>(You)</strong>}
 				</span>
 				<p>{{ contact.email }}</p>
 			</div>
