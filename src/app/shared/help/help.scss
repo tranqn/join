@@ -4,9 +4,6 @@
 h1{
 	display: flex;
 	align-self: center;
-	@include respond-max($break-md) {
-			font-size: 24px;
-		}
 }
 
 section {

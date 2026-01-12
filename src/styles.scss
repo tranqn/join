@@ -61,6 +61,9 @@ h1,
 	@include respond-max($break-md) {
 		font-size: 47px;
 	}
+	@include respond-max($break-xs) {
+		font-size: 38px;
+	}
 }
 
 h2,
