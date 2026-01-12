@@ -57,15 +57,6 @@
 
 h1 {
   white-space: nowrap;
-
-  @include respond-max($break-md) {
-    font-size: 32px;
-  }
-
-  @include respond-max($break-xs) {
-    font-size: 24px;
-    word-break: break-word;
-  }
 }
 
 section {
