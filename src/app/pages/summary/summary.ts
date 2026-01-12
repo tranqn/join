@@ -1,12 +1,12 @@
 import { Component, inject, computed } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { Icon } from '../../shared/icon/icon';
 import { Taskservice } from '../../services/taskservice';
 import { AuthService } from '../../services/auth.service';
 
 @Component({
   selector: 'app-summary',
-  imports: [Icon],
+  imports: [Icon, RouterLink],
   templateUrl: './summary.html',
   styleUrl: './summary.scss',
 })

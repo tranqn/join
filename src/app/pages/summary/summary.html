@@ -10,7 +10,7 @@
 	<div class="summary-content">
 		<div class="left">
 			<div class="top-cards">
-				<div class="card horizontal">
+			<div class="card horizontal" routerLink="/board">
 					<div class="icon edit">
 						<app-icon [size]="28" name="edit" />
 					</div>
@@ -20,7 +20,7 @@
 					</div>
 				</div>
 
-				<div class="card horizontal">
+			<div class="card horizontal" routerLink="/board">
 					<div class="icon check">
 						<app-icon [size]="28" name="tick_icon" />
 					</div>
@@ -55,17 +55,17 @@
 			</div>
 
 			<div class="bottom-cards">
-				<div class="card small">
+			<div class="card small" routerLink="/board">
 					<div class="value h1">{{ totalCount() }}</div>
 					<div class="label"><span>Tasks in</span> <span>Board</span></div>
 				</div>
 
-				<div class="card small">
+			<div class="card small" routerLink="/board">
 					<div class="value h1">{{ progressCount() }}</div>
 					<div class="label"><span>Tasks in</span> <span>Progress</span></div>
 				</div>
 
-				<div class="card small">
+			<div class="card small" routerLink="/board">
 					<div class="value h1">{{ feedbackCount() }}</div>
 					<div class="label"><span>Awaiting</span> <span>Feedback</span></div>
 				</div>

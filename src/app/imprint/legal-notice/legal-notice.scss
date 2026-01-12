@@ -36,23 +36,19 @@
 }
 
 .legal-container {
-  max-width: 800px;
   margin: 24px auto;
-  padding: 0 20px;
+  padding: 0 50px;
   font-family: 'Inter', sans-serif;
   color: #111;
   margin-top: 80px;
 
   @include respond-max($break-md) {
-    margin: 24px auto;
+    margin: 24px auto 104px;
   }
 }
 
 h1 {
   white-space: nowrap;
-  padding: 12px 0;
-  font-size: 48px;
-  font-weight: 700;
 
   @include respond-max($break-md) {
     font-size: 24px;
@@ -64,6 +60,11 @@ section {
 }
 
 h2 {
+  font-size: 27px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+h3 {
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 12px;
@@ -88,10 +89,5 @@ a {
 
   &:hover {
     text-decoration: underline;
-  }
-}
-@media screen and (min-width: 1531px) {
-  .legal-container {
-    margin: 80px 250px;
   }
 }

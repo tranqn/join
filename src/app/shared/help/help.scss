@@ -11,12 +11,13 @@ h1{
 
 section {
 	max-width: 1200px;
-	padding: $spacing-xl $spacing-lg;
+	padding: 0 $spacing-lg;
 	margin-top: 80px;
 
 	@include respond-max($break-md) {
 		padding: $spacing-md $spacing-md;
 		margin-top: 24px;
+		margin-bottom: 104px;
 	}
 	& h1 {
 		margin-bottom: 0;
@@ -69,13 +70,13 @@ section {
 }
 
 h2 {
-	font-size: 20px;
-	font-weight: 600;
+	font-size: 27px;
+	font-weight: 700;
 	margin-bottom: 12px;
 }
 
 h3 {
-	font-size: 18px;
+	font-size: 20px;
 	font-weight: 600;
 	margin-bottom: 10px;
 	margin-top: 20px;

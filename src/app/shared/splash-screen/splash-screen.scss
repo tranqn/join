@@ -70,10 +70,19 @@
 			top: 32px;
 			left: 50px;
 			transform: translate(0, 0);
+			@include respond($break-xxl) {
+				top: 32px;
+				left: calc(50% - 670px);
+
+			}
 			@include respond-max($break-md) {
 				width: 80px;
 				top: 20px;
 				left: 20px;
+			}
+			@include respond-max($break-sm) {
+				width: 64px;
+				top: 12px;
 			}
 
 			&--mobile-start {

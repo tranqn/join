@@ -61,7 +61,8 @@ export class Contactlist {
 	 */
 	isCurrentUser(contact: ContactModel): boolean {
 		const currentEmail = this.authService.currentUser()?.email?.toLowerCase();
-		return currentEmail === contact.email?.toLowerCase();
+		const currentName = this.authService.currentUser()?.displayName;
+		return currentEmail === contact.email?.toLowerCase() && currentName === contact.name; 
 	}
 
 	/**
