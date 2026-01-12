@@ -6,6 +6,10 @@
 	padding: $spacing-xl $spacing-md $spacing-xl $spacing-lg;
 
 	@include respond-max($break-xl) {
+		padding: $spacing-lg $spacing-lg $spacing-xl;
+	}
+	
+	@include respond-max($break-lg) {
 		padding: $spacing-lg $spacing-md $spacing-xl;
 	}
 
@@ -170,12 +174,6 @@
 	@include respond-max($break-sm) {
 		gap: $spacing-sm;
 	}
-
-	// .label {
-	// 	font-size: 1.25rem;
-	// 	color: $darkblue;
-	// 	font-weight: 400;
-	// }
 }
 
 .urgent-right{
