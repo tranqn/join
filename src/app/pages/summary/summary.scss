@@ -32,7 +32,7 @@
 			
 			small {
 				@include text-style-responsive(20px, 24px, 27px, 'Inter', 400);
-				color: #6b7280;
+				color: $darkblue;
 				
 
 				@include respond-max($break-xs) {
@@ -133,11 +133,11 @@
 
 	&:hover {
 		background: $darkblue;
-		color: white;
+		color: #FFFFFF;
 		transform: scale(1.05);
 
 		.sub {
-			color: rgba(255, 255, 255, 0.7);
+			color: #FFFFFF;
 		}
 	}
 
@@ -170,6 +170,12 @@
 	@include respond-max($break-sm) {
 		gap: $spacing-sm;
 	}
+
+	// .label {
+	// 	font-size: 1.25rem;
+	// 	color: $darkblue;
+	// 	font-weight: 400;
+	// }
 }
 
 .urgent-right{
@@ -201,7 +207,7 @@
 
 	.sub {
 		font-size: 1rem;
-		color: #6b7280;
+		color: $darkblue;
 
 		@include respond-max($break-sm) {
 			font-size: 0.8rem;
@@ -246,11 +252,11 @@
 
 	&:hover {
 		background: $darkblue;
-		color: white;
+		color: #FFFFFF;
 		transform: scale(1.05);
 
 		.label {
-			color: rgba(255, 255, 255, 0.7);
+			color: #FFFFFF;
 		}
 
 		.icon {
@@ -266,7 +272,7 @@
 		flex-direction: column;
 		white-space:nowrap;
 		font-size: 1.25rem;
-		color: #6b7280;
+		color: $darkblue;
 		font-weight: 400;
 
 		@include respond-max($break-sm) {
