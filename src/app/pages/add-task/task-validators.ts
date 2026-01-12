@@ -78,6 +78,11 @@ export function getErrorMessage(controlName: string, errors: ValidationErrors | 
 	return 'Invalid value';
 }
 
+/**
+ * Gets a user-friendly form field name.
+ * @param name - The form control name
+ * @returns A formatted field name for display
+ */
 function getFormName(name:string) {
 	if (name === 'title') {
 		return 'Title';

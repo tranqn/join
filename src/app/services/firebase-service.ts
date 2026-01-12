@@ -147,6 +147,11 @@ export class FirebaseService {
 		return 'title' in item && 'description' in item;
 	}
 
+	/**
+	 * Determines the model type and returns the appropriate cleaned JSON.
+	 * @param item - The contact or task model to convert
+	 * @returns A clean JSON object for Firestore storage
+	 */
 	checkModelType(item: ContactModel | TaskModel): {} {
 		if (this.isTaskModel(item)) {
 			return this.getCleanTaskJson(item);
@@ -155,6 +160,11 @@ export class FirebaseService {
 		}
     }
 
+	/**
+	 * Converts a TaskModel to a clean JSON object for Firestore.
+	 * @param task - The task to convert
+	 * @returns A plain object with task data
+	 */
 	getCleanTaskJson(task: TaskModel): {} {
 		return {
 			title: task.title,

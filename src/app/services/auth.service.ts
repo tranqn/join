@@ -41,6 +41,14 @@ export class AuthService {
 		});
 	}
 
+	/**
+	 * Registers a new user with email, password, and display name.
+	 * Creates a user account and a corresponding contact entry.
+	 * @param email - The user's email address
+	 * @param password - The user's password
+	 * @param displayName - The user's display name
+	 * @returns Promise resolving to success status and user object or error message
+	 */
 	async register(email: string, password: string, displayName: string) {
 		try {
 			const userCredential = await createUserWithEmailAndPassword(
@@ -58,6 +66,11 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Creates a contact entry in Firestore for the newly registered user.
+	 * @param name - The user's display name
+	 * @param email - The user's email address
+	 */
 	private async createContactForUser(name: string, email: string) {
 		const contact: Omit<ContactModel, 'id'> = {
 			name,
@@ -68,6 +81,12 @@ export class AuthService {
 		await this.firebaseService.addItemToCollection(contact, 'contacts');
 	}
 
+	/**
+	 * Signs in a user with email and password.
+	 * @param email - The user's email address
+	 * @param password - The user's password
+	 * @returns Promise resolving to success status and user object or error message
+	 */
 	async login(email: string, password: string) {
 		try {
 			const userCredential = await signInWithEmailAndPassword(
@@ -81,6 +100,10 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Signs in a user anonymously as a guest.
+	 * @returns Promise resolving to success status and user object or error message
+	 */
 	async loginAsGuest() {
 		try {
 			const userCredential = await signInAnonymously(this.auth);
@@ -90,6 +113,10 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Signs out the current user and navigates to the login page.
+	 * @returns Promise resolving to success status or error message
+	 */
 	async logout() {
 		try {
 			await signOut(this.auth);
@@ -100,6 +127,10 @@ export class AuthService {
 		}
 	}
 
+	/**
+	 * Deletes the currently authenticated user's account.
+	 * @returns Promise resolving to success status or error message
+	 */
 	async deleteAccount() {
 		const user = this.auth.currentUser;
 		if (user) {
@@ -113,6 +144,11 @@ export class AuthService {
 		return { succes: false, error: 'No user logged in' };
 	}
 
+	/**
+	 * Converts Firebase auth error codes to user-friendly error messages.
+	 * @param code - The Firebase auth error code
+	 * @returns A user-friendly error message
+	 */
 	private getErrorMessage(code: string): string {
 		switch (code) {
 			case 'auth/email-already-in-use':

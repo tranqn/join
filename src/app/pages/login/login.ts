@@ -29,6 +29,10 @@ export class Login {
 		password: ['', [Validators.required, Validators.minLength(6)]]
 	});
 
+	/**
+	 * Handles form submission for user login.
+	 * Validates the form and attempts to authenticate the user.
+	 */
 	async onSubmit() {
 		if (this.loginForm.invalid) {
 			this.loginForm.markAllAsTouched();
@@ -51,6 +55,9 @@ export class Login {
 		}
 	}
 
+	/**
+	 * Handles guest login without requiring credentials.
+	 */
 	async onGuestLogin() {
 		this.isLoading.set(true);
 		this.errorMessage.set('');
@@ -67,18 +74,32 @@ export class Login {
 		}
 	}
 
+	/**
+	 * Toggles the visibility of the password field.
+	 */
 	togglePasswordVisibility() {
 		this.showPassword.update(v => !v);
 	}
 
+	/**
+	 * Gets the email form control.
+	 * @returns The email form control
+	 */
 	get emailControl() {
 		return this.loginForm.get('email');
 	}
 
+	/**
+	 * Gets the password form control.
+	 * @returns The password form control
+	 */
 	get passwordControl() {
 		return this.loginForm.get('password');
 	}
 
+	/**
+	 * Sets the inputIsClicked signal to true.
+	 */
 	SetInputisClickedTrue() {
 		this.inputIsClicked.set(true);
 	}

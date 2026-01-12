@@ -22,6 +22,10 @@ export class ColorService {
 		'#F43F5E'
 	];
 
+	/**
+	 * Selects and returns a random color from the predefined color palette.
+	 * @returns A hex color string
+	 */
 	getRandomColor(): string {
 		return this.profilColors[Math.floor(Math.random() * this.profilColors.length)];
 	}

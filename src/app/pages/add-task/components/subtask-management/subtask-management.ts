@@ -15,6 +15,9 @@ export class SubtaskManagement {
 	editingSubtaskId = signal<string | null>(null);
 	editingSubtaskText = signal('');
 
+	/**
+	 * Adds a new subtask or updates an existing one if in edit mode.
+	 */
 	addSubtask() {
 		const title = this.subtaskInput().trim();
 		if (!title) return;
@@ -37,16 +40,26 @@ export class SubtaskManagement {
 		this.subtaskInput.set('');
 	}
 
+	/**
+	 * Clears the subtask input field and exits edit mode.
+	 */
 	clearSubtaskInput() {
 		this.subtaskInput.set('');
 		this.editingSubtaskId.set(null);
 	}
 
+	/**
+	 * Enters edit mode for a subtask.
+	 * @param subtask - The subtask to edit
+	 */
 	startEditingSubtask(subtask: Subtask) {
 		this.editingSubtaskId.set(subtask.id);
 		this.editingSubtaskText.set(subtask.title);
 	}
 
+	/**
+	 * Saves the edited subtask and exits edit mode.
+	 */
 	saveEditingSubtask() {
 		const editingId = this.editingSubtaskId();
 		const newTitle = this.editingSubtaskText().trim();
@@ -65,6 +78,10 @@ export class SubtaskManagement {
 		this.editingSubtaskText.set('');
 	}
 
+	/**
+	 * Deletes a subtask by ID.
+	 * @param id - The ID of the subtask to delete
+	 */
 	deleteSubtask(id: string) {
 		const updated = this.subtasks().filter(st => st.id !== id);
 		this.subtasksChanged.emit(updated);
@@ -74,6 +91,10 @@ export class SubtaskManagement {
 		}
 	}
 
+	/**
+	 * Toggles the completion status of a subtask.
+	 * @param id - The ID of the subtask to toggle
+	 */
 	toggleSubtaskComplete(id: string) {
 		const updated = this.subtasks().map(st =>
 			st.id === id ? { ...st, completed: !st.completed } : st

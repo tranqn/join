@@ -80,6 +80,10 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		});
 	}
 
+	/**
+	 * Checks if the current device is mobile based on window size and touch capabilities.
+	 * @returns True if mobile device, false otherwise
+	 */
 	private checkIsMobile(): boolean {
 		if (typeof window === 'undefined') return false;
 		return (
@@ -89,6 +93,9 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		);
 	}
 
+	/**
+	 * Handles window resize events to update mobile state.
+	 */
 	onResize() {
 		this.isMobile.set(this.checkIsMobile());
 	}
@@ -107,6 +114,11 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		{ title: 'Done', id: 'done', listName: 'DoneList' }
 	];
 
+	/**
+	 * Gets tasks for a specific status.
+	 * @param status - The task status to filter by
+	 * @returns Array of tasks with the specified status
+	 */
 	getTasksByStatus(status: string) {
 		switch (status) {
 			case 'todo':
@@ -122,6 +134,11 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		}
 	}
 
+	/**
+	 * Gets filtered tasks by status, search term, and priority.
+	 * @param status - The task status to filter by
+	 * @returns Filtered array of tasks
+	 */
 	getFilteredTasksByStatus(status: string) {
 		const tasks = this.getTasksByStatus(status);
 		const term = this.search().toLowerCase().trim();
@@ -141,6 +158,10 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		return result;
 	}
 
+	/**
+	 * Handles task drop events for drag and drop functionality.
+	 * @param event - The CDK drag drop event
+	 */
 	onTaskDropped(event: CdkDragDrop<any>) {
 		const targetStatus = event.container.data;
 		const sourceStatus = event.previousContainer.data;
@@ -167,11 +188,18 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		this.stopAutoScroll();
 	}
 
+	/**
+	 * Opens the add task modal for a specific status.
+	 * @param status - The status for the new task
+	 */
 	openAddTaskModal(status: string) {
 		this.selectedStatus.set(status);
 		this.isAddTaskModalOpen.set(true);
 	}
 
+	/**
+	 * Closes the add task modal with animation.
+	 */
 	closeAddTaskModal() {
 		this.isClosing.set(true);
 		setTimeout(() => {
@@ -180,6 +208,10 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		}, 300);
 		this.selectedStatus.set('');
 	}
+	/**
+	 * Handles drag move events to enable auto-scrolling on mobile.
+	 * @param event - The drag move event
+	 */
 	onDragMoved(event: any) {
 		if (!this.isMobile()) return;
 
@@ -197,6 +229,10 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 	}
 
 
+	/**
+	 * Starts auto-scrolling in the specified direction.
+	 * @param direction - The scroll direction ('up' or 'down')
+	 */
 	private startAutoScroll(direction: 'up' | 'down') {
 		if (this.currentScrollDirection === direction) return;
 
@@ -214,6 +250,9 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		});
 	}
 
+	/**
+	 * Stops the auto-scrolling functionality.
+	 */
 	private stopAutoScroll() {
 		if (this.scrollInterval) {
 			clearInterval(this.scrollInterval);
@@ -231,6 +270,9 @@ export class TaskOverview implements AfterViewInit, OnDestroy {
 		this.stopAutoScroll();
 	}
 
+	/**
+	 * Updates the list of connected drop lists for drag and drop.
+	 */
 	private updateConnectedLists() {
 		const ids = this.columns.map((col) => col.id);
 		this.connectedLists.set(ids);

@@ -66,10 +66,18 @@ export class AddTask {
 		});
 	}
 
+	/**
+	 * Checks if the current route is the board page.
+	 * @returns True if on the board route, false otherwise
+	 */
 	isBoardRoute(): boolean {
 		return this.router.url === '/board';
 	}
 
+	/**
+	 * Populates the form with task data for editing.
+	 * @param task - The task to populate the form with
+	 */
 	private populateForm(task: TaskModel) {
 		this.taskForm.patchValue({
 			title: task.title,
@@ -92,6 +100,10 @@ export class AddTask {
 		this.subtasks.set(task.subtasks || []);
 	}
 
+	/**
+	 * Initializes the task form with validators.
+	 * @returns A configured FormGroup for task data
+	 */
 	private initializeForm(): FormGroup {
 		return this.fb.group({
 			title: ['', minLengthValidator(2)],
@@ -102,6 +114,11 @@ export class AddTask {
 		});
 	}
 
+	/**
+	 * Gets the error message for a form control.
+	 * @param controlName - The name of the form control
+	 * @returns The error message string, or empty string if no error
+	 */
 	getErrorMessage(controlName: string): string {
 		const control = this.taskForm.get(controlName);
 		if (control && control.invalid && control.touched) {
@@ -110,26 +127,49 @@ export class AddTask {
 		return '';
 	}
 
+	/**
+	 * Handles priority selection from the priority buttons component.
+	 * @param value - The selected priority value
+	 */
 	onPrioritySelected(value: string) {
 		this.taskForm.patchValue({ priority: value });
 	}
 
+	/**
+	 * Handles category selection from the category select component.
+	 * @param value - The selected category value
+	 */
 	onCategorySelected(value: string) {
 		this.taskForm.patchValue({ category: value });
 	}
 
+	/**
+	 * Handles date selection from the date picker component.
+	 * @param timestamp - The selected date as a timestamp
+	 */
 	onDateSelected(timestamp: number) {
 		this.taskForm.patchValue({ dueDate: timestamp });
 	}
 
+	/**
+	 * Handles changes to the assigned contacts.
+	 * @param contacts - The array of selected contacts
+	 */
 	onContactsChanged(contacts: ContactModel[]) {
 		this.selectedContacts.set(contacts);
 	}
 
+	/**
+	 * Handles changes to the subtasks list.
+	 * @param subtasks - The array of subtasks
+	 */
 	onSubtasksChanged(subtasks: Subtask[]) {
 		this.subtasks.set(subtasks);
 	}
 
+	/**
+	 * Handles form submission for creating or updating a task.
+	 */
 	async onSubmit() {
 		if (this.taskForm.invalid || this.isSaving()) {
 			this.taskForm.markAllAsTouched();
@@ -158,6 +198,9 @@ export class AddTask {
 		}
 	}
 
+	/**
+	 * Creates a new task in Firestore.
+	 */
 	private async createTask() {
 		const formValue = this.taskForm.value;
 		const assignedToRefs = this.selectedContacts().map(contact =>
@@ -179,6 +222,11 @@ export class AddTask {
 		await this.firebaseService.addItemToCollection(task, 'tasks');
 	}
 
+	/**
+	 * Gets the next position for a task in the specified status column.
+	 * @param status - The task status
+	 * @returns The position index
+	 */
 	private getPositionForStatus(status: string): number {
 		switch (status) {
 			case 'todo': return this.taskService.tasksTodo().length;
@@ -189,6 +237,9 @@ export class AddTask {
 		}
 	}
 
+	/**
+	 * Updates an existing task in Firestore.
+	 */
 	private async updateTask() {
 		const formValue = this.taskForm.value;
 		const assignedToRefs = this.selectedContacts().map(contact =>
@@ -207,6 +258,10 @@ export class AddTask {
 		await this.firebaseService.updateItem(updatedTask, 'tasks');
 	}
 
+	/**
+	 * Displays a success message toast.
+	 * @param isUpdate - Whether this was an update operation (true) or create (false)
+	 */
 	private showSuccessMessage(isUpdate: boolean) {
 		this.messageService.add({
 			severity: 'success',
@@ -216,6 +271,10 @@ export class AddTask {
 		});
 	}
 
+	/**
+	 * Displays an error message toast.
+	 * @param isUpdate - Whether this was an update operation (true) or create (false)
+	 */
 	private showErrorMessage(isUpdate: boolean) {
 		this.messageService.add({
 			severity: 'error',
@@ -225,6 +284,9 @@ export class AddTask {
 		});
 	}
 
+	/**
+	 * Resets the form to its initial state.
+	 */
 	clearForm() {
 		this.taskForm.reset({
 			title: '',

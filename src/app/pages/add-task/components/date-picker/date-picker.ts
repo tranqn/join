@@ -16,10 +16,18 @@ export class DatePicker {
 
 	weekdays = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
 
+	/**
+	 * Toggles the date picker visibility.
+	 */
 	toggle() {
 		this.isOpen.update(open => !open);
 	}
 
+	/**
+	 * Formats a timestamp to a date string (dd/mm/yyyy).
+	 * @param value - The timestamp or date string to format
+	 * @returns The formatted date string
+	 */
 	formatDate(value: number | string | null): string {
 		if (!value) return 'dd/mm/yyyy';
 		const date = new Date(value);
@@ -29,20 +37,34 @@ export class DatePicker {
 		return `${day}/${month}/${year}`;
 	}
 
+	/**
+	 * Gets the current month and year for display.
+	 * @returns The month and year string (e.g., "January 2026")
+	 */
 	getMonthYear(): string {
 		const months = ['January', 'February', 'March', 'April', 'May', 'June',
 			'July', 'August', 'September', 'October', 'November', 'December'];
 		return `${months[this.viewDate.getMonth()]} ${this.viewDate.getFullYear()}`;
 	}
 
+	/**
+	 * Navigates to the previous month.
+	 */
 	prevMonth() {
 		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() - 1, 1);
 	}
 
+	/**
+	 * Navigates to the next month.
+	 */
 	nextMonth() {
 		this.viewDate = new Date(this.viewDate.getFullYear(), this.viewDate.getMonth() + 1, 1);
 	}
 
+	/**
+	 * Generates an array of calendar days for the current view month.
+	 * @returns Array of calendar day objects with metadata
+	 */
 	getCalendarDays(): { num: number; date: Date; current: boolean; selected: boolean; today: boolean; past: boolean }[] {
 		const days = [];
 		const year = this.viewDate.getFullYear();
@@ -86,12 +108,20 @@ export class DatePicker {
 		return days;
 	}
 
+	/**
+	 * Selects a date and emits the UTC timestamp.
+	 * @param date - The selected date
+	 */
 	selectDate(date: Date) {
 		const utcTimestamp = Date.UTC(date.getFullYear(), date.getMonth(), date.getDate());
 		this.dateSelected.emit(utcTimestamp);
 		this.isOpen.set(false);
 	}
 
+	/**
+	 * Closes the date picker when clicking outside.
+	 * @param event - The mouse click event
+	 */
 	@HostListener('document:click', ['$event'])
 	onDocumentClick(event: MouseEvent) {
 		const target = event.target as HTMLElement;

@@ -72,8 +72,9 @@ export class Summary {
       day: 'numeric'
     });
   });
-
-  navigateToTask() {
+  /**
+   * Navigates to the board page with the next urgent task selected.
+   */  navigateToTask() {
     const task = this.nextUrgentTask();
     if (task) {
       this.router.navigate(['/board'], { queryParams: { taskId: task.id } });

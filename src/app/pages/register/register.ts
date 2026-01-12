@@ -32,6 +32,11 @@ export class Register {
 		validators: this.passwordMatchValidator
 	});
 
+	/**
+	 * Validates password strength (requires uppercase, number, and special character).
+	 * @param control - The form control to validate
+	 * @returns Validation errors or null if valid
+	 */
 	passwordStrengthValidator(control: AbstractControl) {
 		const value = control.value;
 		
@@ -48,6 +53,11 @@ export class Register {
 		return !passwordValid ? { passwordStrength: true } : null;
 	}
 
+	/**
+	 * Validates that password and confirm password fields match.
+	 * @param control - The form group to validate
+	 * @returns Validation errors or null if passwords match
+	 */
 	passwordMatchValidator(control: AbstractControl) {
 		const password = control.get('password');
 		const confirmPassword = control.get('confirmPassword');
@@ -59,6 +69,10 @@ export class Register {
 		return password.value === confirmPassword.value ? null : { passwordMismatch: true };
 	}
 
+	/**
+	 * Handles form submission for user registration.
+	 * Validates the form and attempts to create a new user account.
+	 */
 	async onSubmit() {
 		if (this.registerForm.invalid) {
 			this.registerForm.markAllAsTouched();
@@ -88,30 +102,56 @@ export class Register {
 		}
 	}
 
+	/**
+	 * Toggles the visibility of the password field.
+	 */
 	togglePasswordVisibility() {
 		this.showPassword.update(v => !v);
 	}
 
+	/**
+	 * Toggles the visibility of the confirm password field.
+	 */
 	toggleConfirmPasswordVisibility() {
 		this.showConfirmPassword.update(v => !v);
 	}
 
+	/**
+	 * Gets the name form control.
+	 * @returns The name form control
+	 */
 	get nameControl() {
 		return this.registerForm.get('name');
 	}
 
+	/**
+	 * Gets the email form control.
+	 * @returns The email form control
+	 */
 	get emailControl() {
 		return this.registerForm.get('email');
 	}
 
+	/**
+	 * Gets the password form control.
+	 * @returns The password form control
+	 */
 	get passwordControl() {
 		return this.registerForm.get('password');
 	}
 
+	/**
+	 * Gets the confirm password form control.
+	 * @returns The confirm password form control
+	 */
 	get confirmPasswordControl() {
 		return this.registerForm.get('confirmPassword');
 	}
 
+	/**
+	 * Gets the accept policy form control.
+	 * @returns The accept policy form control
+	 */
 	get acceptPolicyControl() {
 		return this.registerForm.get('acceptPolicy');
 	}

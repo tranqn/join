@@ -38,10 +38,19 @@ export class TaskModal {
 
 	constructor() {}
 
+	/**
+	 * Gets the initials from a contact name.
+	 * @param name - The contact's full name
+	 * @returns The initials
+	 */
 	getInitials(name: string) {
 		return getShortName(name);
 	}
 
+	/**
+	 * Gets the count of completed subtasks.
+	 * @returns The number of completed subtasks
+	 */
 	getDoneTasks() {
 		const task = this.task();
 		if (
@@ -54,10 +63,17 @@ export class TaskModal {
 		return task.subtasks.filter((subtask) => subtask.completed).length;
 	}
 
+	/**
+	 * Switches the modal to edit mode.
+	 */
 	onEdit() {
 		this.isEditMode.set(true);
 	}
 
+	/**
+	 * Toggles the completion status of a subtask.
+	 * @param index - The index of the subtask to toggle
+	 */
 	async toggleSubtask(index: number) {
 		const currentTask = this.task();
 		if (!currentTask || !currentTask.subtasks) return;
@@ -80,6 +96,9 @@ export class TaskModal {
 		}
 	}
 
+	/**
+	 * Handles task deletion with confirmation dialog.
+	 */
 	onDelete() {
 		const currentTask = this.task();
 		if (!currentTask) return;
@@ -112,6 +131,9 @@ export class TaskModal {
 		);
 	}
 
+	/**
+	 * Closes the modal with animation.
+	 */
 	onClose() {
 		this.isClosing.set(true);
 		setTimeout(() => {

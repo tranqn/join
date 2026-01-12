@@ -37,6 +37,12 @@ export class Taskservice {
 		this.unsubDone = this.subTasksList(this.tasksDone, 'done');
 	}
 
+	/**
+	 * Subscribes to tasks list filtered by status and updates the signal.
+	 * @param array - The writable signal to update with tasks
+	 * @param status - The task status to filter by
+	 * @returns An unsubscribe function to stop listening to changes
+	 */
 	subTasksList(array: WritableSignal<TaskModel[]>, status: string) {
       let ref = (collection(this.firestore, "tasks"));
       const q = query(ref, where('status', '==', status), limit(100));
@@ -50,6 +56,12 @@ export class Taskservice {
         });
     }
 
+	/**
+	 * Converts Firestore document data to a TaskModel.
+	 * @param obj - The raw Firestore document data
+	 * @param id - The document ID
+	 * @returns A TaskModel instance
+	 */
 	setTaskObject(obj: any, id: string): TaskModel {
 		return {
 			id: id,

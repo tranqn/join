@@ -17,6 +17,10 @@ export class PriorityButtons {
 		{ value: 'low', label: 'Low', icon: 'low' }
 	];
 
+	/**
+	 * Emits the selected priority value.
+	 * @param value - The priority value to emit
+	 */
 	setPriority(value: string) {
 		this.prioritySelected.emit(value);
 	}

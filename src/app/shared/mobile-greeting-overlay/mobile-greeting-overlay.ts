@@ -26,12 +26,20 @@ export class MobileGreetingOverlay {
 		}
 	}
 
+	/**
+	 * Gets the display name of the current user.
+	 * @returns The user's display name or 'Guest'
+	 */
 	getUserName(): string {
 		const user = this.authService.currentUser();
 		if (!user) return 'Guest';
 		return user.isAnonymous ? 'Guest' : (user.displayName || 'User');
 	}
 
+	/**
+	 * Gets a time-appropriate greeting message.
+	 * @returns A greeting message based on the time of day
+	 */
 	getGreeting(): string {
 		const hour = new Date().getHours();
 		if (hour < 12) return 'Good morning';

@@ -16,6 +16,9 @@ export class Board {
 	priorityFilter = signal<'all' | 'urgent' | 'medium' | 'low'>('all');
 	isClosing = signal(false);
 
+	/**
+	 * Cycles through priority filter options (all -> urgent -> medium -> low).
+	 */
 	togglePrioritySort() {
 		const current = this.priorityFilter();
 
@@ -30,10 +33,16 @@ export class Board {
 		}
 	}
 
+	/**
+	 * Opens the modal for adding a new task.
+	 */
 	openAddTaskModal() {
 		this.isAddTaskModalOpen.set(true);
 	}
 
+	/**
+	 * Closes the add task modal with animation.
+	 */
 	closeAddTaskModal() {
 		this.isClosing.set(true);
 		setTimeout(() => {

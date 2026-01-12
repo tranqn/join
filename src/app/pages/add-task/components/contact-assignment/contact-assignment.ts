@@ -21,14 +21,26 @@ export class ContactAssignment {
 		return this.firebaseService.contacts();
 	}
 
+	/**
+	 * Toggles the contact dropdown visibility.
+	 */
 	toggle() {
 		this.isOpen.update(open => !open);
 	}
 
+	/**
+	 * Checks if a contact is currently selected.
+	 * @param contact - The contact to check
+	 * @returns True if the contact is selected, false otherwise
+	 */
 	isContactSelected(contact: ContactModel): boolean {
 		return this.selectedContacts().some(c => c.id === contact.id);
 	}
 
+	/**
+	 * Toggles the selection state of a contact.
+	 * @param contact - The contact to toggle
+	 */
 	toggleContact(contact: ContactModel) {
 		const current = this.selectedContacts();
 		if (this.isContactSelected(contact)) {
@@ -38,10 +50,19 @@ export class ContactAssignment {
 		}
 	}
 
+	/**
+	 * Gets the initials from a contact name.
+	 * @param fullName - The contact's full name
+	 * @returns The initials
+	 */
 	getInitials(fullName: string): string {
 		return getShortName(fullName);
 	}
 
+	/**
+	 * Closes the dropdown when clicking outside.
+	 * @param event - The mouse click event
+	 */
 	@HostListener('document:click', ['$event'])
 	onDocumentClick(event: MouseEvent) {
 		const target = event.target as HTMLElement;

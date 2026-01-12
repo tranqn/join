@@ -18,21 +18,36 @@ export class CategorySelect {
 		{ value: 'user-story', label: 'User Story' }
 	];
 
+	/**
+	 * Toggles the dropdown visibility.
+	 */
 	toggle() {
 		this.isOpen.update(open => !open);
 	}
 
+	/**
+	 * Selects a category and closes the dropdown.
+	 * @param value - The selected category value
+	 */
 	selectCategory(value: string) {
 		this.categorySelected.emit(value);
 		this.isOpen.set(false);
 	}
 
+	/**
+	 * Gets the display label for the selected category.
+	 * @returns The category label or placeholder text
+	 */
 	getSelectedLabel(): string {
 		const value = this.selectedCategory();
 		const category = this.categories.find(c => c.value === value);
 		return category?.label || 'Select task category';
 	}
 
+	/**
+	 * Closes the dropdown when clicking outside.
+	 * @param event - The mouse click event
+	 */
 	@HostListener('document:click', ['$event'])
 	onDocumentClick(event: MouseEvent) {
 		const target = event.target as HTMLElement;

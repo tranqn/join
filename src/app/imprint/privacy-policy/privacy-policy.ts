@@ -10,6 +10,9 @@ import { Location } from '@angular/common';
 export class PrivacyPolicy {
   constructor(private location: Location) {}
 
+  /**
+   * Navigates back to the previous page in the browser history.
+   */
   goBack(): void {
     this.location.back();
   }
