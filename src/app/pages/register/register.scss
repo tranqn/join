@@ -181,6 +181,12 @@
 		gap: $spacing-xs;
 		margin: $spacing-md 0;
 		justify-content: center;
+		& .checkmark {
+			margin-right: 10px
+		}
+		&--wrapper {
+			@include custom-checkbox(16px, $darkblue, 'checkmark');
+		} 
 	}
 
 	&__checkbox-input {

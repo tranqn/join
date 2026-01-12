@@ -148,22 +148,25 @@
 				</div>
 
 				<div class="register__checkbox">
-					<input
-						id="acceptPolicy"
-						type="checkbox"
-						formControlName="acceptPolicy"
-						class="register__checkbox-input"
-					/>
-					<label for="acceptPolicy" class="register__checkbox-label">
-						I accept the
-						<a
-							routerLink="/privacy-policy"
-							target="_blank"
-							class="register__link"
-						>
-							Privacy policy
-						</a>
-					</label>
+					<div class="register__checkbox--wrapper">
+						<input
+							id="acceptPolicy"
+							type="checkbox"
+							formControlName="acceptPolicy"
+							class="register__checkbox-input"
+						/>
+						<span class="checkmark"></span>
+						<label for="acceptPolicy" class="register__checkbox-label">
+							I accept the
+							<a
+								routerLink="/privacy-policy"
+								target="_blank"
+								class="register__link"
+							>
+								Privacy policy
+							</a>
+						</label>
+					</div>
 				</div>
 
 				<button
