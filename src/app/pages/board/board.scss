@@ -83,13 +83,13 @@ section {
 		border-radius: radius(medium);
 		padding: .75rem 1rem;
 		gap: $spacing-sm;
+		@include dFlex-responsive(row, row, center, center);
 		@include respond($break-lg) {
 			&:hover {
 				background: $light-blue;
 				box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
 			}
 		}
-		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {
 			flex: auto;
 		}
@@ -121,13 +121,13 @@ section {
 		border-radius: radius(medium);
 		padding: .75rem 1rem;
 		gap: $spacing-sm;
+		@include dFlex-responsive(row, row, center, center);
 		@include respond($break-lg) {
 			&:hover {
 				background: $light-blue;
 				box-shadow: 0px 2px 5px 0px rgba(0, 0, 0, 0.5);
 			}
 		}
-		@include dFlex-responsive(row, row, center, center);
 		@include respond-max($break-xl) {
 			flex: 0 0 calc(25% - 10px);
 		}
@@ -161,11 +161,10 @@ section {
 }
 
 .modal-content {
-
-	@include modal-dialog(1116px, 90vh);
 	display: flex;
 	flex-direction: column;
 	overflow: hidden;
+	@include modal-dialog(1116px, 90vh);
 	app-add-task {
 		height: 100%;
 	}

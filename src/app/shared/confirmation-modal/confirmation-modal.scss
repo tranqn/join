@@ -1,4 +1,5 @@
 @use 'sass:map';
+@use 'sass:color';
 @use '../../../app/styles/vars.scss' as *;
 
 .confirmation-modal {
@@ -75,7 +76,7 @@
       color: white;
 
       &:hover {
-        background: darken($urgent-color, 5%);
+        background: color.adjust($urgent-color, $lightness: -5%);
       }
     }
 

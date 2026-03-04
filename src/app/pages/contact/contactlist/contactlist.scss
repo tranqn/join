@@ -131,7 +131,7 @@
 	&__letter {
 		padding: 1rem 2rem;
 		border-bottom: 1px solid #d1d1d1;
-		@include spacing(margin-bottom, $spacing-sm, $spacing-sm, $spacing-sm);
 		font-weight: 400;
+		@include spacing(margin-bottom, $spacing-sm, $spacing-sm, $spacing-sm);
 	}
 }
