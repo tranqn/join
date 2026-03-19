@@ -5,9 +5,13 @@
 	position: relative;
 	max-width: calc(1440px - 240px);
 	padding: $spacing-xl $spacing-lg $spacing-md;
+	overflow-y: auto;
+	max-height: calc(100vh - 80px);
+	@include custom-scrollbar;
 	@include respond-max($break-md) {
 		padding: $spacing-lg $spacing-sm $spacing-xl;
 		max-width: none;
+		max-height: calc(100vh - 80px - 80px);
 	}
 
 	&.modal-mode {
